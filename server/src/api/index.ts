@@ -1,5 +1,6 @@
 import express from 'express';
-import posts from '../api/posts/posts.route';
+import posts from './posts/route';
+import articles from './articles/route';
 import MessageResponse from '../interfaces/MessageResponse';
 
 const router = express.Router();
@@ -11,5 +12,6 @@ router.get<{}, MessageResponse>('/', (req, res) => {
 });
 
 router.use('/posts', posts);
+router.use('/articles', articles);
 
 export default router;
