@@ -27,18 +27,12 @@ export async function createArticle(req: Request<{}, {}, Articles>, res: Respons
                     author,
                     likes,
                     comments
-                ) VALUES (
-                    ${title},
-                    ${content},
-                    ${author},
-                    ${likes},
-                    ${comments}
-                )
-            `,
+                ) VALUES (?, ?, ?, ?, ?)
+            `, [title, content, author, likes, comments],
         );
         
         console.log(newArticle[0]);
-        return res.status(201).json("Articles created!");
+        return res.status(201).json(`Article: ${title} is created!`);
     } catch (error) {
         logger.info('Error in getting all articles');
         logger.error(error);

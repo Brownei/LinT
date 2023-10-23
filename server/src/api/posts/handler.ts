@@ -13,7 +13,7 @@ export async function getAllPosts(req: Request, res: Response, next: NextFunctio
         logger.info('Error in getting all posts');
         logger.error(error);
         if(error instanceof ZodError) {
-            res.status(422).json("Zod Error");
+            return res.status(422).json("Zod Error");
         }
         next(error);
     }
@@ -28,8 +28,8 @@ export async function createPost(req: Request<{}, {}, Posts>, res: Response<Post
         const newPost = await databasePool.query(
             `
                 INSERT INTO posts (title, description, tech_stacks, problem, solution, requirements, is_paid)
-                    VALUES (${title}, ${description}, ${tech_stacks}, ${problem_to_solve}, ${solution}, ${requirements}, ${is_paid})
-            `,
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+            `, [title, description, tech_stacks, problem_to_solve, solution, requirements, is_paid],
         );
 
         console.log(newPost);
@@ -38,7 +38,7 @@ export async function createPost(req: Request<{}, {}, Posts>, res: Response<Post
         logger.info('Error in the create section');
         logger.error(error);
         if(error instanceof ZodError) {
-            res.status(422).json("Zod Error");
+            return res.status(422).json("Zod Error");
         }
         next(error);
     }
@@ -53,13 +53,18 @@ export async function getOnePost(req: Request<Params, {}, {}>, res: Response, ne
                     WHERE id = ${id}
             `,
         );
+
+        if(!particularPost[0]) {
+            return res.status(404).json("No posts like this");
+        }
+
         console.log(particularPost[0]);
-        res.status(200).json(particularPost[0]);
+        return res.status(200).json(particularPost[0]);
     } catch (error) {
         logger.info('Error in getting only one post');
         logger.error(error);
         if(error instanceof ZodError) {
-            res.status(422).json("Zod Error");
+            return res.status(422).json("Zod Error");
         }
         next(error);
     }
@@ -124,7 +129,7 @@ export async function updateOnePost(req: Request<Params, {}, Posts>, res: Respon
         logger.info('Error in updating a post');
         logger.error(error);
         if(error instanceof ZodError) {
-            res.status(422).json("Zod Error");
+            return res.status(422).json("Zod Error");
         }
         next(error);
     }
