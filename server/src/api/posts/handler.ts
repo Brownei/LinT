@@ -1,14 +1,25 @@
-import { databasePool } from '../../utils/database';
 import { Request, Response, NextFunction } from "express";
 import logger from '../../utils/logger';
-import { Params, Posts } from './model';
+import Post, { Params, PostType } from './model';
 import { ZodError } from 'zod';
+import Likes from "../likes/model";
+import Requests from "../requests/model";
+// import User from "../users/model";
 
 export async function getAllPosts(req: Request, res: Response, next: NextFunction) {
     try {
-        const posts = await databasePool.query("SELECT * FROM posts ORDER BY id DESC");
-        console.log(posts[0]);
-        return res.status(200).json(posts[0]);
+        const posts = await Post.findAll({
+            include: [
+                {
+                    model: Likes,
+                },
+                {
+                    model: Requests,
+                },
+            ],
+        });
+
+        return res.status(200).json(posts);
     } catch (error) {
         logger.info('Error in getting all posts');
         logger.error(error);
@@ -19,21 +30,24 @@ export async function getAllPosts(req: Request, res: Response, next: NextFunctio
     }
 }
 
-export async function createPost(req: Request<{}, {}, Posts>, res: Response<Posts | string>, next: NextFunction) {
-    const { title, description, tech_stacks, problem_to_solve, solution, requirements, is_paid } = req.body;
+export async function createPost(req: Request<{}, {}, PostType>, res: Response, next: NextFunction) {
+    const { title, description, techStacks, problem, solution, requirements, isPaid, userId } = req.body;
     try {
         if(!req.body) {
             res.status(404).json('Missing information!');
         }
-        const newPost = await databasePool.query(
-            `
-                INSERT INTO posts (title, description, tech_stacks, problem, solution, requirements, is_paid)
-                    VALUES (?, ?, ?, ?, ?, ?, ?)
-            `, [title, description, tech_stacks, problem_to_solve, solution, requirements, is_paid],
-        );
+        const newPost = await Post.create({
+            title, 
+            description, 
+            techStacks, 
+            problem, 
+            solution, 
+            requirements, 
+            isPaid, 
+            userId,
+        });
 
-        console.log(newPost);
-        return res.status(201).json(`${title} is created!`);
+        return res.status(201).json(newPost);
     } catch (error) {
         logger.info('Error in the create section');
         logger.error(error);
@@ -47,19 +61,27 @@ export async function createPost(req: Request<{}, {}, Posts>, res: Response<Post
 export async function getOnePost(req: Request<Params, {}, {}>, res: Response, next: NextFunction) {
     const { id } = req.params;
     try {
-        const particularPost = await databasePool.query(
-            `
-                SELECT * FROM posts
-                    WHERE id = ${id}
-            `,
-        );
+        const particularPost = await Post.findOne({
+            where: {
+                id,
+            },
+            include: [
+                {
+                    model: Requests,
+                    attributes: ['accepted', 'rejected', 'id'],
+                },
+                {
+                    model: Likes,
+                    attributes: ['liked', 'id'],
+                },
+            ],
+        });
 
-        if(!particularPost[0]) {
+        if(!particularPost) {
             return res.status(404).json("No posts like this");
         }
 
-        console.log(particularPost[0]);
-        return res.status(200).json(particularPost[0]);
+        return res.status(200).json(particularPost);
     } catch (error) {
         logger.info('Error in getting only one post');
         logger.error(error);
@@ -73,24 +95,19 @@ export async function getOnePost(req: Request<Params, {}, {}>, res: Response, ne
 export async function deleteOnePost(req: Request<Params, {}, {}>, res: Response, next: NextFunction) {
     const { id } = req.params;
     try {
-        const particularPost = await databasePool.query(
-            `
-                SELECT * FROM posts
-                    WHERE id = ${id}
-            `,
-        );
+        const particularPost = await Post.findByPk(id);
 
         if(!particularPost) {
             return res.status(404).json("No post like this");
         }
 
-        await databasePool.query(
-            `
-                DELETE FROM posts WHERE id = ${id};
-            `,
-        );
+        await Post.destroy({
+            where : {
+                id,
+            },
+        });
 
-        return res.status(200).json(`${particularPost[0]} is successfully deleted!`);
+        return res.status(200).json(`${particularPost} is successfully deleted!`);
     } catch (error) {
         logger.info('Error in deleting a post');
         logger.error(error);
@@ -101,30 +118,31 @@ export async function deleteOnePost(req: Request<Params, {}, {}>, res: Response,
     }
 }
 
-export async function updateOnePost(req: Request<Params, {}, Posts>, res: Response, next: NextFunction) {
-    const { title, description, tech_stacks, problem_to_solve, solution, requirements, is_paid } = req.body;
+export async function updateOnePost(req: Request<Params, {}, PostType>, res: Response, next: NextFunction) {
+    const { title, description, techStacks, problem, solution, requirements, isPaid } = req.body;
     const { id } = req.params;
     try {
-        const particularPost = await databasePool.query(
-            `
-                SELECT * FROM posts
-                    WHERE id = ${id}
-            `,
-        );
+        const particularPost = await Post.findByPk(id);
 
         if(!particularPost) {
             return res.status(404).json("No post like this");
         }
 
-        await databasePool.query(
-            `
-                UPDATE posts
-                SET title = ${title}, description = ${description}, tech_stacks = ${tech_stacks}, problem = ${problem_to_solve}, solution = ${solution}, requirements = ${requirements}, is_paid = ${is_paid}
-                WHERE id = ${id};
-            `,
-        );
+        await Post.update({
+            title,
+            description,
+            techStacks,
+            problem,
+            solution,
+            requirements,
+            isPaid,
+        }, {
+            where: {
+                id,
+            },
+        });
 
-        return res.status(200).json(`${particularPost[0]} is successfully updated!`);
+        return res.status(200).json(`${particularPost} is successfully updated!`);
     } catch (error) {
         logger.info('Error in updating a post');
         logger.error(error);

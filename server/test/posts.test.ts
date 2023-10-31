@@ -28,12 +28,13 @@ describe('POST /posts', () => {
     const response = await request(app)
       .post('/posts')
       .send({
+        userId: 1,
         title: 'Hello world!',
         description: 'Basic tests to check on my api sadly!',
-        problem_to_solve: 'No Postman',
+        problem: 'No Postman',
         solution: 'Using jest test',
         requirements: 'Write test codes',
-        is_paid: true,
+        isPaid: false,
       });
     expect(response.status).toBe(201);
   });
