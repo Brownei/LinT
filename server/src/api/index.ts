@@ -15,7 +15,7 @@ router.get<{}, MessageResponse>('/', (req, res) => {
   });
 });
 
-router.use("/user", users);
+router.use("/users", users);
 router.use('/posts', posts);
 router.use('/articles', articles);
 router.use('/comments', comments);
