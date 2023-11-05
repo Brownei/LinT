@@ -1,40 +1,47 @@
-/* @mixin mobile {
-    @media screen and (max-width:480px) {
-        @content;
-    }
-}
-@mixin tablet {
-    @media screen and (max-width:768px) {
-        @content;
-    }
-}
-@mixin laptop {
-    @media screen and (max-width:1200px) {
-        @content;
-    }
-} */
+// @mixin mobile {
+//     @media screen and (max-width:480px) {
+//         @content;
+//     }
+// }
+// @mixin tablet {
+//     @media screen and (max-width:768px) {
+//         @content;
+//     }
+// }
+// @mixin laptop {
+//     @media screen and (max-width:1200px) {
+//         @content;
+//     }
+// } 
 
 .homepage {
-    width: 1000px;
-    height: 800px;
+    height: 1000dvh;
     margin-top: 20px;
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 2rem/* 32px */;
+    padding-left: 2rem/* 32px */;
+    
 
     .container {
         border: 1px solid white; 
         border-radius: 10px;
         display: flex; 
-      
 
-        .leftside {
+        .leftside {            
+            position: fixed;
+            top: 50px;
+            left: 120px;
             width: 260px;
             height: 264px;
             flex-shrink: 0;
             border-radius: 6px;
             background: black;
-            /* position: relative; */
             margin-top: 100px;
             margin-left: 40px;
-            display: flex;
+            z-index: 999;
+
 
             .leftin {
                 flex: 1;
@@ -75,46 +82,45 @@
         }
         
         .sidebar {
-            flex: 1;
-            position: relative;
+            /* flex: 1; */
+            position: fixed;
+            top: 50px;
+            right: 120px;
             display: flex;
             flex-direction: column;
             align-items: center; 
             margin-left: 15px;
+            z-index: 999;
             /* margin-top: 15px; */
 
-            .cont {
-                /* margin-bottom: 20px; */
-                
-                .search {
-                    display: flex;
-                    width: 316px;
-                    padding: 16px 20px; 
-                    align-items: flex-start;
-                    gap: 11px;
-                    border-radius: 24px;
-                    background: #D9D9D9;
-    
-                    .searchform {
-    
-                        input {
-                        color: #999;
-                        font-family: Inter;
-                        font-size: 16px;
-                        font-style: normal;
-                        font-weight: 400;
-                        line-height: normal;
-                        }
-                        
-                    }
-    
-                    .glass {
-                        width: 17.09px;
-                        height: 17.1px;
-                        flex-shrink: 0;
-                        fill: #999;
-                    }
-                }
+            .cont .search {
+                display: flex;
+                width: 316px;
+                padding: 16px 20px; 
+                align-items: center;
+                text-transform: capitalize;
+                gap: 11px;
+                border-radius: 9999px;
+                background: #D9D9D9;
+            }
+
+            .searchform input {
+                color: #999;
+                font-family: Inter;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                outline: none;
+                border: none;
+                background-color: transparent;
+            }
+
+            .cont .glass {
+                width: 17.09px;
+                height: 17.1px;
+                flex-shrink: 0;
+                fill: #999;
             }
 
             .flex {
@@ -161,11 +167,16 @@
         .navid {
 
             .navbar {
+                position: fixed;
                 display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 60px;
+                margin: 10px 350px;
                 width: 648px;
-                /* padding: 18px 0px; */
-                justify-content: space-between;
-                align-items: flex-start;
+                padding: 18px 0px;
+                z-index: 999;
+                background-color: #ffff;
 
                 .home {
                     display: flex;
@@ -207,7 +218,10 @@
             }
         }
     }
+
+
+    .content {
+        margin: 130px 400px 0px 400px;
+    }
 }
-    
-    
 

@@ -1,4 +1,3 @@
-import React from "react";
 import Collaborate from "../nav/Collaborate";
 import Community from "../nav/Community";
 import Explore from "../nav/Explore";

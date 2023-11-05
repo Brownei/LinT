@@ -1,4 +1,3 @@
-import React from "react";
 import Profile from "../left/Profile";
 import Notifications from "../left/Notifications";
 import Saved from "../left/Saved";

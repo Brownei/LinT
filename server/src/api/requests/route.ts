@@ -1,13 +1,15 @@
 import { Router } from "express";
-import { acceptRequest, createRequest, rejectRequest } from "./handler";
+import { acceptOrRejectRequest, createRequest, getAllRequests } from "./handler";
 
 const router = Router();
 
 router.route('/')
     .post(createRequest);
 
+router.route('/attention-needed')
+    .post(getAllRequests);
+
 router.route("/:id")
-    .put(acceptRequest)
-    .patch(rejectRequest);
+    .put(acceptOrRejectRequest);
 
 export default router;

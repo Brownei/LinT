@@ -16,6 +16,7 @@ export type RequestType = z.infer<typeof requestParams>;
 export type RequestBody = {
     userId: number;
     postId?: number;
+    options?: 'Yes' | 'No';
 };
 
 
@@ -60,5 +61,5 @@ const Requests = sequelize.define<Model<RequestType>>('Requests', {
 );
 export default Requests;
 
-// Requests.belongsTo(User, { foreignKey: 'userId' });
-// Requests.belongsTo(Post, { foreignKey: 'postId' });
+// Requests.belongsTo(User);
+// Requests.belongsTo(Post);

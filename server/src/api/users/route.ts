@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createNewUser, deleteUser, updateUser } from "./handler";
+import { createNewUser, deleteUser, getOneUserDetails, updateUser } from "./handler";
 
 const router = Router();
 
@@ -7,6 +7,7 @@ router.route('/')
     .post(createNewUser);
 
 router.route('/:id')
+    .get(getOneUserDetails)
     .delete(deleteUser)
     .put(updateUser);
 

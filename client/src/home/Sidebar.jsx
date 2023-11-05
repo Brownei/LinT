@@ -1,4 +1,3 @@
-import React from "react";
 import Ideas from "../side/Ideas";
 import Topics from "../side/Topics";
 import Follow from "../side/Follow";
