@@ -10,6 +10,6 @@ router.route('/')
 router.route('/:id')
     .get(getOnePost)
     .delete(deleteOnePost)
-    .patch(updateOnePost);
+    .put(updateOnePost);
 
 export default router;
