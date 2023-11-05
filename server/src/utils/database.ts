@@ -1,7 +1,7 @@
 require('dotenv').config();
-import mysql from 'mysql2';
+import { Sequelize } from 'sequelize';
 
-function getDatabaseVariables() {
+export function getDatabaseVariables() {
   const host = process.env.MYSQL_HOST;
   const port = Number(process.env.MYSQL_PORT);
   const user = process.env.MYSQL_USER;
@@ -21,29 +21,17 @@ function getDatabaseVariables() {
   };
 }
 
-export const databasePool = mysql.createPool({
+export const sequelize = new Sequelize({
   host: getDatabaseVariables().host,
-  port: getDatabaseVariables().port,
-  user: getDatabaseVariables().user,
-  password: getDatabaseVariables().password,
+  dialect: 'mysql',
   database: getDatabaseVariables().databaseName,
-}).promise();
+  password: getDatabaseVariables().password,
+  port: getDatabaseVariables().port,
+  username: getDatabaseVariables().user,
+});
 
-// export async function database( query: string, values = [] ) {
-//   const dbConnection = mysql.createConnection({
-//     host: "localhost",
-//     port: 3001,
-//     user: "brownson",
-//     password: 'bonaventure5',
-//     database: 'lint',
-//   });
-
-//   try {
-//     const [ results ] = await dbConnection.execute(query, values);
-//     dbConnection.end();
-
-//     return results;
-//   } catch (error) {
-//     return error;
-//   }
-// }
+sequelize.authenticate().then(() => {
+  console.log("Connection established with MYSQL database");
+}).catch((error: unknown) => {
+  console.log("Error establishing connection with MYSQL database", error);
+});

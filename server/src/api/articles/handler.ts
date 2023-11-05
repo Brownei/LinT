@@ -1,47 +1,56 @@
 import { Request, Response, NextFunction } from "express";
 import logger from "../../utils/logger";
-import { databasePool } from "../../utils/database";
-import { Articles, Params } from "./model";
+import Article, { ArticleType, Params } from "./model";
 import { ZodError } from "zod";
 
 export async function getAllArticles(req: Request, res: Response, next: NextFunction) {
     try {
-        const articles = await databasePool.query("SELECT * FROM articles ORDER BY id DESC");
-        console.log(articles[0]);
-        return res.status(200).json(articles[0]);
+        const articles = await Article.findAll({
+            order: [['createdAt', 'DESC']],
+        });
+        
+        return res.status(200).json(articles);
     } catch (error) {
-        logger.info('Error in getting all articles');
+        logger.info('Error in updating an article');
         logger.error(error);
+        if(error instanceof ZodError) {
+            return res.status(422).json("Zod Error");
+        }
         next(error);
     }
 }
 
-export async function createArticle(req: Request<{}, {}, Articles>, res: Response, next: NextFunction) {
-    const { title, content, author, likes, comments } = req.body;
+export async function getOneArticle(req: Request<Params, {}, {}>, res: Response, next: NextFunction) {
+    const { id } = req.params;
     try {
-        const newArticle = await databasePool.query(
-            `
-                INSERT INTO articles (
-                    title,
-                    content,
-                    author,
-                    likes,
-                    comments
-                ) VALUES (
-                    ${title},
-                    ${content},
-                    ${author},
-                    ${likes},
-                    ${comments}
-                )
-            `,
-        );
-        
-        console.log(newArticle[0]);
-        return res.status(201).json("Articles created!");
+        const article = await Article.findByPk(id);
+        return res.status(200).json(article);
     } catch (error) {
-        logger.info('Error in getting all articles');
+        logger.info('Error in updating an article');
         logger.error(error);
+        if(error instanceof ZodError) {
+            return res.status(422).json("Zod Error");
+        }
+        next(error);
+    }
+}
+
+export async function createArticle(req: Request<{}, {}, ArticleType>, res: Response, next: NextFunction) {
+    const { title, content, userId } = req.body;
+    try {
+        const newArticle = await Article.create({
+            title,
+            content,
+            userId,
+        });
+        
+        return res.status(201).json(newArticle);
+    } catch (error) {
+        logger.info('Error in updating an article');
+        logger.error(error);
+        if(error instanceof ZodError) {
+            return res.status(422).json("Zod Error");
+        }
         next(error);
     }
 }
@@ -49,29 +58,56 @@ export async function createArticle(req: Request<{}, {}, Articles>, res: Respons
 export async function deleteArticle(req: Request<Params, {}, {}>, res: Response, next: NextFunction) {
     const { id } = req.params;
     try {
-        const particularArticle = await databasePool.query(
-            `
-                SELECT * FROM articles
-                    WHERE id = ${id}
-            `,
-        );
+        const particularArticle = await Article.findByPk(id);
 
         if(!particularArticle) {
             return res.status(404).json("No article like this");
         }
 
-        await databasePool.query(
-            `
-                DELETE FROM articles WHERE id = ${id};
-            `,
-        );
+        await Article.destroy({
+            where: {
+                id,
+            },
+        });
 
-        return res.status(200).json(`${particularArticle[0]} is successfully deleted!`);
+        return res.status(200).json(`${particularArticle} is successfully deleted!`);
     } catch (error) {
         logger.info('Error in deleting an article');
         logger.error(error);
         if(error instanceof ZodError) {
-            res.status(422).json("Zod Error");
+            return res.status(422).json("Zod Error");
+        }
+        next(error);
+    }
+}
+
+export async function updateArticle(req: Request<Params, {}, ArticleType>, res: Response, next: NextFunction) {
+    const { id } = req.params;
+    const { title, content, userId } = req.body;
+    
+    try {
+        const particularArticle = await Article.findByPk(id);
+
+        if(!particularArticle) {
+            return res.status(404).json("No article like this");
+        }
+
+        await Article.update({
+            title,
+            content,
+            userId,
+        }, {
+            where: {
+                id,
+            },
+        });
+
+        return res.status(200).json(`${particularArticle} is successfully updated!`);
+    } catch (error) {
+        logger.info('Error in updating an article');
+        logger.error(error);
+        if(error instanceof ZodError) {
+            return res.status(422).json("Zod Error");
         }
         next(error);
     }
