@@ -13,6 +13,7 @@
   "author": "4D",
   "license": "ISC",
   "dependencies": {
-    "concurrently": "^8.2.1"
+    "concurrently": "^8.2.1",
+    "react-router-dom": "^6.18.0"
   }
 }
