@@ -1,24 +1,37 @@
 import './Homepage.scss';
-//import search from "./home/search";
-import Sidebar from './home/Sidebar';
-import NavId from "./home/NavId";
-//import Postarticle from "./home/Postarticle";
-import Leftside from "./home/Leftside";
-import { BrowserRouter } from 'react-router-dom';
-import Pages from './pages/Pages';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+// import Explore from './pages/Explore';
+// import Collaborate from './pages/Collaborate';
+// import Community from './pages/Community';
+import Articles from './pages/Articles';
+import Homepage from './Homepage';
+// import Home from './pages/Home';
 
 const App = () => {
     return (
-        <div className="homepage">
-            <div className="container">
-              <BrowserRouter>
-                <Leftside/>
-                <NavId/>
-                <Sidebar/>
-                <Pages />
-              </BrowserRouter>
-            </div>
-        </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/'>
+          <Route index element={<Homepage/>} />
+          {/* <Route path='/home' element={<Home />} />   */}
+          {/* <Route path='/explore' element={<Explore />} />  
+          <Route path='/collaborate' element={<Collaborate />} />  
+          <Route path='/community' element={<Community />} />   */}
+          <Route path='/articles' element={<Articles />} />  
+        </Route>
+      </Routes>
+    </BrowserRouter>
     )
 }
 export default App;
+
+//  <div className="homepage">
+// <div className="container">
+// <BrowserRouter>
+//   <Leftside/>
+//   <NavId/>
+//   <Sidebar/>
+//   <Home />
+// </BrowserRouter>
+// </div>
+// </div>

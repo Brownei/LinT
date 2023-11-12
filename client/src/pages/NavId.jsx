@@ -1,8 +1,8 @@
-import Collaborate from "../nav/Collaborate";
-import Community from "../nav/Community";
-import Explore from "../nav/Explore";
-import Home from "../nav/Home";
-import Articles from "../nav/Articles";
+import Collaborate from "./Collaborate";
+import Community from "./Community";
+import Explore from "./Explore";
+import Home from "./Home";
+import Articles from "./Articles";
 
 const NavId = () => {
     return (

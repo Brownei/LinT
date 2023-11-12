@@ -9,7 +9,7 @@ const Saved = () => {
             </g>
         </svg>
 
-            SAVED
+            <p>SAVED</p>
         </div>
     )
 }
