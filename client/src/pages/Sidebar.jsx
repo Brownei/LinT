@@ -1,7 +1,7 @@
-import Ideas from "../side/Ideas";
-import Topics from "../side/Topics";
-import Follow from "../side/Follow";
-import Search from "../side/Search";
+import Ideas from "../components/Ideas";
+import Topics from "../components/Topics";
+import Follow from "../components/Follow";
+import Search from "../components/Search";
 
 const Sidebar = () => {
     return (

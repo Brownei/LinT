@@ -1,7 +1,7 @@
-import Profile from "../left/Profile";
-import Notifications from "../left/Notifications";
-import Saved from "../left/Saved";
-import Events from "../left/Events";
+import Profile from "./Profile";
+import Notifications from "./Notifications";
+import Saved from "./Saved";
+import Events from "./Events";
 
 const Leftside = () => {
     return (
