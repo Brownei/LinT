@@ -12,6 +12,7 @@ const Leftside = () => {
                 <Saved/>
                 <Events/>
             </div>
+            <div className="post"> Post </div>
         </div>
     )
 }

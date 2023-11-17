@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 // import ArticlesPage from "./ArticlesPage";
-// import {route, routes } from "react-router-dom";
+
 
 const Articles = () => {
     return (
