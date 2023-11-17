@@ -1,8 +1,9 @@
+
 import Card from "../components/Card";
 
-const ArticlesPage = () => {
+const Homepage = () => {
     return (
-        <div className="articles_page">
+        <div className="homes">
             <div className="h-container">
               <div className="element1">For you</div>
               <div className="element2">Following</div>
@@ -36,4 +37,4 @@ const ArticlesPage = () => {
     );
 }
 
-export default ArticlesPage;
+export default Homepage;

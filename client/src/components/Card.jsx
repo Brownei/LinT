@@ -13,7 +13,7 @@ const Card = () => {
             </div>
             <div className="next">
                 <h2>How to react like a Boss</h2>
-                <p>Lorem Ipsum is simply a dummy text</p>
+                <p>Lorem Ipsum is simply a dummy text FOLLOW Why do we use it? It is a long established fact that a reader will beIDEAS What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing and.TOPICS Where can I get some? There are many variations of passages of Lorem Ipsum available, but .</p>
             </div>
             <div className="bottom">
                 <div className="first">
@@ -35,7 +35,7 @@ const Card = () => {
                         React
                     </div>
                     <div className="stroke">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="2" height="20" viewBox="0 0 2 20" fill="none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 2 20" fill="none">
                         <path d="M1 0.203125V19.7969" stroke="#939393"/>
                     </svg>
                     </div>
