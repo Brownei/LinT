@@ -1,0 +1,55 @@
+.leftside {            
+    position: fixed;
+    display: flex;
+    top: 5px;
+    left: 60px;
+    width: 17%;
+    height: fit-content;
+    border-radius: 20px;
+    margin-top: 100px;
+    flex-direction: column;
+    
+
+    .leftin {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 25px;
+        padding: 20px;
+        
+        .profile,
+        .notifications,
+        .saved,
+        .events {
+            display: flex;
+            align-items: center;
+            gap: 4px; 
+
+            span {
+                color: #000;
+                font-weight: 500;
+            }
+        }
+    }
+
+
+    button {
+        width: 100%;
+        display: flex;
+        flex: 1;
+        padding: 10px 20px;
+        justify-content: center;
+        align-items: center;
+        border-radius: 24px;
+        background-color: #3338C1;
+        color: #fff;
+    }
+
+}
+
+
+@media screen and (max-width: 1450px) {
+    .leftside {
+        display: none;
+    }
+}

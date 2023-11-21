@@ -1,0 +1,94 @@
+.articles_page {
+    width: 600px;
+
+    .h-container{
+        display: flex;
+        align-items: flex-start;
+
+        .element1 {
+            font-size: small;
+            color: black;
+            padding: 5px;
+        }
+
+        .element2 {
+            font-size: small;
+            color: black;
+            padding: 5px;
+        }
+
+        .element3 {
+            font-size: small;
+            color: black;
+            padding: 5px;
+        }
+    }
+
+    .circleplus {
+        display: flex;
+        text-transform: capitalize;
+
+        svg {
+            padding: 5px;
+        }
+
+        .share {
+            display: flex;
+            width: 520px;
+            height: 14px;
+            padding: 16px;
+            align-items: center;
+            gap: 24px;
+            border-bottom: 1px solid #939393;
+            text-transform: capitalize;
+
+            .share input {
+                color: #939393;
+                font-family: Inter;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                background-color: transparent;
+                outline: none;
+                border: none;
+            }
+        }
+    }
+
+    .under {
+        display: flex;
+        justify-content: space-between;
+        margin: 5px;
+
+        .box1 {
+            display: inline-flex;
+            flex: 1;
+            height: 30px;
+            width: 50px;
+            margin-top: 10px;
+            margin-left: 50px;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            border-radius: 4px;
+            border: 1px solid #939393;
+            margin-right: 200px;
+        }
+
+        .box2 {
+            display: flex;
+            flex: 1;
+            width: 50px;
+            height: 30px;
+            margin-top: 10px;
+            margin-left: 40px;
+            // padding: 10px;
+            justify-content: center;
+            align-items: center;
+            // gap: 10px;
+            border-radius: 24px;
+            background: #939393;
+        }
+    }
+}

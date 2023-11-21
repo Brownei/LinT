@@ -1,0 +1,110 @@
+.sidebar {
+    position: fixed;
+    top: 100px;
+    right: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .flex {
+        width: 285px;
+        height: fit-content;
+        padding: 13px 25px;
+        border-radius: 20px;
+        background-color: #E6E6F7;
+    }
+
+    .cont .glass {
+        width: 17.09px;
+        height: 17.1px;
+        flex-shrink: 0;
+        fill: #999;
+    }
+
+    button {
+        width: 100%;
+        display: flex;
+        flex: 1;
+        padding: 10px 20px;
+        justify-content: center;
+        align-items: center;
+        border-radius: 24px;
+        background-color: #3338C1;
+        color: #fff;
+    }
+
+    h2 {
+        font-weight: 600;
+        line-height: 30px;
+        font-size: 1.5rem;
+        margin-top: 0;
+        // margin-bottom: 10px;
+    }
+
+    .idea {
+        display: grid;
+
+        p {
+            font-size: medium;
+            margin-top: 3px;
+            font-weight: 400;
+        }
+
+        .idea-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .idea-details {
+            display: grid;
+            align-items: start;
+            gap: 1px;
+
+            h4 {
+                font-size: 0.9rem;
+                font-weight: 600;
+                line-height: 30px;
+                padding: 0;
+                margin-bottom: 0;
+                margin-top: 0;
+            }
+        
+            span {
+                margin-top: -3px;
+                font-size: 0.7rem;
+                color: #8F9191;
+            }
+        }
+    }
+}
+
+
+//MEDIA QUERIES
+@media screen and (max-width: 1450px) {
+    .sidebar {
+        right: 80px;
+    }
+}
+
+@media screen and (max-width: 1350px) {
+    .sidebar {
+        display: flex;
+        top: 100px;
+        right: 70px;
+    }
+}
+
+@media screen and (max-width: 1130px) {
+    .sidebar {
+        display: flex;
+        top: 100px;
+        right: 30px;
+    }
+}
+
+@media screen and (max-width: 1075px) {
+    .sidebar {
+        display: none;
+    }
+}
