@@ -8,7 +8,7 @@ import Community from './CommunityPage/Community'
 
 const Pages = () => {
   return (
-    <div className='pages'>
+    <section className='pages'>
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/articles" element={<ArticlesPage />} />
@@ -16,7 +16,7 @@ const Pages = () => {
             <Route path='/collaborate' element={<Collaborate />}/>
             <Route path='/community' element={<Community />}/>
         </Routes>
-    </div>
+    </section>
   )
 }
 

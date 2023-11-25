@@ -6,7 +6,7 @@ import Events from "./LeftNavComponents/Events";
 
 const SideNav = () => {
     return (
-        <div className="leftside">
+        <aside className="leftside">
             <div className="leftin">
                 <Profile />
                 <Notifications/>
@@ -14,7 +14,7 @@ const SideNav = () => {
                 <Events/>
                 <button>Post</button>
             </div>
-        </div>
+        </aside>
     )
 }
 

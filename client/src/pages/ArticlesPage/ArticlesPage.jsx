@@ -2,7 +2,7 @@ import "./Articles.scss"
 
 const ArticlesPage = () => {
   return (
-    <div>ArticlesPage</div>
+    <section>ArticlesPage</section>
   )
 }
 

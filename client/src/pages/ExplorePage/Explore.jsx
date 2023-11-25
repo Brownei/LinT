@@ -2,7 +2,7 @@ import "./Explore.scss"
 
 const Explore = () => {
   return (
-    <div>Explore</div>
+    <section>Explore</section>
   )
 }
 

@@ -7,17 +7,12 @@ import Articles from "./NavComponents/Articles";
 import Search from "./NavComponents/Search";
 
 const Nav = () => {
-    const articlesPathName = new URL("http://localhost:5173/articles") 
-    const explorePathName = new URL("http://localhost:5173/explore") 
-    const homePathName = new URL("http://localhost:5173") 
-
-    console.log(homePathName.pathname, explorePathName.pathname, articlesPathName.pathname)
     return (
-        <div id="navid">
+        <nav id="navid">
             <div className="navbar">
                 <p>LinT</p>
                 <div className='nav_sections'>
-                    <div className={homePathName.pathname === '/articles' ? 'nav_selected' : 'nav'}>
+                    <div className='nav'>
                         <Home/>
                         <Explore/>
                         <Collaborate/>
@@ -27,7 +22,7 @@ const Nav = () => {
                     <Search />
                 </div>
             </div>
-        </div>
+        </nav>
     )
 }
 

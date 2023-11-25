@@ -1,0 +1,6 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 150px [col-start]);
+    gap: 10px;
+    overflow-x: hidden;
+}

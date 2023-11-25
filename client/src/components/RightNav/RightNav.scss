@@ -1,17 +1,110 @@
 .sidebar {
     position: fixed;
-    top: 100px;
-    right: 80px;
+    top: 70px;
+    right: 170px;
     display: flex;
     flex-direction: column;
+    gap: 10px;
     align-items: center;
 
     .flex {
-        width: 285px;
-        height: fit-content;
-        padding: 13px 25px;
+        width: 235px;
+        height: min-content;
+        padding: 9px 20px;
         border-radius: 20px;
         background-color: #E6E6F7;
+        
+        .flex-child {
+            display: grid;
+            gap: 2px;
+        }
+
+        .flex-follow {
+            display: grid;
+            gap: 10px;
+        }
+
+        .show-more {
+            font-size: x-small;
+            font-weight: 600;
+        }
+
+        .topic {
+            display: grid;
+
+            p {
+                font-size: small;
+                margin-top: 2px;
+                font-weight: 400;
+                margin-bottom: 0;
+            }
+
+            
+            .topic-details {
+                display: flex;
+                gap: 2px;
+                align-items: start;
+                
+                span {
+                    font-size: x-small;
+                }
+            }
+        }
+
+
+        .follow {
+            display: grid;
+
+            p {
+                font-size: medium;
+                margin-top: 3px;
+                font-weight: 400;
+            }
+    
+            .follow-info {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                button {
+                    display: flex;
+                    padding: 5px 10px;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 24px;
+                    background-color:#060A0A;
+                    color: #fff;
+                    font-size: x-small;
+                }
+            }
+
+            .follow-sec {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+    
+            .follow-details {
+                display: grid;
+                align-items: start;
+                gap: 1px;
+    
+                h4 {
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                    line-height: 30px;
+                    padding: 0;
+                    margin-bottom: 0;
+                    margin-top: 0;
+                }
+            
+                span {
+                    margin-top: -3px;
+                    font-size: 0.7rem;
+                    color: #8F9191;
+                }
+            }
+        }
     }
 
     .cont .glass {
@@ -21,7 +114,7 @@
         fill: #999;
     }
 
-    button {
+    .box2 {
         width: 100%;
         display: flex;
         flex: 1;
@@ -36,17 +129,16 @@
     h2 {
         font-weight: 600;
         line-height: 30px;
-        font-size: 1.5rem;
+        font-size: large;
         margin-top: 0;
-        // margin-bottom: 10px;
+        margin-bottom: 4px;
     }
 
     .idea {
-        display: grid;
 
         p {
-            font-size: medium;
-            margin-top: 3px;
+            font-size: small;
+            margin-top: 2px;
             font-weight: 400;
         }
 
@@ -62,9 +154,8 @@
             gap: 1px;
 
             h4 {
-                font-size: 0.9rem;
+                font-size: smaller;
                 font-weight: 600;
-                line-height: 30px;
                 padding: 0;
                 margin-bottom: 0;
                 margin-top: 0;
@@ -72,7 +163,7 @@
         
             span {
                 margin-top: -3px;
-                font-size: 0.7rem;
+                font-size: x-small;
                 color: #8F9191;
             }
         }
