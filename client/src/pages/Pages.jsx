@@ -5,6 +5,10 @@ import Home from "./HomePage/Home";
 import Explore from './ExplorePage/Explore'
 import Collaborate from './CollaboratePage/Collaborate'
 import Community from './CommunityPage/Community'
+import Events from './EventsPage/Events';
+// import Profile from './Pro/Events';
+// import Saved from './EventsPage/Events';
+// import Notifications from './EventsPage/Events';
 
 const Pages = () => {
   return (
@@ -15,6 +19,10 @@ const Pages = () => {
             <Route path='/explore' element={<Explore />}/>
             <Route path='/collaborate' element={<Collaborate />}/>
             <Route path='/community' element={<Community />}/>
+            <Route path='/events' element={<Events />}/>
+            {/* <Route path='/saved' element={<Saved />}/>
+            <Route path='/profile' element={<Profile />}/>
+            <Route path='/notifications' element={<Notifications />}/> */}
         </Routes>
     </section>
   )

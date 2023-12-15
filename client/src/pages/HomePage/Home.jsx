@@ -1,91 +1,92 @@
 import './Home.scss'
 import CardComponent from "../../components/Card/CardComponent";
 import { Link, useSearchParams } from 'react-router-dom';
+//import UsersData from "../../components/Users/UsersData";
 
 const Home = () => {
   const pathname = useSearchParams()
   const users = [
-      {
-        id: 1,
-        name: "Udofiah Gift",
-        profession: "Lead Front-end Developer",
-        timestamp: "15 mins",
-        post: {
-          title: "How to write React",
-          description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-        }
-      },
-      {
-        id: 2,
-        name: "Udofiah Gift",
-        profession: "Lead Front-end Developer",
-        timestamp: "15 mins",
-        post: {
-          title: "How to write React",
-          description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-        }
-      },
-      {
-        id: 3,
-        name: "Udofiah Gift",
-        profession: "Lead Front-end Developer",
-        timestamp: "15 mins",
-        post: {
-          title: "How to write React",
-          description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-        }
-      },
-      {
-        id: 4,
-        name: "Udofiah Gift",
-        profession: "Lead Front-end Developer",
-        timestamp: "15 mins",
-        post: {
-          title: "How to write React",
-          description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-        }
-      },
-      {
-        id: 5,
-        name: "Udofiah Gift",
-        profession: "Lead Front-end Developer",
-        timestamp: "15 mins",
-        post: {
-          title: "How to write React",
-          description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-        }
-      },
-      {
-        id: 6,
-        name: "Udofiah Gift",
-        profession: "Lead Front-end Developer",
-        timestamp: "15 mins",
-        post: {
-          title: "How to write React",
-          description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-        }
-      },
-      {
-        id: 7,
-        name: "Udofiah Gift",
-        profession: "Lead Front-end Developer",
-        timestamp: "15 mins",
-        post: {
-          title: "How to write React",
-          description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-        }
-      },
-      {
-        id: 8,
-        name: "Udofiah Gift",
-        profession: "Lead Front-end Developer",
-        timestamp: "15 mins",
-        post: {
-          title: "How to write React",
-          description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-        }
+    {
+      id: 1,
+      name: "Udofiah Gift",
+      profession: "Lead Front-end Developer",
+      timestamp: "15 mins",
+      post: {
+        title: "How to write React",
+        description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
       }
-  ]
+    },
+    {
+      id: 2,
+      name: "Udofiah Gift",
+      profession: "Lead Front-end Developer",
+      timestamp: "15 mins",
+      post: {
+        title: "How to write React",
+        description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
+      }
+    },
+    {
+      id: 3,
+      name: "Udofiah Gift",
+      profession: "Lead Front-end Developer",
+      timestamp: "15 mins",
+      post: {
+        title: "How to write React",
+        description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
+      }
+    },
+    {
+      id: 4,
+      name: "Udofiah Gift",
+      profession: "Lead Front-end Developer",
+      timestamp: "15 mins",
+      post: {
+        title: "How to write React",
+        description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
+      }
+    },
+    {
+      id: 5,
+      name: "Udofiah Gift",
+      profession: "Lead Front-end Developer",
+      timestamp: "15 mins",
+      post: {
+        title: "How to write React",
+        description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
+      }
+    },
+    {
+      id: 6,
+      name: "Udofiah Gift",
+      profession: "Lead Front-end Developer",
+      timestamp: "15 mins",
+      post: {
+        title: "How to write React",
+        description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
+      }
+    },
+    {
+      id: 7,
+      name: "Udofiah Gift",
+      profession: "Lead Front-end Developer",
+      timestamp: "15 mins",
+      post: {
+        title: "How to write React",
+        description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
+      }
+    },
+    {
+      id: 8,
+      name: "Udofiah Gift",
+      profession: "Lead Front-end Developer",
+      timestamp: "15 mins",
+      post: {
+        title: "How to write React",
+        description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
+      }
+    }
+]
 
   const community = [
       {
@@ -182,11 +183,12 @@ const Home = () => {
             {pathname[0].get('params') === 'community' && (
               <div>
                 {users.map((user, index) => (
-                  <div key={index}>
-                    <CardComponent user={user}/>
-                  </div>
-                ))}
+              <div key={index}>
+                <CardComponent user={user}/>
               </div>
+            ))}
+              </div>
+                  // <UsersData users={users}/>
             )}
 
             {pathname[0].get('params') === 'following' && (
@@ -197,6 +199,7 @@ const Home = () => {
                   </div>
                 ))}
               </div>
+              // <UsersData users={users}/>
             )}
 
             {pathname[0].has('params') === false && (

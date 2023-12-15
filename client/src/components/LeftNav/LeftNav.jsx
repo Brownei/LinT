@@ -9,9 +9,10 @@ const SideNav = () => {
         <aside className="leftside">
             <div className="leftin">
                 <Profile />
-                <Notifications/>
-                <Saved/>
-                <Events/>
+                <Notifications />
+                <Saved />
+                <Events />
+                
                 <button>Post</button>
             </div>
         </aside>
