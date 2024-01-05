@@ -29,7 +29,6 @@ const ArticlesPage = (props) => {
                   ))}
                 </div>
                )}
-             {/*{pathname[0].get('params') === null && ( */}
             {/* {location.pathname === null && (
               <div>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis labore accusantium ut? Iusto aut sapiente unde necessitatibus similique sint nam, harum magnam libero facilis maiores dolor? Ipsam rem dignissimos, quibusdam, qui ipsa alias eius tenetur corporis facere autem voluptate ipsum! Perferendis, optio, eveniet soluta itaque praesentium laboriosam excepturi iusto sequi necessitatibus libero minima consequuntur nesciunt, numquam fugit perspiciatis non sed! Veniam aperiam saepe placeat! Natus quisquam nesciunt, veniam obcaecati neque cumque necessitatibus veritatis quaerat voluptatibus consequuntur itaque. Debitis fuga magnam provident? Eveniet sit iste expedita officiis rem reprehenderit tempora quos minus dolor error nesciunt consequatur, natus sed. Quod odio sequi cupiditate earum rem assumenda veritatis quia vero impedit et dignissimos placeat modi, commodi expedita. Reiciendis blanditiis ratione sunt, voluptatibus saepe fugiat, molestiae eius in magni ipsam iste aliquam, atque dolorum aliquid doloribus dolore hic rerum eveniet laudantium voluptates fuga! Sequi illo nesciunt reiciendis dolore cumque velit voluptas sunt harum explicabo.</p>

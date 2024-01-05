@@ -1,12 +1,13 @@
 #events_page {
+    display: flex;
 
     .h-container{
         display: flex;
         align-items: flex-start;
         gap: 10px;
         align-items: center;
-        margin-bottom: 20px;
-        // margin-top: 0;
+        margin-top: 20px;
+        position: fixed;
 
         .element {
             font-size: smaller;
@@ -17,12 +18,57 @@
         .selected {
             font-weight: 700;
             font-size: small;
-            color: black;
-        }
-
-        p {
-            color: red;
-            font-weight: 600;
+            text-decoration-line: underline;
+            color: var(--Blue-blue-500, #0006B1);
         }
     }
 }
+
+.create-event {
+    display: flex;
+    width: 250px;
+    padding: 16px 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    border-radius: 8px;
+    border: 1px solid var(--Blue-blue-500, #0006B1);
+    background: var(--Blue-blue-50, #E6E6F7);
+    position: fixed;
+    margin-left: 650px;
+
+    svg {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    }
+}
+
+h4 {
+    color: #000;
+    font-family: Inter;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 40px; /* 125% */
+    position: fixed;
+    margin-top: -30px;
+}
+
+.top-events {
+    margin-top: 10px;
+    h3 {
+        color: #000;
+        font-family: Inter;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 40px; /* 125% */
+        margin-top: 40px;
+    }
+
+    .top-events2 {
+        display: flex;
+    }
+}
+

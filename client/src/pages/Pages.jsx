@@ -6,9 +6,10 @@ import Explore from './ExplorePage/Explore'
 import Collaborate from './CollaboratePage/Collaborate'
 import Community from './CommunityPage/Community'
 import Events from './EventsPage/Events';
-// import Profile from './Pro/Events';
-// import Saved from './EventsPage/Events';
-// import Notifications from './EventsPage/Events';
+import Profile from './ProfilePage/Profile';
+import Saved from './SavedPage/Saved';
+import Notifications from './NotificationsPage/Notifications';
+//import Scroll from '../components/Scroll/Scroll';
 
 const Pages = () => {
   return (
@@ -20,9 +21,9 @@ const Pages = () => {
             <Route path='/collaborate' element={<Collaborate />}/>
             <Route path='/community' element={<Community />}/>
             <Route path='/events' element={<Events />}/>
-            {/* <Route path='/saved' element={<Saved />}/>
+            <Route path='/saved' element={<Saved />}/>
             <Route path='/profile' element={<Profile />}/>
-            <Route path='/notifications' element={<Notifications />}/> */}
+            <Route path='/notifications' element={<Notifications />}/>
         </Routes>
     </section>
   )

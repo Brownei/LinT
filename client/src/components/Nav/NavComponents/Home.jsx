@@ -1,5 +1,4 @@
 import { NavLink, useLocation } from "react-router-dom"
-// import Articles from "./Articles"
 
 const Home = () => {
   const location = useLocation()

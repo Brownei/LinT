@@ -1,7 +1,13 @@
 import './RightNav.scss'
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Sidebar = () => {
+    const location = useLocation()
+    const isEvents = location.pathname === '/events';
+
+    if (isEvents) {
+        return null;
+      } else {
     return (
         <aside className="sidebar">
             <div className="flex">
@@ -142,8 +148,12 @@ const Sidebar = () => {
                 </div>
                 <Link className='show-more' to={'/'}>Show More</Link>
             </div>
+            <div className={`sidebar ${isEvents ? 'hide-sidebar' : ''}`}>
+                {/* {children} */}
+            </div>
         </aside>
     )
+      }
 }
 
 export default Sidebar;

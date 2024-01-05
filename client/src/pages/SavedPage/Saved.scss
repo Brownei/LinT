@@ -1,0 +1,28 @@
+#saved_page {
+
+    .h-container{
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 20px;
+        // margin-top: 0;
+
+        .element {
+            font-size: smaller;
+            color: black;
+            font-weight: 400;
+        }
+
+        .selected {
+            font-weight: 700;
+            font-size: small;
+            color: black;
+        }
+
+        p {
+            color: red;
+            font-weight: 600;
+        }
+    }
+}
