@@ -1,7 +1,5 @@
 import './App.scss';
-import LeftNav from './components/LeftNav/LeftNav'
 import Nav from './components/Nav/Nav'
-import RightNav from './components/RightNav/RightNav'
 import Pages from './pages/Pages'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -16,9 +14,7 @@ const App = () => {
         <div id="homepage">
             <QueryClientProvider client={queryClient}>
                 <div className="container">
-                    <LeftNav/>
-                    <Nav/>
-                    <RightNav/>
+                    <Nav />
                     <Pages />
                 </div>
                 <ReactQueryDevtools initialIsOpen={false}/>

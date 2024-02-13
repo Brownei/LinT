@@ -1,0 +1,23 @@
+.ideas {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    margin-left: 5px;
+
+    .card2 {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        height: 90px;
+        width: 250px;
+        // width: 648px;
+        // height: 216px;
+        // top: 522px;
+        // left: 211px;
+        // padding: 16px;
+        // border-radius: 8px;
+        // gap: 16px;
+
+    }
+}

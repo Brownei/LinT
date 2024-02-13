@@ -1,15 +1,13 @@
 import './Nav.scss'
 import Collaborate from "./NavComponents/Collaborate";
-import Community from "./NavComponents/Community";
-import Explore from "./NavComponents/Explore";
-import Home from "./NavComponents/Home";
-import Articles from "./NavComponents/Articles";
-import Search from "./NavComponents/Search";
+import Profile from "./NavComponents/Profile";
+import Notification from "./NavComponents/Notification";
 
 const Nav = () => {
     return (
         <nav id="navid">
-            <div className="navbar">
+        <div className="navbar">
+            <div className='logo'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="60" height="30" viewBox="0 0 80 40" fill="none">
                     <path d="M36.7318 11.6777H35.6797V21.5797C36.8182 19.6806 37.4146 17.5059 37.4042 15.2917C37.4056 14.0559 37.1776 12.8304 36.7318 11.6777Z" fill="#0006B1"/>
                     <path d="M19.7728 25.9187C20.5526 27.174 21.0517 28.5831 21.2358 30.0494V32.0074H0V3.20117H6.74864V25.9249L19.7728 25.9187Z" fill="#0006B1"/>
@@ -27,19 +25,19 @@ const Nav = () => {
                     <path d="M15.1782 11.7271C15.1247 11.7276 15.0717 11.717 15.0226 11.6959L13.2047 10.9333C13.1562 10.9129 13.1123 10.8831 13.0754 10.8457C13.0384 10.8082 13.0092 10.7639 12.9894 10.7152C12.9696 10.6665 12.9596 10.6144 12.96 10.5618C12.9603 10.5092 12.971 10.4572 12.9915 10.4088C13.0119 10.3603 13.0417 10.3164 13.0791 10.2795C13.1165 10.2425 13.1608 10.2133 13.2095 10.1935C13.2583 10.1737 13.3104 10.1637 13.363 10.1641C13.4155 10.1644 13.4675 10.1751 13.516 10.1956L15.3339 10.9582C15.4185 10.9938 15.4883 11.0575 15.5314 11.1387C15.5745 11.2198 15.5882 11.3133 15.5702 11.4034C15.5523 11.4934 15.5038 11.5745 15.4329 11.633C15.3621 11.6914 15.2732 11.7235 15.1813 11.724L15.1782 11.7271Z" fill="#0006B1"/>
                     <path d="M22.2445 4.70728C22.1654 4.70729 22.0881 4.68357 22.0226 4.63917C21.9571 4.59477 21.9065 4.53175 21.8772 4.45825L21.1301 2.63413C21.0888 2.5363 21.0881 2.42608 21.1281 2.32771C21.1681 2.22935 21.2455 2.1509 21.3434 2.10962C21.4412 2.06834 21.5514 2.06761 21.6498 2.1076C21.7481 2.14759 21.8266 2.22502 21.8679 2.32285L22.6149 4.14697C22.6352 4.19536 22.6457 4.2473 22.6457 4.29976C22.6456 4.35223 22.6352 4.40416 22.6149 4.45255C22.5946 4.50093 22.5649 4.5448 22.5275 4.58158C22.4901 4.61837 22.4458 4.64734 22.397 4.66682C22.3497 4.6911 22.2977 4.70491 22.2445 4.70728Z" fill="#0006B1"/>
                 </svg>
-                <div className='nav_sections'>
-                    <div className='nav'>
-                        <Home/>
-                        <Explore/>
-                        <Collaborate/>
-                        <Community/>
-                        <Articles/>
-                    </div>
-                    <Search />
+            </div>
+            <div className='nav_sections'>
+                <div className='nav'>
+                    <Collaborate/>
+                    <Profile/>
+                    <Notification/>
                 </div>
             </div>
-        </nav>
+        </div>
+    </nav>
+            
     )
 }
 
 export default Nav;
+

@@ -1,28 +1,114 @@
 #profile_page {
+    display: flex;
+    .profile-details {
+        float: left;
+        margin-top: 60px;
+        margin-right: 370px;
+        margin-left: -200px;
+        width: 400px;
+        height: 100px;
 
-    .h-container{
-        display: flex;
-        align-items: flex-start;
-        gap: 10px;
-        align-items: center;
-        margin-bottom: 20px;
-        // margin-top: 0;
+        img {
+            display: flex;
+            // margin-right: 20px;
+        }
+        .write-ups {
+           margin-left: 60px;
+           margin-top: -78px;
+           padding: 0;
+        }
+    }
 
-        .element {
-            font-size: smaller;
-            color: black;
-            font-weight: 400;
+
+    .sidebar {
+        margin-top: 65px;
+        float: right;
+        margin-right: -200px;
+
+        button {
+            width: 205px;
+            display: flex;
+            flex: 1;
+            padding: 10px 20px;
+            justify-content: center;
+            align-items: center;
+            border-radius: 24px;
+            background-color: #3338C1;
+            color: #fff;
+            gap: 10px;
         }
 
-        .selected {
-            font-weight: 700;
-            font-size: small;
-            color: black;
+        .icons {
+            display: flex;
+            flex-direction: row; 
+            width: 184px;
+            height: 24px;
+            gap: 16px;
+            margin-left: 10px;
+            margin-top: 40px;
         }
 
-        p {
-            color: red;
-            font-weight: 600;
+        .loc-cal {
+            display: flex;
+            flex-direction: row;
+            width: 262px;
+            height: 22px;
+            top: 334px;
+            left: 1037px;
+            gap: 16px;
+
+
+            .location {
+                display: flex;
+                flex-direction: row;
+
+                svg {
+                    margin-top: 18px;
+                }
+            }
+
+            .calendar {
+                display: flex;
+                flex-direction: row;
+
+                svg {
+                    margin-top: 18px;
+                }
+            }
         }
     }
 }
+// h2 {
+//     margin-top: 250px;
+// }
+
+
+//MEDIA QUERIES
+@media screen and (max-width: 1450px) {
+    .sidebar {
+        right: 80px;
+    }
+}
+
+@media screen and (max-width: 1350px) {
+    .sidebar {
+        display: flex;
+        top: 100px;
+        right: 70px;
+    }
+}
+
+@media screen and (max-width: 1130px) {
+    .sidebar {
+        display: flex;
+        top: 100px;
+        right: 30px;
+    }
+}
+
+@media screen and (max-width: 1075px) {
+    .sidebar {
+        display: none;
+    }
+}
+
