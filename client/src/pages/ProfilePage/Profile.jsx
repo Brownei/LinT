@@ -1,6 +1,8 @@
-import { Link, useLocation } from 'react-router-dom';
-import './Profile.scss';
-import Ideas from '../../components/Card/Ideas';
+import { Link, useLocation } from 'react-router-dom'; 
+import './Profile.scss'; 
+import Ideas from '../../components/Card/Ideas'; 
+import ayati from '../../assets/images/ayati.jpg'; 
+import brownson from '../../assets/images/brownson.jpg'; 
 
 const Profile = () => {
 
@@ -9,93 +11,42 @@ const Profile = () => {
     const users = [
         {
           id: 1,
-          name: "Udofiah Gift",
-          profession: "Lead Front-end Developer",
-          timestamp: "15 mins",
+          name: "Brownson Esiti",
+          profession: "Full-stack Developer",
+          image: {brownson},
           post: {
-            title: "How to write React",
+            title: "Shopify Ecommerce Store like Jumia",
             description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
           }
         },
-        {
-          id: 2,
-          name: "Udofiah Gift",
-          profession: "Lead Front-end Developer",
-          timestamp: "15 mins",
-          post: {
-            title: "How to write React",
-            description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-          }
-        },
-        {
-          id: 3,
-          name: "Udofiah Gift",
-          profession: "Lead Front-end Developer",
-          timestamp: "15 mins",
-          post: {
-            title: "How to write React",
-            description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-          }
-        },
-        {
-          id: 4,
-          name: "Udofiah Gift",
-          profession: "Lead Front-end Developer",
-          timestamp: "15 mins",
-          post: {
-            title: "How to write React",
-            description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-          }
-        },
-        {
-          id: 5,
-          name: "Udofiah Gift",
-          profession: "Lead Front-end Developer",
-          timestamp: "15 mins",
-          post: {
-            title: "How to write React",
-            description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-          }
-        },
-        {
-          id: 6,
-          name: "Udofiah Gift",
-          profession: "Lead Front-end Developer",
-          timestamp: "15 mins",
-          post: {
-            title: "How to write React",
-            description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-          }
-        },
-        {
-          id: 7,
-          name: "Udofiah Gift",
-          profession: "Lead Front-end Developer",
-          timestamp: "15 mins",
-          post: {
-            title: "How to write React",
-            description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-          }
-        },
-        {
-          id: 8,
-          name: "Udofiah Gift",
-          profession: "Lead Front-end Developer",
-          timestamp: "15 mins",
-          post: {
-            title: "How to write React",
-            description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-          }
-        }
+        // {
+        //     id: 2,
+        //     name: "Brownson Esiti",
+        //     profession: "Full-stack Developer",
+        //     post: {
+        //         title: "Shopify Ecommerce Store like Jumia",
+        //         description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
+        //     }
+        // },
+        // {
+        //     id: 3,
+        //     name: "Brownson Esiti",
+        //     profession: "Full-stack Developer",
+        //     post: {
+        //         title: "Shopify Ecommerce Store like Jumia",
+        //         description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
+        //     }
+        // }
     ]
     return (
         <div id="profile_page">
             <div className='profile-details'>
-                <img src={`https://robohash.org/${searchParams.get('id')}.png?set=set4&size=50x50`} alt="" />
+                <img src={ayati}/>
+                {/* <img src={`https://robohash.org/${searchParams.get('id')}.png?set=set4&size=50x50`} alt="" /> */}
                 <div className='write-ups'>
                     <h2>Ayati Ogochukwu</h2>
                     <p>Product Designer</p>
-                    <p>creating webflow content | providing creative solutions that helps brands grow and beknown. designing fintech solutions that'll change the world.</p>
+                    <p>creating webflow content | providing creative solutions that helps brands grow and be known. designing fintech solutions that'll change the world.</p>
                 </div>
             </div>
             <aside className="sidebar">
@@ -144,19 +95,20 @@ const Profile = () => {
                     </div>
                 </div>
             </aside>
-            
-            <div>
-                {/* <h2>Ideas</h2> */}
-                {searchParams.get('params') === false && ( 
+            <div className='card-title'>
+                {searchParams.get('params') === null && ( 
                     <div>
-                    {users.map((user, index) => (
-                        <div key={index}>
-                        <Ideas user={user} />
-                        </div>
-                    ))}
+                        {users.map((user, index) => (
+                            <div key={index}>
+                                <Ideas user={user}/>
+                            </div>
+                        ))}
                     </div>
                 )}
-               </div>
+            </div>
+
+            <h2 className='collab'>Collaborations</h2>
+            <h2 className='h2-tag'>Ideas</h2>
         </div>
     );
 }
