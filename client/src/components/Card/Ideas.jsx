@@ -4,9 +4,8 @@ const Ideas = ({user}) => {
 
     return (
         <div className='ideas'>
-            {/* <h2>Ideas</h2> */}
             <div className="card" key={user.id}>
-                <img className='image' src={user.image.brownson}></img>
+                <img className='image' src={user.image.ayati}></img>
                 <div id='not-image'>
                     <p className='name'>{user.name}</p>
                     <p className='profession'>{user.profession}</p>

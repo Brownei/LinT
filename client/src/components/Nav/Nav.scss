@@ -6,7 +6,7 @@
         top: 0;
         left: 0;
         right: 0;
-        height: fit-content;
+        height: 100px;
         display: flex;
         // justify-content: space-between;
         gap: 250px;
@@ -15,9 +15,9 @@
         background-color: #ffff;
         margin-top: 0;
 
-        .logo {
-            margin-top: 80px;
-        }
+        // .logo {
+        //     margin-top: 80px;
+        // }
 
         .nav_sections {
             display: flex;

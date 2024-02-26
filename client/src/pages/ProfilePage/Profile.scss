@@ -2,7 +2,7 @@
     
     .profile-details {
         float: left;
-        margin-top: 70px;
+        margin-top: 50px;
         margin-right: 370px;
         margin-left: -200px;
         width: 536px;
@@ -30,16 +30,17 @@
         margin-right: -200px;
 
         button {
-            width: 205px;
+            width: 150px;
             display: flex;
             flex: 1;
             padding: 10px 20px;
             justify-content: center;
             align-items: center;
-            border-radius: 24px;
-            background-color: #3338C1;
-            color: #fff;
+            border-radius: 6px;
+            background-color: #bbbbbe;
+            color: #3338C1;
             gap: 10px;
+            margin-left: 100px;
         }
 
         .icons {
@@ -48,7 +49,7 @@
             width: 184px;
             height: 24px;
             gap: 16px;
-            margin-left: 10px;
+            margin-left: 70px;
             margin-top: 40px;
         }
 
@@ -84,13 +85,25 @@
 
     .collab {
         margin-left: 500px;
-        margin-top: -270px;
+        margin-top: -380px;
     }
 
     .h2-tag {
         // position: fixed;
         margin-top: -50px;
         margin-left: -190px;
+    }
+
+    .coll-1 {
+        background-color: #d8d5dd;
+        width: 402px;
+        height: 400px;
+        top: 522px;
+        left: 875px;
+        gap: 16px;
+        margin-left: 500px;
+        margin-top: -15px;
+
     }
 }
 

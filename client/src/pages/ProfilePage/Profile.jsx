@@ -1,8 +1,10 @@
-import { Link, useLocation } from 'react-router-dom'; 
+import { useLocation } from 'react-router-dom'; 
 import './Profile.scss'; 
 import Ideas from '../../components/Card/Ideas'; 
-import ayati from '../../assets/images/ayati.jpg'; 
-import brownson from '../../assets/images/brownson.jpg'; 
+import Coll from '../../components/Card/Coll'; 
+import ayati from '../../assets/images/ayati.svg'; 
+import brownson from '../../assets/images/brownson.svg'; 
+import gift from '../../assets/images/gift.svg'; 
 
 const Profile = () => {
 
@@ -11,33 +13,128 @@ const Profile = () => {
     const users = [
         {
           id: 1,
-          name: "Brownson Esiti",
-          profession: "Full-stack Developer",
-          image: {brownson},
+          name: "Ayati Ogochukwu",
+          profession: "Product Designer",
+          image: {ayati},
           post: {
             title: "Shopify Ecommerce Store like Jumia",
             description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
           }
         },
-        // {
-        //     id: 2,
-        //     name: "Brownson Esiti",
-        //     profession: "Full-stack Developer",
-        //     post: {
-        //         title: "Shopify Ecommerce Store like Jumia",
-        //         description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-        //     }
-        // },
+        {
+            id: 2,
+            name: "Ayati Ogochukwu",
+            profession: "Product Designer",
+            image: {ayati},
+            post: {
+                title: "Shopify Ecommerce Store like Jumia",
+                description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
+            }
+        },
         // {
         //     id: 3,
         //     name: "Brownson Esiti",
         //     profession: "Full-stack Developer",
+        //     image: {ayati},
         //     post: {
         //         title: "Shopify Ecommerce Store like Jumia",
         //         description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
         //     }
         // }
     ]
+
+    const collaborations = [
+        {
+            id: 1,
+            name: "Ayati Ogochukwu",
+            profession: "Product Designer",
+            image: {ayati}
+        },
+        {
+            id: 2,
+            name: "Ayati Ogochukwu",
+            profession: "Product Designer",
+            image: {ayati}
+        },
+        {
+            id: 3,
+            name: "Ayati Ogochukwu",
+            profession: "Product Designer",
+            image: {ayati}
+        },
+        {
+            id: 4,
+            name: "Ayati Ogochukwu",
+            profession: "Product Designer",
+            image: {ayati}
+        },
+        {
+            id: 5,
+            name: "Ayati Ogochukwu",
+            profession: "Product Designer",
+            image: {ayati}
+        },
+        {
+            id: 6,
+            name: "Ayati Ogochukwu",
+            profession: "Product Designer",
+            image: {ayati}
+        },
+        {
+            id: 7,
+            name: "Ayati Ogochukwu",
+            profession: "Product Designer",
+            image: {ayati}
+        },
+    ]
+
+    const collaboration1 = [
+        {
+            id: 1,
+            name: "Brownson Esiti",
+            profession: "Full-stack Developer",
+            image: {brownson}
+        },
+        {
+            id: 2,
+            name: "Gift Udofiah",
+            profession: "Frontend Developer",
+            image: {gift}
+        },
+        {
+            id: 3,
+            name: "Brownson Esiti",
+            profession: "Full-stack Developer",
+            image: {brownson}
+        },
+        {
+            id: 4,
+            name: "Gift Udofiah",
+            profession: "Frontend Developer",
+            image: {gift}
+        },
+        {
+            id: 5,
+            name: "Brownson Esiti",
+            profession: "Full-stack Developer",
+            image: {brownson}
+        },
+        {
+            id: 6,
+            name: "Gift Udofiah",
+            profession: "Frontend Developer",
+            image: {gift}
+        },
+        {
+            id: 7,
+            name: "Brownson Esiti",
+            profession: "Full-stack Developer",
+            image: {brownson}
+        },
+    ]
+
+    // const collaborations = [...collaborations1, ...collaborations2];
+
     return (
         <div id="profile_page">
             <div className='profile-details'>
@@ -50,7 +147,7 @@ const Profile = () => {
                 </div>
             </div>
             <aside className="sidebar">
-                <button>Shake</button>
+                <button>8 Collabs</button>
                 <div className="icons">
                     <div className='web'>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -109,7 +206,35 @@ const Profile = () => {
 
             <h2 className='collab'>Collaborations</h2>
             <h2 className='h2-tag'>Ideas</h2>
+
+            
+            <div className='coll-1'>
+                {searchParams.get('params') === null && ( 
+                    <div>
+                         {collaborations.map((collaborations, index) => (
+                            <div key={index}>
+                                <Coll collaborations={collaborations} />
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+
+
+            {/* <div className='coll-1'>
+                {searchParams.get('params') === null && ( 
+                    <div>
+                        {[...collaborations1, ...collaborations2].map((collaboration, index) => (
+                            <div key={index}>
+                                <Coll collaborations={collaborations} />
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div> */}
+
         </div>
+
     );
 }
  
