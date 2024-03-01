@@ -1,10 +1,10 @@
-.ideas {
+.interests {
     display: grid;
     justify-content: start;
     place-content: start;
     place-items: start;
     background-color: #F5F5F5;
-    width: 648px;
+    width: 379px;
     border-radius: 8px;
     padding: 20px;
     text-decoration: none;
@@ -30,7 +30,7 @@
                 h5 {
                     margin: 0px;
                     font-weight: 600;
-                    font-size: 1rem;
+                    font-size: 0.9rem;
                     color: #000000;
                 }
                 p {
@@ -43,25 +43,42 @@
 
         h4 {
             margin: 0px;
-            color: #2A2A2A;
+            color: #060A0A;
             font-weight: 600;
-            font-size: 1.5rem;
+            font-size: 0.9rem;
         }
         p {
             margin: 0px;
-            font-size: 1rem;
+            font-size: 0.7rem;
             line-height: 22px;
             font-weight: 400;
             color: #8F9191;
         }
-    }
-}
 
-.ideas:hover {
-    .card {
-        h4 {
-            color: #0006B1;
-            transition-duration: 300ms;
+
+        .action-buttons {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            button {
+                padding: 8px 40px;
+                border-radius: 8px;
+                outline: none;
+                border: 0px solid transparent;
+                font-size: 0.6rem;
+                font-weight: 600;
+            }
+
+            .accept-button {
+                background-color: #0006B1;
+                color: #ffffff;
+            }
+
+            .decline-button {
+                background-color: #B0B2E7;
+                color: #060A0A;
+            }
         }
     }
 }

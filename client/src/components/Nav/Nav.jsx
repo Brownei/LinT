@@ -7,7 +7,7 @@ const Nav = () => {
     return (
         <nav id="navid">
         <div className="navbar">
-            <div className='logo'>
+            <div>
                 <svg xmlns="http://www.w3.org/2000/svg" width="60" height="30" viewBox="0 0 80 40" fill="none">
                     <path d="M36.7318 11.6777H35.6797V21.5797C36.8182 19.6806 37.4146 17.5059 37.4042 15.2917C37.4056 14.0559 37.1776 12.8304 36.7318 11.6777Z" fill="#0006B1"/>
                     <path d="M19.7728 25.9187C20.5526 27.174 21.0517 28.5831 21.2358 30.0494V32.0074H0V3.20117H6.74864V25.9249L19.7728 25.9187Z" fill="#0006B1"/>

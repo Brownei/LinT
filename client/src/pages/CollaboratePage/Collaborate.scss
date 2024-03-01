@@ -1,3 +1,41 @@
-.collaborate-page {
-    background-color: red;
+#collaborate-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100dvh;
+    // margin-top: 130px;
+
+    ::-webkit-scrollbar {
+        width: 3px;
+        margin: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #3338C1;
+        border-radius: 40px;
+        margin: 10px;
+    }
+
+    .collaborate-page {
+
+        .chats-view {
+            position: fixed;
+            overflow-y: auto;
+            left: 5%;
+            width: 430px;
+            border: 2px solid #2A2A2A;
+            border-radius: 22px;
+            display: flex;
+            flex-direction: column;
+            height: 100dvh;
+            padding: 20px 5px 0px 20px;
+        }
+
+        .ideas-view {
+            position: relative;
+            width: calc(100% - 480px);
+            left: 480px;
+            padding: 20px;
+        }
+    }
 }

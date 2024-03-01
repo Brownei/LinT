@@ -1,19 +1,24 @@
+/* eslint-disable react/prop-types */
 import './Coll.scss';
 
-const Coll = ({collaborations}) => {
+const Coll = ({collaborations, currentUser}) => {
     return (
         <div className='collabo'>
-            <div className='first-coll' key={collaborations}>
-                <img className='image' src={collaborations.image.ayati}></img>
-                <p className='profession'>{collaborations.profession}</p>
-                <p className='name'>{collaborations.name}</p>
+            <div className='user'>
+                <img src={currentUser.image} alt={currentUser.name} />
+                <div>
+                    <h5>{currentUser.name}</h5>
+                    <p>{currentUser.profession}</p>
+                </div>
             </div>
-            <div id='and'>&</div>
-            {/* <div className='second-coll' key={collaborations}>
-                <img className='image' src={collaborations.image.ayati}></img>
-                <p className='profession'>{collaborations.profession}</p>
-                <p className='name'>{collaborations.name}</p>
-            </div> */}
+            <span>&</span>
+            <div className='user'>
+                <img src={collaborations.image} alt={collaborations.name} />
+                <div>
+                    <h5>{collaborations.name}</h5>
+                    <p>{collaborations.profession}</p>
+                </div>
+            </div>
         </div>
     );
 }

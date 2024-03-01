@@ -1,12 +1,23 @@
 import "./Collaborate.scss"
-import {useLocation } from 'react-router-dom';
+import Chats from "../../components/Chats/Chats";
+import Ideas from "../../components/Chats/IdeasSection/IdeasSection";
 
 const Collaborate = () => {
-  const location = useLocation()
-  const searchParams = new URLSearchParams(location.search);
 
       return (
-        <div className="collaborate-page">Collaborate</div>
+        <main id="collaborate-page">
+          <div className="collaborate-page">
+
+            <div className="chats-view">
+              <Chats />
+            </div>
+
+            <div className="ideas-view">
+              <Ideas />
+            </div>
+
+          </div>
+        </main>
       )
 }
 

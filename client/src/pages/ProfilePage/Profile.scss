@@ -1,140 +1,111 @@
 #profile_page {
-    
-    .profile-details {
-        float: left;
-        margin-top: 50px;
-        margin-right: 370px;
-        margin-left: -200px;
-        width: 536px;
-        height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100dvh;
 
-        img {
+    .profile {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+
+        .profile-details {
             display: flex;
-            width: 70px;
-            height: 70px;
-        }
-        .write-ups {
-           margin-left: 80px;
-           margin-top: -100px;
-           padding: 0;
-           gap: 0;
-        //    height: 20px;
-        //    width: 50px;
-        }
-    }
-
-
-    .sidebar {
-        margin-top: -50px;
-        float: right;
-        margin-right: -200px;
-
-        button {
-            width: 150px;
-            display: flex;
-            flex: 1;
-            padding: 10px 20px;
-            justify-content: center;
-            align-items: center;
-            border-radius: 6px;
-            background-color: #bbbbbe;
-            color: #3338C1;
-            gap: 10px;
-            margin-left: 100px;
-        }
-
-        .icons {
-            display: flex;
-            flex-direction: row; 
-            width: 184px;
-            height: 24px;
-            gap: 16px;
-            margin-left: 70px;
-            margin-top: 40px;
-        }
-
-        .loc-cal {
-            display: flex;
-            flex-direction: row;
-            width: 262px;
-            height: 22px;
-            top: 334px;
-            left: 1037px;
+            justify-content: start;
+            align-items: start;
             gap: 16px;
 
-
-            .location {
-                display: flex;
-                flex-direction: row;
-
-                svg {
-                    margin-top: 18px;
+            .write-ups {
+                display: grid;
+                gap: 16px;
+                width: 426px;
+                h2 {
+                    margin: 0px;
+                    font-weight: 600;
+                    font-size: 3rem;
+                    line-height: 58.09px;
+                }
+                p {
+                    margin: 0px;
+                    font-weight: 400;
+                    font-size: 1rem;
+                    line-height: 22px;
                 }
             }
+        }
 
-            .calendar {
+        .sidebar {
+            display: grid;
+            place-items: end;
+            gap: 16px;
+
+            button {
+                width: 138px;
+                height: 45px;
+                padding: 8px, 16px;
+                border-radius: 6px;
+                background-color: #E6E6F7;
+                color: #00034A;
+                font-weight: 700;
+                font-size: 1.5rem;
+                line-height: 29.05px;
+            }
+
+            .icons {
                 display: flex;
-                flex-direction: row;
+                align-items: center;
+                gap: 16px;
+            }
 
-                svg {
-                    margin-top: 18px;
+            .loc-cal {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+
+                .location, 
+                .calendar {
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+
+                    p {
+                        margin: 0px;
+                    }
                 }
             }
         }
     }
 
-    .collab {
-        margin-left: 500px;
-        margin-top: -380px;
-    }
-
-    .h2-tag {
-        // position: fixed;
-        margin-top: -50px;
-        margin-left: -190px;
-    }
-
-    .coll-1 {
-        background-color: #d8d5dd;
-        width: 402px;
-        height: 400px;
-        top: 522px;
-        left: 875px;
-        gap: 16px;
-        margin-left: 500px;
-        margin-top: -15px;
-
-    }
-}
-
-
-
-//MEDIA QUERIES
-@media screen and (max-width: 1450px) {
-    .sidebar {
-        right: 80px;
-    }
-}
-
-@media screen and (max-width: 1350px) {
-    .sidebar {
+    .ideas-collabs {
         display: flex;
-        top: 100px;
-        right: 70px;
+        justify-content: start;
+        align-items: start;
+        gap: 10px;
+
+        h3 {
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+
+        .card-title {
+            display: grid;
+            gap: 16px;
+
+            .user-ideas {
+                display: grid;
+                gap: 16px;
+            }
+        }
+
+        .coll-1 {
+            display: grid;
+            gap: 16px;
+
+            .user-collabs {
+                display: grid;
+                gap: 16px;
+            }
+        }
     }
 }
-
-@media screen and (max-width: 1130px) {
-    .sidebar {
-        display: flex;
-        top: 100px;
-        right: 30px;
-    }
-}
-
-@media screen and (max-width: 1075px) {
-    .sidebar {
-        display: none;
-    }
-}
-
