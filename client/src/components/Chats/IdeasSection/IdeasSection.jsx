@@ -1,10 +1,106 @@
+import './IdeasSection.scss'
+import ayati from '../../../assets/images/ayati.svg'
+import Ideas from '../../Card/Ideas'
 
 const IdeasSection = () => {
+  const users = [
+    {
+        id: 1,
+        name: "Ayati Ogochukwu",
+        profession: "Product Designer",
+        image: ayati,
+        post: {
+            title: "Shopify Ecommerce Store like Jumia",
+            description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
+        }
+    },
+    {
+        id: 2,
+        name: "Ayati Ogochukwu",
+        profession: "Product Designer",
+        image: ayati,
+        post: {
+            title: "Shopify Ecommerce Store like Jumia",
+            description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
+        }
+    },
+    {
+      id: 2,
+      name: "Ayati Ogochukwu",
+      profession: "Product Designer",
+      image: ayati,
+      post: {
+          title: "Shopify Ecommerce Store like Jumia",
+          description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
+      }
+  },
+  {
+    id: 2,
+    name: "Ayati Ogochukwu",
+    profession: "Product Designer",
+    image: ayati,
+    post: {
+        title: "Shopify Ecommerce Store like Jumia",
+        description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
+    }
+},
+{
+  id: 2,
+  name: "Ayati Ogochukwu",
+  profession: "Product Designer",
+  image: ayati,
+  post: {
+      title: "Shopify Ecommerce Store like Jumia",
+      description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
+  }
+},
+{
+  id: 2,
+  name: "Ayati Ogochukwu",
+  profession: "Product Designer",
+  image: ayati,
+  post: {
+      title: "Shopify Ecommerce Store like Jumia",
+      description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
+  }
+},
+{
+  id: 2,
+  name: "Ayati Ogochukwu",
+  profession: "Product Designer",
+  image: ayati,
+  post: {
+      title: "Shopify Ecommerce Store like Jumia",
+      description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
+  }
+},
+{
+  id: 2,
+  name: "Ayati Ogochukwu",
+  profession: "Product Designer",
+  image: ayati,
+  post: {
+      title: "Shopify Ecommerce Store like Jumia",
+      description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
+  }
+},
+  ]
+
   return (
-    <main>
-      <div>
-        <h1>Ideas</h1>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolorum, sint iste sapiente eveniet earum iusto fugiat dolorem veniam rerum excepturi ullam fuga adipisci rem aut at totam eos distinctio laboriosam vitae minima quod. Laudantium vel dolorum porro, fuga doloremque labore minima quas et numquam maiores aut at amet nisi quibusdam autem perferendis temporibus ratione ab modi totam, id rerum optio quaerat cum! Nisi officiis dolorem accusamus vitae? Voluptatem id hic alias, dolorem dicta ut rerum maiores? Quaerat doloribus amet repudiandae consectetur est aliquam fugit cupiditate rem ipsa modi sequi recusandae facilis, placeat assumenda possimus ad praesentium consequuntur illum, laudantium veritatis obcaecati? Recusandae amet tempore, labore minima inventore magnam pariatur laboriosam odio. Ratione quaerat sit laborum! Vero cumque molestias, cum modi maxime laboriosam nulla numquam alias in facilis, saepe quae voluptas sint. Doloremque ipsum vero nobis dolore, eligendi quod illum consequatur quaerat consectetur, officiis voluptatibus beatae quam eaque provident mollitia minus aliquam. Eveniet cum ratione, molestias ducimus cupiditate commodi, sit quos voluptate quaerat dolore a accusamus dolorem doloremque quam pariatur perferendis perspiciatis! Nam, non ab sunt amet illum eum inventore nulla ratione praesentium modi molestiae, pariatur placeat reprehenderit! Aspernatur, blanditiis dolores magni temporibus ipsam incidunt similique enim voluptatum laborum quas totam, adipisci in sint aliquid ut fugiat non. Ipsum iure cumque ad totam enim! Exercitationem, temporibus voluptatem. Blanditiis cum aspernatur earum dolor, nemo iusto, ut atque vitae libero delectus asperiores, nihil exercitationem? Eius tenetur temporibus soluta quos ut possimus dicta vel necessitatibus impedit. Sint assumenda maiores veritatis aut odio perspiciatis suscipit, magnam eos ad sed laboriosam est asperiores at illo et eligendi deserunt culpa vel architecto unde, reprehenderit esse! Tempore quam sequi unde nemo quo qui perferendis nesciunt aliquam quaerat quia voluptates, et fuga. Distinctio accusantium et fuga. Eligendi rem ratione optio in. Officia nisi expedita modi magnam enim nemo quas aliquam perspiciatis recusandae ratione? Quibusdam, corrupti odio? Repellat dolores itaque pariatur odit, corrupti architecto aliquid iure quis amet provident ab minus sequi doloremque, eius molestias fugiat soluta possimus dicta est odio. Beatae adipisci alias ex quod debitis at est officiis nostrum sed non consequatur neque commodi dolores odit, quibusdam doloremque, sapiente cumque iusto amet voluptas! Temporibus incidunt voluptate vero reprehenderit excepturi vitae quidem sequi commodi repellendus totam. Fugiat neque corrupti quis exercitationem eligendi at ab aliquid totam laboriosam obcaecati velit, iste, magni vel saepe aut eaque autem ad ipsa odio, quasi iure esse culpa accusantium? Magni hic illum, facilis ratione, minus ad officia impedit quisquam in asperiores explicabo pariatur accusamus iste possimus harum aspernatur libero temporibus numquam, omnis maiores molestiae. Laboriosam, totam, corporis culpa quos a eius, id rerum accusamus illum optio asperiores libero qui ratione perspiciatis natus repudiandae fugiat ipsam esse voluptates delectus at? Molestias, alias, natus culpa quae aspernatur voluptates eius unde voluptate error minima facere temporibus dignissimos possimus qui esse vel, hic nemo dicta omnis? Assumenda odit earum architecto. Ea aliquam reprehenderit dicta? At error quasi veritatis incidunt mollitia nihil enim quo aperiam repellendus. Earum, et, sed iusto minima enim dolore eveniet cumque necessitatibus tenetur, doloribus quidem.</p>
+    <main id='ideas-section'>
+      <div className='ideas-details'>
+        <div className='ideas-header'>
+          <h1>Explore Ideas and collaborate</h1>
+          <button type='button' onClick={() => console.log('Hello world!')}>Share your idea</button>
+        </div>
+
+        <div className='all-ideas'>
+          {users.map((user, index) => (
+            <div key={index}>
+              <Ideas user={user}/>
+            </div>
+          ))}
+        </div>
       </div>
     </main>
   )

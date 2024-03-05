@@ -7,15 +7,17 @@ const Collaborate = () => {
       return (
         <main id="collaborate-page">
           <div className="collaborate-page">
+            <div className="collaborate-view">
+              
+              <div className="chats-view">
+                <Chats />
+              </div>
 
-            <div className="chats-view">
-              <Chats />
+              <div className="ideas-view">
+                <Ideas />
+              </div>
+
             </div>
-
-            <div className="ideas-view">
-              <Ideas />
-            </div>
-
           </div>
         </main>
       )

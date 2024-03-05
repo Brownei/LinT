@@ -1,12 +1,18 @@
 #notifications_page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100dvh;
 
     .h-container{
+        position: fixed;
+        top: 120px;
         display: flex;
-        align-items: flex-start;
-        gap: 10px;
-        align-items: center;
+        align-items: start;
+        justify-content: start;
+        gap: 17px;
         margin-bottom: 20px;
-        // margin-top: 0;
 
         .element {
             font-size: smaller;

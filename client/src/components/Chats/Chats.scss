@@ -1,84 +1,85 @@
 #chats {
+    position: relative;
+    align-self: stretch;
     display: flex;
-    justify-content: center;
-    align-self: center;
-    border-radius: 22px;
-    width: fit-content;
-    padding: 20px;
+    flex: 1;
+    flex-direction: column;
+    align-items: stretch;
+    z-index: 0;
 
     .chat-properties {
+        position: absolute;
+        margin-left: 60px;
+        top: 120px;
+        bottom: 0px;
+        right: 0px;
+        left: 0px;
+        overflow-y: auto;
+        align-items: stretch;
         display: flex;
         flex-direction: column;
-        justify-content: start;
-        align-items: start;
-        gap: 14px;
-
-        span {
-            margin: 0px;
-        }
+        gap: 16px;
+        flex-shrink: 0;
+        flex-basis: auto;
+        z-index: 0;
+        border-top: 2px solid #2A2A2A;
+        border-left: 2px solid #2A2A2A;
+        border-right: 2px solid #2A2A2A;
+        border-radius: 22px 22px 0px 0px;
+        padding: 20px;
 
         .chats-nav {
-            // position: fixed;
-            // top: 0;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 16px;
+            gap: 40px;
 
             .chats-nav-single {
-                display: flex;
-                align-items: center;
-                gap: 5px;
-                text-decoration: none;
                 color: #00034A;
+                text-decoration: none;
+                display: flex;
+                gap: 8px;
+                justify-content: center;
+                align-items: center;
+
+                p {
+                    margin: 0px;
+                    font-weight: 600;
+                    font-size: 1.5rem;
+                }
 
                 span {
                     width: 20px;
                     height: 20px;
+                    border-radius: 100%;
+                    border: 1px solid transparent;
+                    background-color: #00034A;
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    border-radius: 100%;
-                    background-color: #00034A;
-                    color: #ffffff;
+                    color: white;
                     font-weight: 400;
-                    font-size: 0.6rem;
-                }
-
-                p {
-                    margin: 0px;
-                    font-size: 1.5rem;
-                    font-weight: 600;
+                    font-size: 0.7rem;
                 }
             }
-
         }
 
         .interest-section {
-                width: 437px;
-                
-            .no-interests {
-                display: flex;
-                justify-content: column;
-                align-items: center;
 
-                p {
-                    color: #2A2A2A;
-                    font-weight: 300;
-                    font-size: 0.9rem;
-                    text-align: center;
-                }
-            }
-    
             .all-interests {
-                display: flex;
-                flex-direction: column;
-                align-items: start;
+                display: grid;
                 gap: 16px;
-                margin-bottom: 200px;
+                align-items: center;
+                align-content: center;
 
+                span {
+                    font-weight: 400;
+                    font-size: 0.9rem;
+                    line-height: 22px;
+                }
             }
         }
 
+        .chat-section {
+            background-color: #F5F5F5;
+        }
     }
 }

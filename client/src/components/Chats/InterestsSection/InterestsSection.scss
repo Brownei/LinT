@@ -4,7 +4,7 @@
     place-content: start;
     place-items: start;
     background-color: #F5F5F5;
-    width: 379px;
+    width: fit-content;
     border-radius: 8px;
     padding: 20px;
     text-decoration: none;
@@ -68,6 +68,7 @@
                 border: 0px solid transparent;
                 font-size: 0.6rem;
                 font-weight: 600;
+                cursor: pointer;
             }
 
             .accept-button {

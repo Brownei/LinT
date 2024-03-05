@@ -72,6 +72,66 @@ const Chats = () => {
         description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
     }
 },
+{
+  id: 2,
+  name: "Ayati Ogochukwu",
+  profession: "Product Designer",
+  image: ayati,
+  post: {
+      title: "Shopify Ecommerce Store like Jumia",
+      description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
+  }
+},
+{
+  id: 2,
+  name: "Ayati Ogochukwu",
+  profession: "Product Designer",
+  image: ayati,
+  post: {
+      title: "Shopify Ecommerce Store like Jumia",
+      description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
+  }
+},
+{
+  id: 2,
+  name: "Ayati Ogochukwu",
+  profession: "Product Designer",
+  image: ayati,
+  post: {
+      title: "Shopify Ecommerce Store like Jumia",
+      description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
+  }
+},
+{
+  id: 2,
+  name: "Ayati Ogochukwu",
+  profession: "Product Designer",
+  image: ayati,
+  post: {
+      title: "Shopify Ecommerce Store like Jumia",
+      description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
+  }
+},
+{
+  id: 2,
+  name: "Ayati Ogochukwu",
+  profession: "Product Designer",
+  image: ayati,
+  post: {
+      title: "Shopify Ecommerce Store like Jumia",
+      description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
+  }
+},
+{
+  id: 2,
+  name: "Ayati Ogochukwu",
+  profession: "Product Designer",
+  image: ayati,
+  post: {
+      title: "Shopify Ecommerce Store like Jumia",
+      description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
+  }
+},
 
   ]
 
@@ -93,16 +153,15 @@ const Chats = () => {
           </Link>
         </div>
         
-        <span>View people interested in your Idea!!</span>
-
         {location.search === '?=chats' ? (
-          <div>
+          <div className='chat-section'>
             <h1>Chats</h1>
           </div>
         ) : (
         <div className='interest-section'>
           {users.length > 0 ? (
             <div className='all-interests'>
+              <span>View people interested in your Idea!!</span>
               {users.map((user, index) => (
                   <div key={index}>
                     <InterestsSection user={user}/>
