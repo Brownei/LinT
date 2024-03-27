@@ -10,7 +10,7 @@ const Chats = () => {
   const location = useLocation()
   let numberOfInterest = 0
   let numberOfChats = 5
-  console.log(location.search)
+  console.log(location)
   const users = [
     {
         id: 1,
@@ -139,18 +139,25 @@ const Chats = () => {
     <main id='chats'>
       <div className='chat-properties'>
         <div className='chats-nav'>
-          <Link to={'/'} className='chats-nav-single'>
-            {numberOfInterest > 0 && (
-              <span>{numberOfInterest}</span>
-            )}
-            <p>Interests</p>
-          </Link>
-          <Link to={'/?=chats'} className='chats-nav-single'>
-            {numberOfChats > 0 && (
-              <span>{numberOfChats}</span>
-            )}
-            <p>Chats</p>
-          </Link>
+          <div className='chats-nav-whole'>
+            <Link to={'/'} className='chats-nav-single'>
+              {numberOfInterest > 0 && (
+                <span>{numberOfInterest}</span>
+              )}
+              <p>Interests</p>
+            </Link>
+            <span className={location.search === '' ? 'active' : ''}></span>
+          </div>
+
+          <div className='chats-nav-whole'>
+            <Link to={'/?=chats'} className='chats-nav-single'>
+              {numberOfChats > 0 && (
+                <span>{numberOfChats}</span>
+              )}
+              <p>Chats</p>
+            </Link>
+            <span className={location.search === '?=chats' ? 'active' : ''}></span>
+          </div>
         </div>
         
         {location.search === '?=chats' ? (
