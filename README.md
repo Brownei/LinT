@@ -1,2 +1,8 @@
-# LinT
-An innovative online platform designed to bring together tech enthusiasts, developers, designers, and entrepreneurs from around the world. The platform acts as a collaborative ecosystem, empowering users to share their creative ideas, find like-minded individuals, and collaborate on diverse technology projects.
+# React + Vite
+
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh

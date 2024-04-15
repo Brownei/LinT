@@ -1,0 +1,116 @@
+#profile-setup {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        align-content: start;
+
+        h1 {
+            text-align: start;
+            font-weight: 600;
+            font-size: 1.9rem;
+        }
+
+        img {
+            width: 94px;
+            height: 94px;
+            border-radius: 100%;
+        }
+    }
+
+
+    .setup {
+        display: grid;
+
+    
+        form {
+            display: flex;
+            flex-direction: column;
+            justify-content: start;
+            align-items: start;
+            gap: 16px;
+
+            .username-email {
+                display: flex;
+                gap: 16px;
+            }
+    
+            .input-field {
+                display: grid;
+                gap: 4px;
+        
+                label {
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                    color: #808080;
+                }
+        
+                input {
+                    padding: 14px 16px;
+                    border: 1px solid #C1C2C2;
+                    border-radius: 40px;
+                    width: 316px;
+                    font-weight: 400;
+                    font-size: 0.9rem;
+                }
+
+                span {
+                    font-weight: 600;
+                    font-size: 12px;
+                    line-height: 18px;
+                    color: red;
+                }
+            }
+    
+            
+
+            p {
+                font-size: 1rem;
+                text-align: start;
+                font-weight: 400;
+                font-style: italic;
+    
+                span {
+                    font-weight: 600;
+                }
+            }
+
+        }
+        
+        .progress {
+            margin-top: 50px;
+
+            button {
+                cursor: pointer;
+                padding: 10px 70px;
+                border-radius: 24px;
+                background-color: #0006B1;
+                border: 0px solid transparent;
+                color: #FFFFFF;
+                font-size: 0.9rem;
+                font-weight: 400;
+                margin-top: 10px;
+
+                &:hover {
+                    opacity: 0.8;
+                    transition-duration: 300ms;
+                }
+
+                &:disabled {
+                    opacity: 0.5;
+                    cursor: not-allowed;
+                }
+            }
+            
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+}

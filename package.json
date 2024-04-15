@@ -1,19 +1,42 @@
 {
-  "name": "lint",
-  "version": "1.0.0",
-  "description": "An innovative online platform designed to bring together tech enthusiasts, developers, designers, and entrepreneurs from around the world. The platform acts as a collaborative ecosystem, empowering users to share their creative ideas, find like-minded individuals, and collaborate on diverse technology projects.",
-  "main": "index.js",
+  "name": "client",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "start": "cd server && nodemon src/server.ts",
-    "client": "cd client && npm run dev",
-    "dev": "concurrently \"npm run start\" \"npm run client\"",
-    "build": "cd client && npm run build"
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
   },
-  "keywords": [],
-  "author": "4D",
-  "license": "ISC",
   "dependencies": {
-    "concurrently": "^8.2.1",
-    "react-router-dom": "^6.18.0"
+    "@cloudinary/react": "^1.13.0",
+    "@cloudinary/url-gen": "^1.19.0",
+    "@iconify/react": "^4.1.1",
+    "@reduxjs/toolkit": "^2.2.3",
+    "@tanstack/react-query": "^5.8.4",
+    "@tanstack/react-query-devtools": "^5.8.4",
+    "axios": "^1.6.8",
+    "color-name-list": "^10.16.0",
+    "date-fns": "^3.6.0",
+    "firebase": "^10.11.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.51.3",
+    "react-router-dom": "^6.18.0",
+    "react-spinners": "^0.13.8",
+    "sass": "^1.69.5",
+    "universal-cookie": "^7.1.4",
+    "zustand": "^4.5.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.3",
+    "eslint": "^8.45.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "vite": "^4.4.5"
   }
 }
