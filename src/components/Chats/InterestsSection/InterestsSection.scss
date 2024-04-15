@@ -1,0 +1,85 @@
+.interests {
+    display: grid;
+    justify-content: start;
+    place-content: start;
+    place-items: start;
+    background-color: #F5F5F5;
+    width: fit-content;
+    border-radius: 8px;
+    padding: 20px;
+    text-decoration: none;
+
+    .card {
+        display: grid;
+        gap: 10px;
+
+        .user {
+            display: flex;
+            justify-content: start;
+            align-items: start;
+            gap: 4px;
+
+            img {
+                margin: 0px;
+                height: 40px;
+                width: 40px;
+                border-radius: 100%;
+            }
+
+            .not-image {
+                h5 {
+                    margin: 0px;
+                    font-weight: 600;
+                    font-size: 0.9rem;
+                    color: #000000;
+                }
+                p {
+                    font-weight: 400;
+                    font-size: 0.7rem;
+                    color: #8F9191;
+                }
+            }
+        }
+
+        h4 {
+            margin: 0px;
+            color: #060A0A;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        p {
+            margin: 0px;
+            font-size: 0.7rem;
+            line-height: 22px;
+            font-weight: 400;
+            color: #8F9191;
+        }
+
+
+        .action-buttons {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            button {
+                padding: 8px 40px;
+                border-radius: 8px;
+                outline: none;
+                border: 0px solid transparent;
+                font-size: 0.6rem;
+                font-weight: 600;
+                cursor: pointer;
+            }
+
+            .accept-button {
+                background-color: #0006B1;
+                color: #ffffff;
+            }
+
+            .decline-button {
+                background-color: #B0B2E7;
+                color: #060A0A;
+            }
+        }
+    }
+}

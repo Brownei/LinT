@@ -1,0 +1,44 @@
+.collabo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    width: 402px;
+    
+    .user {
+        width: 184px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+
+        img {
+            height: 40px;
+            width: 40px;
+        }
+
+        h5 {
+            margin: 0px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #060A0A;
+        }
+
+        p {
+            margin: 0px;
+            color: #8F9191;
+            font-weight: 400;
+            font-size: 0.7rem;
+        }
+
+        div {
+            display: grid;
+            gap: 8px;
+        }
+    }
+
+    span {
+        font-weight: 600;
+        font-size: 0.7rem;
+    }
+}
