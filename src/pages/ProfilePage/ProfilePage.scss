@@ -16,21 +16,45 @@
             align-items: start;
             gap: 16px;
 
+            img {
+                height: 94px;
+                width: 94px;
+                border-radius: 100%;
+            }
+
             .write-ups {
                 display: grid;
-                gap: 16px;
+                // gap: 16px;
                 width: 426px;
+
+                div {
+                    margin-top: 16px;
+
+                    p {
+                        margin: 0px;
+                        font-weight: 400;
+                        font-size: 1rem;
+                        line-height: 22px;
+                    }
+
+                    .occupation {
+                        font-weight: 600;
+                        font-size: 1rem;
+                        line-height: 22px;
+                    }
+                }
+
                 h2 {
                     margin: 0px;
                     font-weight: 600;
                     font-size: 3rem;
                     line-height: 58.09px;
                 }
-                p {
-                    margin: 0px;
-                    font-weight: 400;
-                    font-size: 1rem;
-                    line-height: 22px;
+
+                span {
+                    font-weight: 600;
+                    font-size: 14px;
+                    line-height: 20px;
                 }
             }
         }
@@ -40,10 +64,20 @@
             place-items: end;
             gap: 16px;
 
-            button {
-                width: 138px;
-                height: 45px;
-                padding: 8px, 16px;
+            .edit-profile {
+                text-decoration: none;
+                padding: 10px 60px;
+                border-radius: 24px;
+                border: 1px solid #00034A;
+                background-color: #E6E6F7;
+                color: #00034A;
+                font-weight: 600;
+                font-size: 1rem;
+                line-height: 22px;
+            }
+
+            .collabs {
+                padding: 8px 16px;
                 border-radius: 6px;
                 background-color: #E6E6F7;
                 color: #00034A;
@@ -57,6 +91,12 @@
                 display: flex;
                 align-items: center;
                 gap: 16px;
+
+                .particular-icon {
+                    cursor: pointer;
+                    text-decoration: none;
+                    color: black;
+                }
             }
 
             .loc-cal {
@@ -96,6 +136,16 @@
             .user-ideas {
                 display: grid;
                 gap: 16px;
+
+                .loading {
+                    width: 600px;
+                    text-align: center;
+                }
+
+                .information {
+                    width: 600px;
+                    text-align: center;
+                }
             }
         }
 

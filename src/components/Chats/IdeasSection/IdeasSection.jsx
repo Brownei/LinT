@@ -1,91 +1,10 @@
+/* eslint-disable react/prop-types */
 import './IdeasSection.scss'
 import ayati from '../../../assets/images/ayati.svg'
 import Ideas from '../../Card/Ideas'
 import { NavLink } from 'react-router-dom'
 
-const IdeasSection = () => {
-  const users = [
-    {
-        id: 1,
-        name: "Ayati Ogochukwu",
-        profession: "Product Designer",
-        image: ayati,
-        post: {
-            title: "Shopify Ecommerce Store like Jumia",
-            description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-        }
-    },
-    {
-        id: 2,
-        name: "Ayati Ogochukwu",
-        profession: "Product Designer",
-        image: ayati,
-        post: {
-            title: "Shopify Ecommerce Store like Jumia",
-            description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-        }
-    },
-    {
-      id: 2,
-      name: "Ayati Ogochukwu",
-      profession: "Product Designer",
-      image: ayati,
-      post: {
-          title: "Shopify Ecommerce Store like Jumia",
-          description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-      }
-  },
-  {
-    id: 2,
-    name: "Ayati Ogochukwu",
-    profession: "Product Designer",
-    image: ayati,
-    post: {
-        title: "Shopify Ecommerce Store like Jumia",
-        description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-    }
-},
-{
-  id: 2,
-  name: "Ayati Ogochukwu",
-  profession: "Product Designer",
-  image: ayati,
-  post: {
-      title: "Shopify Ecommerce Store like Jumia",
-      description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-  }
-},
-{
-  id: 2,
-  name: "Ayati Ogochukwu",
-  profession: "Product Designer",
-  image: ayati,
-  post: {
-      title: "Shopify Ecommerce Store like Jumia",
-      description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-  }
-},
-{
-  id: 2,
-  name: "Ayati Ogochukwu",
-  profession: "Product Designer",
-  image: ayati,
-  post: {
-      title: "Shopify Ecommerce Store like Jumia",
-      description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-  }
-},
-{
-  id: 2,
-  name: "Ayati Ogochukwu",
-  profession: "Product Designer",
-  image: ayati,
-  post: {
-      title: "Shopify Ecommerce Store like Jumia",
-      description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-  }
-},
-  ]
+const IdeasSection = ({ posts }) => {
 
   return (
     <>
@@ -97,11 +16,18 @@ const IdeasSection = () => {
           </div>
 
           <div className='all-ideas'>
-            {users.map((user) => (
-              <div key={user.id}>
-                <Ideas user={user}/>
+            {posts.length === 0 ? (
+              <div className='no-data'>Nobody wants to post?</div>
+            ): (
+              <div>
+                {posts.map((post) => (
+                  <div key={post.id}>
+                    {/* <Ideas user={user}/> */}
+                    {JSON.stringify(post)}
+                  </div>
+                ))}
               </div>
-            ))}
+            )}
           </div>
         </div>
       </main>

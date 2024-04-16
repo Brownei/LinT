@@ -10,7 +10,6 @@ const Chats = () => {
   const location = useLocation()
   let numberOfInterest = 0
   let numberOfChats = 5
-  console.log(location)
   const users = [
     {
         id: 1,

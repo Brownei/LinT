@@ -61,6 +61,10 @@
         .all-ideas {
             display: grid;
             gap: 30px;
+
+            .no-data {
+                text-align: center;
+            }
         }
     }
 }

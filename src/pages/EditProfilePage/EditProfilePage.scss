@@ -1,0 +1,120 @@
+#edit-profile-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 30px;
+
+    .edit-profile-page {
+        display: grid;
+        gap: 16px;
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+
+            .link {
+                text-decoration: none;
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+
+                span {
+                    font-weight: 600;
+                    font-size: 1.2rem;
+                    line-height: 30px;
+                    color: black;
+                }
+            }
+
+            button {
+                padding: 8px 40px;
+                background-color: #0006B1;
+                border: 1px solid transparent;
+                border-radius: 24px;
+                font-weight: 600;
+                font-size: 1rem;
+                line-height: 22px;
+                color: white;
+                cursor: pointer;
+            }
+        }
+
+        .content {
+            display: grid;
+            gap: 16px;
+
+            .upload {
+                .btn {
+                    border: 1px solid transparent;
+                    width: 94px;
+                    height: 94px;
+                    border-radius: 100%;
+
+                    .spinner {
+                        animation: spin 2s linear infinite;
+
+                        @keyframes spin {
+                            from {
+                              transform: rotate(0deg); /* Start rotation from 0 degrees */
+                            }
+                            to {
+                              transform: rotate(360deg); /* Rotate to 360 degrees */
+                            }
+                        }
+                    }
+                }
+
+                .viewed-image {
+                    position: relative;
+                    display: inline-block;
+
+                    img {
+                        width: 94px;
+                        height: 94px;
+                        border-radius: 100%;
+                    }
+
+                    button {
+                        border: 1px solid transparent;
+                        background-color: transparent;
+                        position: absolute;
+                        left: 50%;
+                        top: 50%;
+                        transform: translate(-50%, -50%);
+                        cursor: pointer;
+                    }
+                }
+
+            }
+
+            .inputs {
+                display: grid;
+                gap: 24px;
+
+                .input {
+                    border: 1px solid #8F9191;
+                    padding: 8px 16px;
+                    width: 648px;
+                    display: grid;
+                    gap: 8px;
+                    border-radius: 8px;
+
+                    label {
+                        font-weight: 400;
+                        font-size: 14px;
+                        line-height: 20px;
+                        color: #939393;
+                    }
+
+                    input {
+                        width: 90%;
+                        outline: none;
+                        border: none;
+                    }
+                }
+            }
+        }
+    }
+}

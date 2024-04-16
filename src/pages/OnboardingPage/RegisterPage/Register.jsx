@@ -27,7 +27,7 @@ const Register = () => {
       },
       onSuccess({data}) {
           authStore.set(data.userInfo)
-          sessionStorage.setItem('session', data.sessionCookie)
+          sessionStorage.setItem('session', JSON.stringify(data.sessionCookie))
           navigate("/setup-profile");
       },
   });

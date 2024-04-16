@@ -62,9 +62,14 @@ const SecondSetupPage = ({ heading }) => {
 
                 <div className="setup">
                     <form>
-                        <div className='input-field'>
+                    <div className='input-field'>
                             <label htmlFor="bio">Tell us more about you</label>
                             <textarea type="text" name="bio" id="bio" placeholder='Bio' {...register("description")}/>
+                        </div>
+
+                        <div className='input-field'>
+                            <label htmlFor="location">Where are you at?</label>
+                            <input type="text" name="location" id="location" placeholder='Location' {...register("location")}/>
                         </div>
 
                         <div className='input-field'>

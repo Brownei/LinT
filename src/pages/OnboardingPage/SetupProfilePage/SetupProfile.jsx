@@ -1,14 +1,15 @@
 /* eslint-disable react/prop-types */
 import './SetupProfile.scss'
 import { useNavigate} from 'react-router-dom'
-import { useSession } from '../../../hooks/use-session';
 import { useForm } from "react-hook-form"
 import { useAppState } from '../../../hooks/use-app-state';
 import Upload from '../../../components/Upload/Upload';
 import { useState } from 'react';
+// import { useSession } from '../../../hooks/use-session';
+import { useCurrentUser } from '../../../hooks/use-current-user';
 
 const SetupProfile = ({heading}) => {
-  const {user} = useSession()
+  const {data: user} = useCurrentUser()
   const [state, setState] = useAppState()
   const [uploadedImage, setUploadedImage] = useState(user.profileImage ? user.profileImage : '');
   const navigate = useNavigate()
