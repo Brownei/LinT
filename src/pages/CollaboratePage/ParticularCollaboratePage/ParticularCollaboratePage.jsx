@@ -2,17 +2,15 @@ import './ParticularCollaboratePage.scss'
 import { useParams } from 'react-router-dom'
 import brownson from '../../../assets/images/brownson.svg'
 import { Icon } from '@iconify/react'
-import {useNavigate} from 'react-router-dom'
 
 const ParticularCollaboratePage = () => {
-    const navigate = useNavigate()
-    const { id } = useParams()
-    // console.log(id)
+    const { project } = useParams()
+    console.log(project)
   return (
     <main id='particular-page'>
         <div className='container'>
 
-            <button onClick={() => navigate('/collaborate')} className='back-button'>
+            <button onClick={() => window.history.back()} className='back-button'>
                 <span>
                     <Icon icon={'tabler:arrow-left'} fontSize={23} color='#0006B1'/>
                     Back

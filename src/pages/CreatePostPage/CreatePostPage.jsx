@@ -1,9 +1,7 @@
 import './CreatePostPage.scss';
 import { Icon } from '@iconify/react';
-import { useNavigate } from 'react-router-dom'
 
 const CreatePostPage = () => {
-  const navigate = useNavigate()
   return (
     <main>
       <div className='logo'>
@@ -29,7 +27,7 @@ const CreatePostPage = () => {
       <div id='modal'>
         <div className="container">
             <div className="header">
-              <button onClick={() => navigate('/collaborate')} className='back-button'>
+              <button onClick={() => window.history.back()} className='back-button'>
                 <span>
                   <Icon icon={'tabler:arrow-left'} fontSize={23} color='#0006B1'/>
                   Back

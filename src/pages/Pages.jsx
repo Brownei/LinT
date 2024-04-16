@@ -40,7 +40,7 @@ const Pages = () => {
             <Route path="/collaborate" element={<Collaborate />} />
             <Route path='profile' element={<ProfilePage />}/>
             <Route path='/notifications' element={<Notifications />}/>
-            <Route path='/collaborate/:id' element={<ParticularCollaboratePage />}/>
+            <Route path='/collaborate/:project' element={<ParticularCollaboratePage />}/>
             <Route path='/profile/edit' element={<EditProfilePage />}/>
           </Route>
 

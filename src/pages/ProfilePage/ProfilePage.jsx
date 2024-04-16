@@ -114,10 +114,10 @@ const ProfilePage = () => {
                                 <div className='loading'>
                                     <ClipLoader />
                                 </div>
-                            ) : isError ? (<p className='information'>You have no posts available..</p>) : (
+                            ) : isError ? (<p className='information'>Wanna refresh?..</p>) : (
                                 <div>
                                     {posts.length === 0 ? (
-                                        <p className='information'>You have not posted shit</p>
+                                        <p className='information'>No ideas yet? Share and Collaborate!</p>
                                     ) : (
                                         <div>
                                             {posts.map((post) => {

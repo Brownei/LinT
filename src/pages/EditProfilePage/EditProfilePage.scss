@@ -19,6 +19,19 @@
                 display: inline-flex;
                 align-items: center;
                 gap: 4px;
+                outline: none;
+                border: 0px solid transparent;
+                background-color: transparent;
+                padding: 10px 20px;
+                border-radius: 19px;
+                font-size: 0.9rem;
+                line-height: 22px;
+                font-weight: 600;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #F5F5F5;
+                }
 
                 span {
                     font-weight: 600;

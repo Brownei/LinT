@@ -2,10 +2,10 @@ import "./Collaborate.scss"
 import Chats from "../../components/Chats/Chats";
 import IdeasSection from "../../components/Chats/IdeasSection/IdeasSection";
 import { useAllPosts } from "../../hooks/use-all-posts";
-import { ClipLoader } from "react-spinners";
+// import { ClipLoader } from "react-spinners";
 
 const Collaborate = () => {
-  const {data: posts, isLoading} = useAllPosts()
+  const {data: posts, isLoading, isError} = useAllPosts()
   return (
       <main id="collaborate-page">
         <div className="collaborate-page">
@@ -16,9 +16,7 @@ const Collaborate = () => {
             </div>
 
             <div className="ideas-view">
-              {isLoading ? (<ClipLoader />) : (
-                <IdeasSection posts={posts}/>
-              )}
+              <IdeasSection posts={posts} isLoading={isLoading} isError={isError}/>
             </div>
 
           </div>
