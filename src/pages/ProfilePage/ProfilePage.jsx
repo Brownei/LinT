@@ -3,7 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 import './ProfilePage.scss'; 
 import Ideas from '../../components/Card/Ideas'; 
 import Coll from '../../components/Card/Coll'; 
-import ayati from '../../assets/images/ayati.svg'; 
 import brownson from '../../assets/images/brownson.svg'; 
 import gift from '../../assets/images/gift.svg'; 
 import { Icon } from '@iconify/react';
@@ -11,6 +10,7 @@ import { useUserPosts } from '../../hooks/use-user-posts';
 import { useCurrentUser } from '../../hooks/use-current-user';
 import { ClipLoader } from 'react-spinners';
 import LinkIcons from '../../components/LinkIcons';
+import { Image } from '@mantine/core';
 
 const ProfilePage = () => {
     const {data: user, isLoading: isCurrentUserLoading, isError: isCurrentUserError} = useCurrentUser()
@@ -28,13 +28,6 @@ const ProfilePage = () => {
 
     if(isCurrentUserError) {
         window.location.assign('/')
-    }
-
-    const currentUser = {
-        id: 1,
-        name: "Ayati Ogochukwu",
-        profession: "Product Designer",
-        image: ayati
     }
 
     const collaborations = [
@@ -69,7 +62,7 @@ const ProfilePage = () => {
             <div>
                 <div className='profile'>
                     <div className='profile-details'>
-                        <img src={user.profile.profileImage}/>
+                        <Image radius={100} h={94} w={94} src={user.profile.profileImage}/>
                         {/* <img src={`https://robohash.org/${searchParams.get('id')}.png?set=set4&size=50x50`} alt="" /> */}
                         <div className='write-ups'>
                             <h2>{user.profile.fullName}</h2>

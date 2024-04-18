@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Icon } from '@iconify/react';
+import { Image } from '@mantine/core';
+
 
 // eslint-disable-next-line react/prop-types
 const Upload = ({setUploadedImage, uploadedImage, styles}) => {
@@ -61,7 +63,7 @@ const Upload = ({setUploadedImage, uploadedImage, styles}) => {
                 </button>
             ) : (
                 <div className='viewed-image'>
-                    <img src={uploadedImage} alt="uploaded image" />
+                    <Image src={uploadedImage} alt="uploaded image" />
                     <button onClick={() => setUploadedImage('')}>
                         <Icon icon={'ion:trash-sharp'} color='#ff6347' fontSize={24}/>
                     </button>

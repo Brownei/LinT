@@ -7,7 +7,7 @@ import { ClipLoader } from 'react-spinners';
 import { useCurrentUser } from '../../hooks/use-current-user';
 
 export default function Layout() {
-  const {data: session, isLoading} = useCurrentUser()
+  const {data: session, isLoading, isError} = useCurrentUser()
   const navigate = useNavigate();
 
   if (isLoading) {
@@ -16,7 +16,7 @@ export default function Layout() {
         <ClipLoader color="#0006B1" size={30} />
     </div>
     )
-  } else if (!session) {
+  } else if (isError) {
     navigate('/')
   } else if (session && session.profile === null) {
     navigate('/setup-profile')

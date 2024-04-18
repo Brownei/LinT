@@ -1,3 +1,5 @@
+import { SelectTagsInput } from '../../components/SelectTagsInput';
+import { Textarea, TextInput } from '@mantine/core';
 import './CreatePostPage.scss';
 import { Icon } from '@iconify/react';
 
@@ -38,20 +40,17 @@ const CreatePostPage = () => {
 
             <div className="content">
               <h1>Collaborate Today</h1>
+
               <div className='input-title'>
-                  <label htmlFor="title">Project Title</label>
-                  <input type="text" placeholder="Input your project Idea" name="title" id="title"/>
+                <TextInput radius={'md'} className='text-inputs' label='Project Title' placeholder="Input your project Idea"/>
               </div>
+
               <div className='input-description'>
-                  <label htmlFor="description">Project Description</label>
-                  <textarea name="description" placeholder="Describe your amazing project idea here"></textarea>
+                <Textarea label='Project Description' className='text-inputs' minRows={10}  radius={'md'} placeholder="Describe your amazing project idea here" />
               </div>
+
               <div className='input-tags'>
-                  <div className='label'>
-                      <label htmlFor="tags">Select Tags</label>
-                      <p>Select tags associated with your project</p>
-                  </div>
-                  <input type="text" placeholder="Search tag" name="tags" id="tags"/>
+                <SelectTagsInput style={'input'}/>
               </div>
             </div>
         </div>
