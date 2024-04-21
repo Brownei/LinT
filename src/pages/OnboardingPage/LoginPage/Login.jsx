@@ -39,7 +39,7 @@ const Login = () => {
           navigate('/collaborate')
         }
     },
-});
+  });
 
   async function handleGoogleSignIn() {
       try {

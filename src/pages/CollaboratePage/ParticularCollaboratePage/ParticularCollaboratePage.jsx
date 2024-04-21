@@ -1,11 +1,21 @@
 import './ParticularCollaboratePage.scss'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import brownson from '../../../assets/images/brownson.svg'
 import { Icon } from '@iconify/react'
+import { useIdeaData } from '../../../hooks/use-idea-data'
+import { ClipLoader } from 'react-spinners'
 
 const ParticularCollaboratePage = () => {
-    const { project } = useParams()
-    console.log(project)
+    const { id } = useParams()
+    const navigate = useNavigate()
+    const { data: particularpost, isError, isFetching } = useIdeaData(id)
+    
+    {isFetching && <ClipLoader />}
+
+    {isError && (<div>You might wanna refresh!</div>)}
+
+    console.log(particularpost)
+
   return (
     <main id='particular-page'>
         <div className='container'>

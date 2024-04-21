@@ -2,8 +2,36 @@ import { SelectTagsInput } from '../../components/SelectTagsInput';
 import { Textarea, TextInput } from '@mantine/core';
 import './CreatePostPage.scss';
 import { Icon } from '@iconify/react';
+import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 
 const CreatePostPage = () => {
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
+  const [tags, setTags] = useState([])
+  const token = JSON.parse(sessionStorage.getItem('session'))
+
+  const createCollabMutation = useMutation({
+    mutationFn: () => {
+        return axios.post(`http://localhost:3131/posts`, {
+          description,
+          toolsTags: tags.map((tag) => tag),
+          title,
+        }, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+    },
+    onSuccess() {
+      window.location.assign('/collaborate')
+      alert('Post created')
+    },
+  });
+
   return (
     <main>
       <div className='logo'>
@@ -35,22 +63,22 @@ const CreatePostPage = () => {
                   Back
                 </span>
               </button>
-              <button className='post-button'>Post your idea</button>
+              <button className='post-button' onClick={async () => await createCollabMutation.mutateAsync()}>Post your idea</button>
             </div>
 
             <div className="content">
               <h1>Collaborate Today</h1>
 
               <div className='input-title'>
-                <TextInput radius={'md'} className='text-inputs' label='Project Title' placeholder="Input your project Idea"/>
+                <TextInput radius={'md'} className='text-inputs' label='Project Title' placeholder="Input your project Idea" value={title} onChange={(e) => setTitle(e.target.value)}/>
               </div>
 
               <div className='input-description'>
-                <Textarea label='Project Description' className='text-inputs' minRows={10}  radius={'md'} placeholder="Describe your amazing project idea here" />
+                <Textarea label='Project Description' className='text-inputs' minRows={10}  radius={'md'} placeholder="Describe your amazing project idea here" value={description} onChange={(e) => setDescription(e.target.value)}/>
               </div>
 
               <div className='input-tags'>
-                <SelectTagsInput style={'input'}/>
+                <SelectTagsInput style={'input'} setValue={setTags} value={tags}/>
               </div>
             </div>
         </div>

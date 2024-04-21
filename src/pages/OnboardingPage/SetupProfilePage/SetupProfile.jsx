@@ -7,11 +7,12 @@ import Upload from '../../../components/Upload/Upload';
 import { useState } from 'react';
 // import { useSession } from '../../../hooks/use-session';
 import { useCurrentUser } from '../../../hooks/use-current-user';
+import { ClipLoader } from 'react-spinners';
 
 const SetupProfile = ({heading}) => {
-  const {data: user} = useCurrentUser()
+  const {data: user, isLoading, isError} = useCurrentUser()
   const [state, setState] = useAppState()
-  const [uploadedImage, setUploadedImage] = useState(user.profileImage ? user.profileImage : '');
+  const [uploadedImage, setUploadedImage] = useState(user?.profileImage ? user?.profileImage : '');
   const navigate = useNavigate()
   const {register, handleSubmit, formState: { errors, isDirty }} = useForm({
     defaultValues: state,
@@ -24,6 +25,10 @@ const SetupProfile = ({heading}) => {
     localStorage.setItem('profileSetup', JSON.stringify(payload))
     navigate('/setup-profile/2')
   }
+
+  {isLoading && <ClipLoader />}
+
+  {isError && navigate('/')}
 
   return (
     <main id='profile-setup'>

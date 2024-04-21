@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import './IdeasSection.scss'
-import ayati from '../../../assets/images/ayati.svg'
 import Ideas from '../../Card/Ideas'
 import { NavLink } from 'react-router-dom'
 import { ClipLoader } from 'react-spinners'
@@ -29,8 +28,7 @@ const IdeasSection = ({ posts, isLoading, isError }) => {
                   <div>
                     {posts.map((post) => (
                       <div key={post.id}>
-                        {/* <Ideas user={user}/> */}
-                        {JSON.stringify(post)}
+                        <Ideas post={post} forProfile={false}/>
                       </div>
                     ))}
                   </div>

@@ -5,7 +5,7 @@ import { useAllPosts } from "../../hooks/use-all-posts";
 // import { ClipLoader } from "react-spinners";
 
 const Collaborate = () => {
-  const {data: posts, isLoading, isError} = useAllPosts()
+  const {data: posts, isFetching, isStale} = useAllPosts()
   return (
       <main id="collaborate-page">
         <div className="collaborate-page">
@@ -16,7 +16,7 @@ const Collaborate = () => {
             </div>
 
             <div className="ideas-view">
-              <IdeasSection posts={posts} isLoading={isLoading} isError={isError}/>
+              <IdeasSection posts={posts} isLoading={isFetching} isError={isStale}/>
             </div>
 
           </div>

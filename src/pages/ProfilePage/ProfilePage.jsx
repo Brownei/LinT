@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Link, useLocation } from 'react-router-dom'; 
+import { Link, useLocation, useNavigate } from 'react-router-dom'; 
 import './ProfilePage.scss'; 
 import Ideas from '../../components/Card/Ideas'; 
 import Coll from '../../components/Card/Coll'; 
@@ -11,14 +11,19 @@ import { useCurrentUser } from '../../hooks/use-current-user';
 import { ClipLoader } from 'react-spinners';
 import LinkIcons from '../../components/LinkIcons';
 import { Image } from '@mantine/core';
+import {formatDate} from 'date-fns';
+import { formatDate as dateFormater } from '../../utils/formatDate';
 
 const ProfilePage = () => {
-    const {data: user, isLoading: isCurrentUserLoading, isError: isCurrentUserError} = useCurrentUser()
-    const {data: posts, isLoading, isError} = useUserPosts(user.profile.username)
+    const navigate = useNavigate()
+    
+    const {data: user, isFetching: isCurrentUserFetching, isError: isCurrentUserError} = useCurrentUser()
+    const {data: posts, isFetching, isError} = useUserPosts(user.profile.username)
     const location = useLocation()
     const searchParams = new URLSearchParams(location.search);
+    const formattedDate = formatDate(user.profile.createdAt, "yyyy-MM-dd")
 
-    if(isCurrentUserLoading) {
+    if(isCurrentUserFetching) {
         return (
             <div className="loader">
                 <ClipLoader color="#0006B1" size={30} />
@@ -27,7 +32,7 @@ const ProfilePage = () => {
     }
 
     if(isCurrentUserError) {
-        window.location.assign('/')
+        navigate('/')
     }
 
     const collaborations = [
@@ -93,7 +98,7 @@ const ProfilePage = () => {
                             </div>
                             <div className='calendar'>
                                 <Icon icon={'bx:calendar'} fontSize={24}/>
-                                <p>Joined April 2022</p>
+                                <p>{dateFormater(formattedDate)}</p>
                             </div>
                         </div>
                     </div>
@@ -103,7 +108,7 @@ const ProfilePage = () => {
                     <div className='card-title'>
                         <h3>Ideas</h3>
                         <div className='user-ideas'>
-                            {isLoading ? (
+                            {isFetching ? (
                                 <div className='loading'>
                                     <ClipLoader />
                                 </div>
@@ -113,9 +118,11 @@ const ProfilePage = () => {
                                         <p className='information'>No ideas yet? Share and Collaborate!</p>
                                     ) : (
                                         <div>
-                                            {posts.map((post) => {
-                                                <p>{JSON.stringify(post)}</p>
-                                            })}
+                                            {posts.map((post) => (
+                                                <div key={post.id}>
+                                                    <Ideas post={post} forProfile={true}/>
+                                                </div>
+                                            ))}
                                         </div>
                                     )}
                                 </div>

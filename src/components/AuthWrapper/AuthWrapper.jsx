@@ -6,10 +6,10 @@ import { useCurrentUser } from "../../hooks/use-current-user";
 
 
 export const AuthWrapper = () => {
-  const {isLoading} = useCurrentUser();
+  const { isFetching } = useCurrentUser();
   // const navigate = useNavigate();
 
-  if (isLoading) {
+  if (isFetching) {
     return (
       <div className="loader">
         <ClipLoader color="#0006B1" size={30} />

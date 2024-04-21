@@ -4,7 +4,7 @@ import { Combobox, Pill, PillsInput, useCombobox, Group, CheckIcon, PillGroup } 
 import { programmingAndDesignTools } from '../utils/data';
 import LanguageIcons from './LanguageIcons/LanguageIcons';
 
-export function SelectTagsInput({ style }) {
+export function SelectTagsInput({ style, value, setValue }) {
     const MAX_DISPLAYED_VALUES = 4;
     const combobox = useCombobox({
         onDropdownClose: () => combobox.resetSelectedOption(),
@@ -13,7 +13,7 @@ export function SelectTagsInput({ style }) {
     
     const [search, setSearch] = useState('');
     const [data, setData] = useState(programmingAndDesignTools);
-    const [value, setValue] = useState([]);
+    // const [value, setValue] = useState([]);
     
     const exactOptionMatch = data.some((item) => item === search);
     
