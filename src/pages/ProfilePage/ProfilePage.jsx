@@ -13,16 +13,37 @@ import LinkIcons from '../../components/LinkIcons';
 import { Image } from '@mantine/core';
 import {formatDate} from 'date-fns';
 import { formatDate as dateFormater } from '../../utils/formatDate';
+import { useMutation } from "@tanstack/react-query";
+import axios from 'axios';
+import { useAuthStore } from '../../hooks/use-auth-store';
+import { parsedToken } from '../../utils/api';
 
 const ProfilePage = () => {
     const navigate = useNavigate()
-    
+    const authStore = useAuthStore()
     const {data: user, isFetching: isCurrentUserFetching, isError: isCurrentUserError} = useCurrentUser()
     const {data: posts, isFetching, isError} = useUserPosts(user.profile.username)
     const location = useLocation()
     const searchParams = new URLSearchParams(location.search);
     const formattedDate = formatDate(user.profile.createdAt, "yyyy-MM-dd")
 
+    const signOutMutation = useMutation({
+        mutationFn: (token) => {
+            return axios.post(`http://localhost:3131/auth/logout`, {}, {
+                withCredentials: true,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': "Bearer " + token 
+                }
+            })
+        },
+        onSuccess() {
+            authStore.clear()
+            sessionStorage.removeItem('session')
+            window.location.assign('/')
+        },
+    });
+    
     if(isCurrentUserFetching) {
         return (
             <div className="loader">
@@ -62,13 +83,13 @@ const ProfilePage = () => {
         },
     ]
 
+
     return (
         <main id="profile_page">
             <div>
                 <div className='profile'>
                     <div className='profile-details'>
                         <Image radius={100} h={94} w={94} src={user.profile.profileImage}/>
-                        {/* <img src={`https://robohash.org/${searchParams.get('id')}.png?set=set4&size=50x50`} alt="" /> */}
                         <div className='write-ups'>
                             <h2>{user.profile.fullName}</h2>
                             <span>@{user.profile.username}</span>
@@ -80,7 +101,10 @@ const ProfilePage = () => {
                     </div>
                     <div className="sidebar">
                         {location.pathname.includes(user.profile.username) || location.pathname === '/profile' ? (
-                            <Link to={'/profile/edit'} className='edit-profile'>Edit Profile</Link>
+                            <div className='buttons'>
+                                <Link to={'/profile/edit'} className='edit-profile'>Edit Profile</Link>
+                                <button onClick={async () => await signOutMutation.mutateAsync(parsedToken)}>Log Out</button>
+                            </div>
                         ) : (
                             <button className='collabs'>8 Collabs</button>
                         )}

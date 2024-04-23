@@ -56,7 +56,8 @@ const Login = () => {
   }
 
   if(session) {
-    navigate('/collaborate', { replace: true })
+    setIsLoading(false)
+    window.location.assign('/collaborate')
   }
 
   return (

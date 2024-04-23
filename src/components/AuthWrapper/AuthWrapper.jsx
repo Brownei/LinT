@@ -3,10 +3,10 @@ import "./AuthWrapper.scss"
 import { Outlet } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useCurrentUser } from "../../hooks/use-current-user";
-
+// import { useNavigate } from "react-router-dom";
 
 export const AuthWrapper = () => {
-  const { isFetching } = useCurrentUser();
+  const { isFetching, error } = useCurrentUser();
   // const navigate = useNavigate();
 
   if (isFetching) {
@@ -15,6 +15,10 @@ export const AuthWrapper = () => {
         <ClipLoader color="#0006B1" size={30} />
     </div>
     )
+  }
+
+  if(error) {
+    window.location.assign('/')
   }
 
   return (

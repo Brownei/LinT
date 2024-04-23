@@ -7,13 +7,13 @@ async function getIdeaData(id) {
         withCredentials: true,
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + parsedToken
+            'Authorization': `Bearer ` + parsedToken
         }
     })
     return data
 }
 
 export const useIdeaData = (id) => useQuery({
-    queryKey: ['idea-data'],
+    queryKey: ['all-posts', id],
     queryFn: () => getIdeaData(id),
 })
