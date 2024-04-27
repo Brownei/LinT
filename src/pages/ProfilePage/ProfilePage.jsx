@@ -10,7 +10,6 @@ import { useUserPosts } from '../../hooks/use-user-posts';
 import { useCurrentUser } from '../../hooks/use-current-user';
 import { ClipLoader } from 'react-spinners';
 import LinkIcons from '../../components/LinkIcons';
-import { Image } from '@mantine/core';
 import {formatDate} from 'date-fns';
 import { formatDate as dateFormater } from '../../utils/formatDate';
 import { useMutation } from "@tanstack/react-query";
@@ -21,8 +20,8 @@ import { parsedToken } from '../../utils/api';
 const ProfilePage = () => {
     const navigate = useNavigate()
     const authStore = useAuthStore()
-    const {data: user, isFetching: isCurrentUserFetching, isError: isCurrentUserError} = useCurrentUser()
-    const {data: posts, isFetching, isError} = useUserPosts(user.profile.username)
+    const {data: user, isFetching: isCurrentUserFetching, error: isCurrentError} = useCurrentUser()
+    const {data: posts, isFetching, error} = useUserPosts(user.profile.username)
     const location = useLocation()
     const searchParams = new URLSearchParams(location.search);
     const formattedDate = formatDate(user.profile.createdAt, "yyyy-MM-dd")
@@ -33,7 +32,7 @@ const ProfilePage = () => {
                 withCredentials: true,
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': "Bearer " + token 
+                    'Authorization': "Bearer " + token  
                 }
             })
         },
@@ -52,7 +51,7 @@ const ProfilePage = () => {
         )
     }
 
-    if(isCurrentUserError) {
+    if(isCurrentError) {
         navigate('/')
     }
 
@@ -89,7 +88,7 @@ const ProfilePage = () => {
             <div>
                 <div className='profile'>
                     <div className='profile-details'>
-                        <Image radius={100} h={94} w={94} src={user.profile.profileImage}/>
+						<img src={user.profile.profileImage} alt={'Profile Image'}/>
                         <div className='write-ups'>
                             <h2>{user.profile.fullName}</h2>
                             <span>@{user.profile.username}</span>
@@ -136,7 +135,7 @@ const ProfilePage = () => {
                                 <div className='loading'>
                                     <ClipLoader />
                                 </div>
-                            ) : isError ? (<p className='information'>Wanna refresh?..</p>) : (
+                            ) : error ? (<p className='information'>Wanna refresh?..</p>) : (
                                 <div>
                                     {posts.length === 0 ? (
                                         <p className='information'>No ideas yet? Share and Collaborate!</p>

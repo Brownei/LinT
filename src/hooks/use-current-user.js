@@ -7,7 +7,7 @@ async function getCurrentUser() {
         withCredentials: true,
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + parsedToken
+            'Authorization': `Bearer ${parsedToken}` 
         }
     })
     return data

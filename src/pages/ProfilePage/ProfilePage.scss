@@ -12,10 +12,19 @@
         padding: 10px;
 
         .profile-details {
+
             display: flex;
             justify-content: start;
             align-items: start;
             gap: 16px;
+
+
+			img {
+				width: 90px;
+				height: 90px;
+				border: 1px solid transparent;
+				border-radius: 100%;
+			}
 
             .write-ups {
                 display: grid;

@@ -3,8 +3,10 @@ import './IdeasSection.scss'
 import Ideas from '../../Card/Ideas'
 import { NavLink } from 'react-router-dom'
 import { ClipLoader } from 'react-spinners'
+import { useAllPosts } from '../../../hooks/use-all-posts'
 
-const IdeasSection = ({ posts, isLoading, isError }) => {
+const IdeasSection = () => {
+  const {data: posts, isLoading, isError} = useAllPosts()
 
   return (
     <>
@@ -18,7 +20,7 @@ const IdeasSection = ({ posts, isLoading, isError }) => {
           <div className='all-ideas'>
             {isLoading ? (
               <div className='loading'>
-                <ClipLoader />
+                <ClipLoader color="#0006B1" fontSize={30}/>
               </div>
             ) : isError ? (<p className='information'>Wanna refresh?..</p>) : (
               <div>

@@ -29,7 +29,7 @@ const Login = () => {
     },
     onSuccess({data}) {
         authStore.set(data.userInfo)
-        sessionStorage.setItem('session', JSON.stringify(data.sessionCookie))
+        sessionStorage.setItem('session', data.sessionCookie)
 
         console.log(data.userInfo)
 
@@ -57,7 +57,7 @@ const Login = () => {
 
   if(session) {
     setIsLoading(false)
-    window.location.assign('/collaborate')
+    navigate('/collaborate')
   }
 
   return (

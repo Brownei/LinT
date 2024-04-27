@@ -3,12 +3,13 @@ import { useLocation } from 'react-router-dom'
 import InterestsSection from './InterestsSection/InterestsSection'
 import ayati from '../../assets/images/ayati.svg'; 
 import { Link } from 'react-router-dom';
-// import brownson from '../../assets/images/brownson.svg'; 
-// import gift from '../../assets/images/gift.svg';
+import {useAllInterests} from '../../hooks/use-all-interests';
+import {ClipLoader} from 'react-spinners';
 
 const Chats = () => {
   const location = useLocation()
-  let numberOfInterest = 0
+	const { data: interests, isLoading, error } = useAllInterests()
+  let numberOfInterest =  interests?.length
   let numberOfChats = 5
   const users = [
     {
@@ -133,7 +134,6 @@ const Chats = () => {
 },
 
   ]
-  
   const chatsSection = location.search === '?=chats' && 'chat-chats'
 
   return (
@@ -160,30 +160,39 @@ const Chats = () => {
             <span className={location.search === '?=chats' ? 'active' : ''}></span>
           </div>
         </div>
-        
-        {location.search === '?=chats' ? (
-          <div className='chat-section'>
-            <input type="text" placeholder='Search'/>
-            <h1>Chats</h1>
-          </div>
-        ) : (
-        <div className='interest-section'>
-          {users.length > 0 ? (
-            <div className='all-interests'>
-              <span>View people interested in your Idea!!</span>
-              {users.map((user, index) => (
-                  <div key={index}>
-                    <InterestsSection user={user}/>
-                  </div>
-              ))}
-            </div>
-          ) : (
-            <div className='no-interests'>
-              <p>Nobody is interested yet!</p>
-            </div>
-          )}
-        </div>
-        )}
+		  {isLoading ? (
+			  <div className='loading'>
+				<ClipLoader fontSize={30}/>
+			  </div>
+		  ) : error ? (
+			<div>You gotta make a little refresh</div>
+		  ) : (
+			<div>
+				{location.search === '?=chats' ? (
+					<div className='chat-section'>
+						<input type="text" placeholder='Search'/>
+						<h1>Chats</h1>
+					</div>
+				) : (
+					<div className='interest-section'>
+						{users.length > 0 ? (
+							<div className='all-interests'>
+								<span>View people interested in your Idea!!</span>
+								{users.map((user, index) => (
+									<div key={index}>
+										<InterestsSection user={user}/>
+									</div>
+								))}
+							</div>
+						) : (
+							<div className='no-interests'>
+								<p>Nobody is interested yet!</p>
+							</div>
+						)}
+					</div>
+				)}
+			</div>
+		  )}
       </div>
     </main>
   )

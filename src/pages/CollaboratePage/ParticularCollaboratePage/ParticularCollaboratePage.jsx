@@ -3,22 +3,47 @@ import { useParams } from 'react-router-dom'
 import { Icon } from '@iconify/react'
 import { useIdeaData } from '../../../hooks/use-idea-data'
 import { ClipLoader } from 'react-spinners'
+import {useCurrentUser} from '../../../hooks/use-current-user'
+import { parsedToken } from '../../../utils/api'
+import { useMutation } from '@tanstack/react-query'
+import {useModalStore} from '../../../hooks/use-modal-store'
 
 const ParticularCollaboratePage = () => {
     const { id } = useParams()
-    const { data: particularpost, error, isFetching, isSuccess } = useIdeaData(id)
-    
-    {isFetching && (
-        <div className='loader'>
-            <ClipLoader color="#0006B1" size={30} />
-        </div>
-    )}
-    
-    {error && (<div>You might wanna refresh!</div>)}
+    const { data: particularpost, error, isLoading } = useIdeaData(id)
+	const { data: currentUser } = useCurrentUser()
+	const { setModalOpen, open } = useModalStore()
 
-    return (
+	console.log(open)
+	const sendInterestMutation = useMutation({
+		mutationFn: (token) => {
+			return axios.post(`http://localhost:3131/collaborators/requests`, {
+				content
+			}, {
+				withCredentials: true,
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': `Bearer ${token}`
+				}
+			})
+		},
+		onSuccess() {
+			alert('Request Sent!')
+		},
+		onError() {
+			alert('Request failed!')
+		}
+	});	
+
+	return (
         <main id='particular-page'>
-            {isSuccess && (
+            {isLoading ? (
+				<div className='loader'>
+					<ClipLoader color="#0006B1" fontSize={30}/>
+				</div>
+			) : error ? (
+				<div>You might wanna refresh big boy!</div>
+			) : (
                 <div className='container'>
 
                     <button onClick={() => window.history.back()} className='back-button'>
@@ -36,7 +61,9 @@ const ParticularCollaboratePage = () => {
                                 <span>{particularpost.profile.occupation}</span>
                             </p>
                         </div>
-                        <button>Interested</button>
+                        {currentUser.id !== particularpost.profile.id && (
+							<button onClick={() => setModalOpen(true)} >Interested</button>
+						)}
                     </div>
 
                     <div className='content'>
@@ -54,7 +81,7 @@ const ParticularCollaboratePage = () => {
                     </div>
 
                 </div>
-            )}
+			)}
         </main>
     )
 }

@@ -10,7 +10,7 @@ import { useState } from 'react';
 
 const App = () => {
     const [queryClient] = useState(() => new QueryClient({
-        defaultOptions: {queries: {staleTime: 1000 * 60, cacheTime: 1000 * 60 * 20}}
+		defaultOptions: {queries: {staleTime: 1000 * 20, gcTime: 1000 * 60 * 5}}
     }))
     
     return (

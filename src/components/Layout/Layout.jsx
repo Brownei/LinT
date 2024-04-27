@@ -5,12 +5,25 @@ import { Outlet } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 import { useCurrentUser } from '../../hooks/use-current-user';
+import {useEffect} from 'react';
 
 export default function Layout() {
-  const {data: session, isFetching, error} = useCurrentUser()
+  const {data: session, isLoading} = useCurrentUser()
   const navigate = useNavigate();
 
-  if (isFetching) {
+	useEffect(() => {
+		const timeOut = setTimeout(() => {
+			if(!session) {
+				navigate('/')
+			} else if (session && session.profile === null) {
+				navigate('/setup-profile')
+			}
+		}, 4000)
+
+		return () => clearTimeout(timeOut)
+	}, [session])
+
+  if (isLoading) {
     return (
       <div className="loader">
         <ClipLoader color="#0006B1" size={30} />
@@ -18,13 +31,6 @@ export default function Layout() {
     )
   }
 
-  if(error) {
-    window.location.assign('/')
-  }
-
-  if (session && session.profile === null) {
-    navigate('/setup-profile')
-  } 
 
   return (
       <main id="body">

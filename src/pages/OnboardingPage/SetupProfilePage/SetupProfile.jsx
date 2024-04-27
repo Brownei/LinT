@@ -8,11 +8,12 @@ import { useState } from 'react';
 // import { useSession } from '../../../hooks/use-session';
 import { useCurrentUser } from '../../../hooks/use-current-user';
 import { ClipLoader } from 'react-spinners';
+import { useEffect } from 'react';
 
 const SetupProfile = ({heading}) => {
-  const {data: user, isLoading, isError} = useCurrentUser()
+  const {data: user, isLoading} = useCurrentUser()
   const [state, setState] = useAppState()
-  const [uploadedImage, setUploadedImage] = useState(user?.profileImage ? user?.profileImage : '');
+  const [uploadedImage, setUploadedImage] = useState(user.profileImage ? user.profileImage : '');
   const navigate = useNavigate()
   const {register, handleSubmit, formState: { errors, isDirty }} = useForm({
     defaultValues: state,
@@ -28,7 +29,15 @@ const SetupProfile = ({heading}) => {
 
   {isLoading && <ClipLoader />}
 
-  {isError && navigate('/')}
+	useEffect(() => {
+		const timeOut = setTimeout(() => {
+			if(!user) {
+				window.location.assign('/')
+			}
+		}, 4000)
+
+		return () => clearTimeout(timeOut)
+	}, [user])
 
   return (
     <main id='profile-setup'>
