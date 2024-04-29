@@ -1,7 +1,7 @@
 import './Pages.scss'
 import { Routes, Route } from "react-router-dom";
 import Collaborate from './CollaboratePage/Collaborate'
-import Profile from './ProfilePage/Profile';
+import ProfilePage from './ProfilePage/ProfilePage';
 import Notifications from './NotificationsPage/Notifications';
 import Login from './OnboardingPage/LoginPage/Login';
 import Register from './OnboardingPage/RegisterPage/Register';
@@ -15,10 +15,9 @@ import { AppProvider } from '../components/Provider/AppProvider';
 import { useLocation } from 'react-router-dom';
 import SecondSetupPage from './OnboardingPage/SetupProfilePage/SecondSetup/SecondSetupPage';
 import SetupConfirmPage from './OnboardingPage/SetupProfilePage/SetupConfirmPage/SetupConfirmPage';
-import { useSession } from '../hooks/use-session';
+import EditProfilePage from './EditProfilePage/EditProfilePage';
 
 const Pages = () => {
-  const session = useSession()
   const location = useLocation()
   let heading;
 
@@ -37,11 +36,12 @@ const Pages = () => {
   return (
     <section className='pages'>
         <Routes>
-          <Route element={<Layout session={session}/>}>
+          <Route element={<Layout />}>
             <Route path="/collaborate" element={<Collaborate />} />
-            <Route path={`/${session.user?.profile?.username}`} element={<Profile user={session.user}/>}/>
+            <Route path='profile' element={<ProfilePage />}/>
             <Route path='/notifications' element={<Notifications />}/>
             <Route path='/collaborate/:id' element={<ParticularCollaboratePage />}/>
+            <Route path='/profile/edit' element={<EditProfilePage />}/>
           </Route>
 
           <Route element={<AuthWrapper />}>

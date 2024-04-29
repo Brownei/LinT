@@ -1,91 +1,12 @@
+/* eslint-disable react/prop-types */
 import './IdeasSection.scss'
-import ayati from '../../../assets/images/ayati.svg'
 import Ideas from '../../Card/Ideas'
 import { NavLink } from 'react-router-dom'
+import { ClipLoader } from 'react-spinners'
+import { useAllPosts } from '../../../hooks/use-all-posts'
 
 const IdeasSection = () => {
-  const users = [
-    {
-        id: 1,
-        name: "Ayati Ogochukwu",
-        profession: "Product Designer",
-        image: ayati,
-        post: {
-            title: "Shopify Ecommerce Store like Jumia",
-            description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-        }
-    },
-    {
-        id: 2,
-        name: "Ayati Ogochukwu",
-        profession: "Product Designer",
-        image: ayati,
-        post: {
-            title: "Shopify Ecommerce Store like Jumia",
-            description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-        }
-    },
-    {
-      id: 2,
-      name: "Ayati Ogochukwu",
-      profession: "Product Designer",
-      image: ayati,
-      post: {
-          title: "Shopify Ecommerce Store like Jumia",
-          description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-      }
-  },
-  {
-    id: 2,
-    name: "Ayati Ogochukwu",
-    profession: "Product Designer",
-    image: ayati,
-    post: {
-        title: "Shopify Ecommerce Store like Jumia",
-        description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-    }
-},
-{
-  id: 2,
-  name: "Ayati Ogochukwu",
-  profession: "Product Designer",
-  image: ayati,
-  post: {
-      title: "Shopify Ecommerce Store like Jumia",
-      description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-  }
-},
-{
-  id: 2,
-  name: "Ayati Ogochukwu",
-  profession: "Product Designer",
-  image: ayati,
-  post: {
-      title: "Shopify Ecommerce Store like Jumia",
-      description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-  }
-},
-{
-  id: 2,
-  name: "Ayati Ogochukwu",
-  profession: "Product Designer",
-  image: ayati,
-  post: {
-      title: "Shopify Ecommerce Store like Jumia",
-      description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-  }
-},
-{
-  id: 2,
-  name: "Ayati Ogochukwu",
-  profession: "Product Designer",
-  image: ayati,
-  post: {
-      title: "Shopify Ecommerce Store like Jumia",
-      description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, aperiam distinctio officiis sunt vitae soluta tempora quod deleniti accusamus vero nihil."
-  }
-},
-  ]
+  const {data: posts, isLoading, isError} = useAllPosts()
 
   return (
     <>
@@ -97,11 +18,25 @@ const IdeasSection = () => {
           </div>
 
           <div className='all-ideas'>
-            {users.map((user) => (
-              <div key={user.id}>
-                <Ideas user={user}/>
+            {isLoading ? (
+              <div className='loading'>
+                <ClipLoader color="#0006B1" fontSize={30}/>
               </div>
-            ))}
+            ) : isError ? (<p className='information'>Wanna refresh?..</p>) : (
+              <div>
+                {posts.length === 0 ? (
+                  <div className='no-data'>Nobody wants to post?</div>
+                ): (
+                  <div>
+                    {posts.map((post) => (
+                      <div key={post.id}>
+                        <Ideas post={post} forProfile={false}/>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </main>

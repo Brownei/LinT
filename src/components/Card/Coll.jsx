@@ -5,10 +5,10 @@ const Coll = ({collaborations, currentUser}) => {
     return (
         <div className='collabo'>
             <div className='user'>
-                <img src={currentUser.image} alt={currentUser.name} />
+                <img src={currentUser.profileImage} alt={currentUser.fullName} />
                 <div>
-                    <h5>{currentUser.name}</h5>
-                    <p>{currentUser.profession}</p>
+                    <h5>{currentUser.fullName}</h5>
+                    <p>{currentUser.occupation}</p>
                 </div>
             </div>
             <span>&</span>

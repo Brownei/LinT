@@ -1,9 +1,37 @@
+import { SelectTagsInput } from '../../components/SelectTagsInput';
+import { Textarea, TextInput } from '@mantine/core';
 import './CreatePostPage.scss';
 import { Icon } from '@iconify/react';
-import { useNavigate } from 'react-router-dom'
+import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
+import { parsedToken } from '../../utils/api';
 
 const CreatePostPage = () => {
-  const navigate = useNavigate()
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
+  const [tags, setTags] = useState([])
+
+  const createCollabMutation = useMutation({
+    mutationFn: () => {
+        return axios.post(`http://localhost:3131/posts`, {
+          description,
+          toolsTags: tags.map((tag) => tag),
+          title,
+        }, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${parsedToken}`
+            }
+        })
+    },
+    onSuccess() {
+      window.location.assign('/collaborate')
+      alert('Post created')
+    },
+  });
+
   return (
     <main>
       <div className='logo'>
@@ -29,31 +57,28 @@ const CreatePostPage = () => {
       <div id='modal'>
         <div className="container">
             <div className="header">
-              <button onClick={() => navigate('/collaborate')} className='back-button'>
+              <button onClick={() => window.history.back()} className='back-button'>
                 <span>
                   <Icon icon={'tabler:arrow-left'} fontSize={23} color='#0006B1'/>
                   Back
                 </span>
               </button>
-              <button className='post-button'>Post your idea</button>
+              <button className='post-button' onClick={async () => await createCollabMutation.mutateAsync()}>Post your idea</button>
             </div>
 
             <div className="content">
               <h1>Collaborate Today</h1>
+
               <div className='input-title'>
-                  <label htmlFor="title">Project Title</label>
-                  <input type="text" placeholder="Input your project Idea" name="title" id="title"/>
+                <TextInput radius={'md'} className='text-inputs' label='Project Title' placeholder="Input your project Idea" value={title} onChange={(e) => setTitle(e.target.value)}/>
               </div>
+
               <div className='input-description'>
-                  <label htmlFor="description">Project Description</label>
-                  <textarea name="description" placeholder="Describe your amazing project idea here"></textarea>
+                <Textarea label='Project Description' className='text-inputs' minRows={10}  radius={'md'} placeholder="Describe your amazing project idea here" value={description} onChange={(e) => setDescription(e.target.value)}/>
               </div>
+
               <div className='input-tags'>
-                  <div className='label'>
-                      <label htmlFor="tags">Select Tags</label>
-                      <p>Select tags associated with your project</p>
-                  </div>
-                  <input type="text" placeholder="Search tag" name="tags" id="tags"/>
+                <SelectTagsInput style={'input'} setValue={setTags} value={tags}/>
               </div>
             </div>
         </div>

@@ -3,10 +3,9 @@
     justify-content: start;
     place-content: start;
     place-items: start;
-    background-color: #F5F5F5;
     width: fit-content;
     border-radius: 8px;
-    padding: 20px;
+    padding: 16px 10px;
     text-decoration: none;
 
     .card {
@@ -37,7 +36,7 @@
                     font-weight: 400;
                     font-size: 0.7rem;
                     color: #8F9191;
-                    -webkit-line-clamp: 4;
+                    margin: 0px;
                 }
             }
         }
@@ -47,8 +46,22 @@
             color: #2A2A2A;
             font-weight: 600;
             font-size: 1.5rem;
+            text-transform: capitalize;
         }
-        p {
+        .profile-way {
+            margin: 0px;
+            font-size: 1rem;
+            line-height: 22px;
+            font-weight: 400;
+            color: #8F9191;
+            width: 615.7px;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            -webkit-line-clamp: 3
+        }
+
+        .collaborate-way {
             margin: 0px;
             font-size: 1rem;
             line-height: 22px;
@@ -61,13 +74,16 @@
             -webkit-line-clamp: 4
         }
     }
-}
 
-.ideas:hover {
+    &:hover {
+        background-color: #F5F5F5;
+        transition-duration: 300ms;
+
     .card {
         h4 {
             color: #0006B1;
             transition-duration: 300ms;
         }
+    }
     }
 }

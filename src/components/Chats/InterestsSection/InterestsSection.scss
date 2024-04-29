@@ -8,6 +8,7 @@
     border-radius: 8px;
     padding: 20px;
     text-decoration: none;
+	cursor: pointer;
 
     .card {
         display: grid;
@@ -17,7 +18,7 @@
             display: flex;
             justify-content: start;
             align-items: start;
-            gap: 4px;
+            gap: 2px;
 
             img {
                 margin: 0px;
@@ -32,11 +33,13 @@
                     font-weight: 600;
                     font-size: 0.9rem;
                     color: #000000;
+					margin: 0px;
                 }
                 p {
                     font-weight: 400;
                     font-size: 0.7rem;
                     color: #8F9191;
+					margin: 0px;
                 }
             }
         }
@@ -46,13 +49,17 @@
             color: #060A0A;
             font-weight: 600;
             font-size: 0.9rem;
+			text-transform: capitalize;
         }
         p {
             margin: 0px;
             font-size: 0.7rem;
-            line-height: 22px;
             font-weight: 400;
             color: #8F9191;
+			display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            -webkit-line-clamp: 2
         }
 
 
@@ -81,5 +88,14 @@
                 color: #060A0A;
             }
         }
+    }
+
+    &:hover {
+		.card {
+			h4 {
+				color: #0006B1;
+				transition-duration: 300ms;
+			}
+		}
     }
 }

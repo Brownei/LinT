@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Icon } from '@iconify/react';
 
+
 // eslint-disable-next-line react/prop-types
-const Upload = ({setUploadedImage, uploadedImage}) => {
+const Upload = ({setUploadedImage, uploadedImage, styles}) => {
     const cloudName = import.meta.env.VITE_CLOUD_NAME;
     const uploadPreset = import.meta.env.VITE_UPLOAD_PRESET;
     const [loaded, setLoaded] = useState(false);
@@ -50,20 +51,20 @@ const Upload = ({setUploadedImage, uploadedImage}) => {
     }, [loaded]);
 
     return (
-        <div>
+        <div className={styles}>
             {uploadedImage === '' ? (
                 <button
                     disabled={isDisabled}
-                    className={`btn btn-primary ${isDisabled ? 'btn-disabled' : ''}`}
+                    className={`btn`}
                     type="button"
                     onClick={uploadWidget}>
-                    {isDisabled ? 'Opening Widget' : 'Upload Image'}
+                    {isDisabled ? <Icon className='spinner' icon={'formkit:spinner'} fontSize={24}/> : <Icon icon={'fluent:camera-add-48-regular'} fontSize={24}/>}
                 </button>
             ) : (
-                <div>
+                <div className='viewed-image'>
                     <img src={uploadedImage} alt="uploaded image" />
                     <button onClick={() => setUploadedImage('')}>
-                        <Icon icon={'mdi:trash-outline'}/>
+                        <Icon icon={'ion:trash-sharp'} color='#ff6347' fontSize={24}/>
                     </button>
                 </div>
             )}

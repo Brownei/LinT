@@ -61,6 +61,16 @@
         .all-ideas {
             display: grid;
             gap: 30px;
+			margin-bottom: 70px;
+
+            .loading {
+                // width: 600px;
+                text-align: center;
+            }
+
+            .no-data {
+                text-align: center;
+            }
         }
     }
 }

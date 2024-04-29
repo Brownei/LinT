@@ -13,6 +13,10 @@
     "@cloudinary/react": "^1.13.0",
     "@cloudinary/url-gen": "^1.19.0",
     "@iconify/react": "^4.1.1",
+    "@mantine/core": "^7.8.0",
+    "@mantine/hooks": "^7.8.0",
+    "@mantine/modals": "^7.8.0",
+    "@mantine/notifications": "^7.8.0",
     "@reduxjs/toolkit": "^2.2.3",
     "@tanstack/react-query": "^5.8.4",
     "@tanstack/react-query-devtools": "^5.8.4",
@@ -20,6 +24,7 @@
     "color-name-list": "^10.16.0",
     "date-fns": "^3.6.0",
     "firebase": "^10.11.0",
+    "moment": "^2.30.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.3",
@@ -37,6 +42,9 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
+    "postcss": "^8.4.38",
+    "postcss-preset-mantine": "^1.14.4",
+    "postcss-simple-vars": "^7.0.1",
     "vite": "^4.4.5"
   }
 }

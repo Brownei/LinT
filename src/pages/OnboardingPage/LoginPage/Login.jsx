@@ -6,39 +6,39 @@ import { useMutation } from "@tanstack/react-query";
 import { signInWithGoogle } from '../../../utils/firebase';
 import { useAuthStore } from '../../../hooks/use-auth-store';
 import axios from 'axios';
-// import { useSession } from '../../../hooks/use-session';
+import { useCurrentUser } from '../../../hooks/use-current-user';
 
 const Login = () => {
   const navigate = useNavigate();
+  const {data: session} = useCurrentUser()
   const authStore = useAuthStore();
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  // const {status} = useSession()
   // const URL = import.meta.env.VITE_API_ENDPOINT
 
 
   const googleLoginMutation = useMutation({
-      mutationFn: (token) => {
-          return axios.post(`http://localhost:3131/auth/google/login`, {}, {
-              withCredentials: true,
-              headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': `Bearer ${token}`
-              }
-          })
-      },
-      onSuccess({data}) {
-          authStore.set(data.userInfo)
-          sessionStorage.setItem('session', data.sessionCookie)
+    mutationFn: (token) => {
+        return axios.post(`http://localhost:3131/auth/google/login`, {}, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+    },
+    onSuccess({data}) {
+        authStore.set(data.userInfo)
+        sessionStorage.setItem('session', data.sessionCookie)
 
-          console.log(data.userInfo)
+        console.log(data.userInfo)
 
-          if (data.userInfo.profile === null) {
-            navigate('/setup-profile');
-          } else {
-            navigate('/collaborate')
-          }
-      },
+        if (data.userInfo.profile === null) {
+          navigate('/setup-profile');
+        } else {
+          navigate('/collaborate')
+        }
+    },
   });
 
   async function handleGoogleSignIn() {
@@ -55,9 +55,10 @@ const Login = () => {
       }
   }
 
-  // if(status === 'authenticated') {
-  //   navigate('/collaborate', { replace: true })
-  // }
+  if(session) {
+    setIsLoading(false)
+    navigate('/collaborate')
+  }
 
   return (
     <main>

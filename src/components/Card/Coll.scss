@@ -12,12 +12,14 @@
         align-items: center;
         gap: 8px;
 
-        img {
-            height: 40px;
-            width: 40px;
-        }
+		img {
+			width: 40px;
+			height: 40px;
+			border: 1px solid transparent;
+			border-radius: 100%;
+		}
 
-        h5 {
+		h5 {
             margin: 0px;
             font-weight: 600;
             font-size: 1rem;
