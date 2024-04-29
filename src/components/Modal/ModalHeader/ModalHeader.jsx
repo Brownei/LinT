@@ -1,12 +1,11 @@
+import './ModalHeader.scss';
 
-const ModalHeader = () => {
+const ModalHeader = ({children}) => {
 	
 
 	return (
-		<main>
-			<div>
-
-			</div>
+		<main className='modal-header'>
+			{children}
 		</main>
 	)
 }

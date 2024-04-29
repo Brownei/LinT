@@ -5,12 +5,12 @@ import { Icon } from '@iconify/react';
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
+import { parsedToken } from '../../utils/api';
 
 const CreatePostPage = () => {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [tags, setTags] = useState([])
-  const token = JSON.parse(sessionStorage.getItem('session'))
 
   const createCollabMutation = useMutation({
     mutationFn: () => {
@@ -22,7 +22,7 @@ const CreatePostPage = () => {
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${parsedToken}`
             }
         })
     },

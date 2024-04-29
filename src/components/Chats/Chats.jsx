@@ -175,18 +175,18 @@ const Chats = () => {
 					</div>
 				) : (
 					<div className='interest-section'>
-						{users.length > 0 ? (
+						{interests.length > 0 ? (
 							<div className='all-interests'>
 								<span>View people interested in your Idea!!</span>
-								{users.map((user, index) => (
-									<div key={index}>
-										<InterestsSection user={user}/>
+								{interests.map((interest) => (
+									<div key={interest.id}>
+										<InterestsSection interest={interest}/>
 									</div>
 								))}
 							</div>
 						) : (
 							<div className='no-interests'>
-								<p>Nobody is interested yet!</p>
+								<p>No interests yet!</p>
 							</div>
 						)}
 					</div>

@@ -71,7 +71,15 @@
                 }
 
 				&:disabled {
-					background-color: #B0B2E7;
+					text-decoration: none;
+                    padding: 10px 60px;
+                    border-radius: 24px;
+                    border: 1px solid #00034A;
+                    background-color: #E6E6F7;
+                    color: #00034A;
+                    font-weight: 600;
+                    font-size: 1rem;
+                    line-height: 22px;
 				}
             }
         }
@@ -82,6 +90,7 @@
                 font-size: 24px;
                 line-height: 30px;
                 color: #242727;
+				text-transform: capitalize;
             }
 
             p {
@@ -97,7 +106,22 @@
                     font-size: 1rem;
                     line-height: 22px;
                 }
-            }
+
+				.languages {
+					display: flex;
+					gap: 16px;
+					align-items: center;
+
+					.language {
+                        background-color: transparent;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        border: 1px solid #B0B2E7;
+                        border-radius: 24px;
+                        padding: 3px 16px;
+					}
+				}
         }
 
     }
@@ -109,5 +133,19 @@
 		left: 50%;
 		transform: translate(-50%, -50%);
 	}
-}
 
+
+	.overlay {
+		position: fixed;
+		overflow: hidden;
+		background-color: rgb(0 0 0 / 0.8);
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 40;
+	}
+}
+}

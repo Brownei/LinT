@@ -7,20 +7,18 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const AuthWrapper = () => {
-	const { isLoading, data: session } = useCurrentUser();
+	const { isLoading, error } = useCurrentUser();
   const navigate = useNavigate();
-
-	console.log(session)
 
 	useEffect(() => {
 		const timeOut = setTimeout(() => {
-			if(!session) {
+			if(error) {
 				navigate('/')
 			} 
 		}, 4000)
 
 		return () => clearTimeout(timeOut)
-	}, [session])
+	}, [error])
  
 	if (isLoading) {
 		return (

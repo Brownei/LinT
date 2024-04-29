@@ -1,0 +1,67 @@
+.modal-container {
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	box-sizing: border-box;
+    padding: 27px 14px;
+	transition-property: transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+	border-radius: 10px;
+	transition-duration: 500ms;
+	z-index: 50;
+	width: 553px;
+	background-color: #ffffff;
+
+	.loading {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;	
+		height: 220px;
+
+	}
+
+	.success {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		height: 220px;
+
+
+		p {
+			color: #8F9191;
+			font-size: 1.3rem;
+			line-height: 22px;
+			font-weight: 600;
+			margin: none;
+		}
+
+
+		.link {
+			text-decoration: underline;
+			color: #0006B1;
+			font-weight: 600;
+			line-height: 16px;
+			font-size: 0.8rem;
+		}
+	}
+
+
+	.skip-button {
+		border: 1px solid transparent;
+		background-color: transparent;
+		position: absolute;
+		top: 20px;
+		right: 20px;
+		font-size: 12px;
+		font-weight: 600;
+		line-height: 18px;
+		color: #8F9191;
+		cursor: pointer;
+	}
+}
+
+

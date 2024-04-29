@@ -1,19 +1,22 @@
 /* eslint-disable react/prop-types */
 import './InterestsSection.scss'
+import { Link } from 'react-router-dom';
 
-const InterestsSection = ({user}) => {
+const InterestsSection = ({interest}) => {
     return (
         <div className='interests'>
             <div className="card">
                 <div className='user'>
-                    <img src={user.image}></img>
+					<Link to={`${interest.sender.username}`}>
+						<img src={interest.sender.profileImage}></img>
+					</Link>
                     <div className='not-image'>
-                        <h5>{user.name}</h5>
-                        <p>{user.profession}</p>
+                        <h5>{interest.sender.fullName}</h5>
+                        <p>{interest.sender.occupation}</p>
                     </div> 
                 </div>
-                <h4>{user.post.title}</h4>
-                <p>Hello brownson, I’m interested in working with you as your project is quite intriguing</p>
+                <h4>{interest.post.title}</h4>
+                <p>{interest.content}</p>
 
                 <div className='action-buttons'>
                     <button className='accept-button'>Accept</button>

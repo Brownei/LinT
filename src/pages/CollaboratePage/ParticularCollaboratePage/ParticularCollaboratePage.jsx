@@ -4,36 +4,15 @@ import { Icon } from '@iconify/react'
 import { useIdeaData } from '../../../hooks/use-idea-data'
 import { ClipLoader } from 'react-spinners'
 import {useCurrentUser} from '../../../hooks/use-current-user'
-import { parsedToken } from '../../../utils/api'
-import { useMutation } from '@tanstack/react-query'
-import {useModalStore} from '../../../hooks/use-modal-store'
+import RequestModal from '../../../components/RequestModal/RequestModal'
+import {useState} from 'react'
+import LanguageIcons from '../../../components/LanguageIcons/LanguageIcons'
 
 const ParticularCollaboratePage = () => {
-    const { id } = useParams()
+	const [onOpen, setOnOpen] = useState()
+	const { id } = useParams()
     const { data: particularpost, error, isLoading } = useIdeaData(id)
 	const { data: currentUser } = useCurrentUser()
-	const { setModalOpen, open } = useModalStore()
-
-	console.log(open)
-	const sendInterestMutation = useMutation({
-		mutationFn: (token) => {
-			return axios.post(`http://localhost:3131/collaborators/requests`, {
-				content
-			}, {
-				withCredentials: true,
-				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': `Bearer ${token}`
-				}
-			})
-		},
-		onSuccess() {
-			alert('Request Sent!')
-		},
-		onError() {
-			alert('Request failed!')
-		}
-	});	
 
 	return (
         <main id='particular-page'>
@@ -62,7 +41,7 @@ const ParticularCollaboratePage = () => {
                             </p>
                         </div>
                         {currentUser.id !== particularpost.profile.id && (
-							<button onClick={() => setModalOpen(true)} >Interested</button>
+							<button disabled={particularpost.requests.some((request) => request.senderId === currentUser.id)} onClick={() => setOnOpen(true)} >{particularpost.requests.some((request) => request.senderId === currentUser.id) ? 'Already Interested' : 'Interested'}</button>
 						)}
                     </div>
 
@@ -72,16 +51,24 @@ const ParticularCollaboratePage = () => {
                     
                         <div className='tags'>
                             <p>Skill tags</p>
-                            {particularpost.toolsTags.map((tag, index) => (
-                                <div key={index}>
-                                    {JSON.stringify(tag)}
-                                </div> 
-                            ))}
+							<div className='languages'>
+								{particularpost.toolsTags.map((tag, index) => (
+									<div className='language' key={index}>
+										<LanguageIcons language={tag}/>
+									</div> 
+								))}
+							</div>
+                            
                         </div>
                     </div>
 
                 </div>
 			)}
+
+			{onOpen && <RequestModal post={particularpost}/>}
+
+			{onOpen && <div className='overlay' onClick={() => setOnOpen(false)}/>}
+
         </main>
     )
 }
