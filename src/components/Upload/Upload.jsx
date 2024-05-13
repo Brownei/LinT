@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Icon } from '@iconify/react';
+import { ActionIcon } from '@mantine/core';
 
 
 // eslint-disable-next-line react/prop-types
@@ -53,19 +54,20 @@ const Upload = ({setUploadedImage, uploadedImage, styles}) => {
     return (
         <div className={styles}>
             {uploadedImage === '' ? (
-                <button
+                <ActionIcon
+                    variant='default'
                     disabled={isDisabled}
                     className={`btn`}
                     type="button"
                     onClick={uploadWidget}>
                     {isDisabled ? <Icon className='spinner' icon={'formkit:spinner'} fontSize={24}/> : <Icon icon={'fluent:camera-add-48-regular'} fontSize={24}/>}
-                </button>
+                </ActionIcon>
             ) : (
                 <div className='viewed-image'>
                     <img src={uploadedImage} alt="uploaded image" />
-                    <button onClick={() => setUploadedImage('')}>
-                        <Icon icon={'ion:trash-sharp'} color='#ff6347' fontSize={24}/>
-                    </button>
+                    <ActionIcon variant='default' onClick={() => setUploadedImage('')}>
+                        <Icon icon={'bi:trash-fill'} color='#ff6347' fontSize={24}/>
+                    </ActionIcon>
                 </div>
             )}
         </div>

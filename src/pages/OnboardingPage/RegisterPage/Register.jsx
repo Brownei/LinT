@@ -2,15 +2,15 @@ import './Register.scss'
 import { Icon } from '@iconify/react'
 import { Link } from 'react-router-dom'
 import { useMutation } from '@tanstack/react-query'
-import { useAuthStore } from '../../../hooks/use-auth-store'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import axios from 'axios'
 import { signInWithGoogle } from '../../../utils/firebase'
+// import { useAuth } from '../../../hooks/use-auth'
 
 const Register = () => {
   const navigate = useNavigate();
-  const authStore = useAuthStore();
+  // const {user, loading} = useAuth();
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
@@ -26,9 +26,8 @@ const Register = () => {
           })
       },
       onSuccess({data}) {
-          authStore.set(data.userInfo)
-          sessionStorage.setItem('session', data.sessionCookie)
-          navigate("/setup-profile");
+        sessionStorage.setItem('session', data.sessionCookie)
+        navigate("/setup-profile", {replace: true});
       },
   });
 
@@ -96,8 +95,22 @@ const Register = () => {
 
           <div className='other-options'>
             <button onClick={handleGoogleRegister} type='button' className='google-button' disabled={isLoading}>
-              <Icon icon={'ri:google-fill'} fontSize={24} color='#FFFFFF'/>
-              <span>Continue with Google</span>
+              {isLoading ? (
+                <span className='google-button-check'>
+                  <Icon className='loading-google' icon={'formkit:spinner'} fontSize={24}/>
+                  <span>Opening up Google</span>
+                </span>
+              ) : googleRegisterMutation.isPending ? (
+                <span className='google-button-check'>
+                  <Icon className='loading-google' icon={'formkit:spinner'} fontSize={24}/>
+                  <span>Creating....</span>
+                </span>
+              ) : (
+                <span className='google-button-check'>
+                  <Icon icon={'ri:google-fill'} fontSize={24}/>
+                  <span>Continue with Google</span>
+                </span>
+              )}
             </button>
             <Link to={'/'} className='login-button'>
               Have an account?

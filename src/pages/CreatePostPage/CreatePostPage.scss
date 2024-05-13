@@ -51,6 +51,7 @@
             }
 
             .post-button {
+                display: block;
                 border-radius: 24px;
                 padding: 10px 40px;
                 font-size: 0.9rem;
@@ -62,8 +63,32 @@
                 outline: none;
                 border: 0px;
 
+                span {
+                    margin: 0px;
+                    padding: 0px;
+                    display: flex;
+                    gap: 10px;
+                    align-items: center;
+                    justify-content: center;
+
+                    .loading-post-create {
+                        animation: spin 1s ease-in-out infinite;
+
+                        
+                        @keyframes spin {
+                            0% {
+                            transform: rotate(0deg);
+                            }
+                            100% {
+                            transform: rotate(360deg);
+                            }
+                        }
+                    }
+                }
+
                 &:disabled {
                     background-color: #8A8CDB;
+                    cursor: progress;
                 }
 
                 &:hover {
@@ -101,6 +126,16 @@
             .input-title,
             .input-description,
             .input-tags {
+                display: grid;
+                gap: 4px;
+
+                .error {
+                    margin: 0px;
+                    font-weight: 600;
+                    font-size: 12px;
+                    line-height: 18px;
+                    color: red;
+                }
                 
                 .text-inputs {
                     display: grid;
@@ -145,7 +180,139 @@
                 }
 
             }
+
+            .mobile-post-button {
+                display: none;
+            }
         }
 
+    }
+}
+
+@media screen and (max-width: 1225px) {
+    .logo {
+        display: none;
+    }
+
+    #modal {
+        margin: 30px 15px 0px 15px;
+        
+        .container {
+            .header {
+                h1 {
+                    font-size: 0.9rem;
+                }
+
+                .back-button {
+                    font-size: 0.8rem;
+                    padding: 8px 18px;
+
+                    span {
+                        gap: 4px;
+                    }
+                }
+
+                .post-button {
+                    display: none;
+                }
+            }
+            .content {
+                justify-content: end;
+                width: 100%;
+                gap: 8px;
+
+                .input {
+                    padding: 8px 14px;
+                    border-radius: 6px;
+                }
+
+                label {
+                    font-size: 0.9rem;
+                }
+
+                .input-title,
+                .input-description,
+                .input-tags {
+                    .text-inputs {
+                        gap: 8px;
+                    }
+                }
+
+                .input-tags {
+                    gap: 4px;
+                    
+                    .input {
+                        border-radius: 30px;
+                        padding: 18px;
+                        background-color: transparent;
+                    }
+    
+                    .pills-group {
+                        .pill {
+                            border-radius: 22px;
+                            padding: 2px 14px;
+                        }
+    
+                        .pill-selected {
+                            border-radius: 22px;
+                            padding: 2px 14px;
+                            background-color: #00FF00;
+                            border: 1px solid #00FF00;
+                        }
+                    }
+    
+                }
+
+                .mobile-post-button {
+                    display: flex;
+                    align-self: end;
+                    width: fit-content;
+                    display: block;
+                    margin-top: 16px;
+                    border-radius: 22px;
+                    padding: 8px 38px;
+                    font-size: 0.8rem;
+                    font-weight: 600;
+                    background-color: #0006B1;
+                    color: #ffff;
+                    cursor: pointer;
+                    outline: none;
+                    border: 0px;
+
+                    span {
+                        margin: 0px;
+                        padding: 0px;
+                        display: flex;
+                        gap: 8px;
+                        align-items: center;
+                        justify-content: center;
+
+                        .loading-post-create {
+                            animation: spin 1s ease-in-out infinite;
+
+                            
+                            @keyframes spin {
+                                0% {
+                                transform: rotate(0deg);
+                                }
+                                100% {
+                                transform: rotate(360deg);
+                                }
+                            }
+                        }
+                    }
+
+                    &:disabled {
+                        background-color: #8A8CDB;
+                        cursor: progress;
+                    }
+
+                    &:hover {
+                        background-color: #3a40e4;
+                        transition-duration: 300ms;
+                    }
+                }
+            }
+        }
     }
 }

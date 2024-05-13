@@ -1,0 +1,28 @@
+.all-ideas {
+    display: grid;
+    gap: 30px;
+    margin: 24px 0px 12px 0px;
+
+    .loading {
+        // width: 600px;
+        text-align: center;
+    }
+
+    .posts {
+        .no-data {
+            text-align: center;
+        }
+
+        .all-posts {
+            display: grid;
+            gap: 16px;
+        }
+
+        p {
+            text-align: center;
+            font-size: 0.6rem;
+            font-weight: 500;
+            color: '#00034A';
+        }
+    }
+}

@@ -3,24 +3,16 @@ import "./AuthWrapper.scss"
 import { Outlet } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useCurrentUser } from "../../hooks/use-current-user";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+
 
 export const AuthWrapper = () => {
-	const { isLoading, error } = useCurrentUser();
-  const navigate = useNavigate();
+	const {error, isLoading: loading} = useCurrentUser()
 
-	useEffect(() => {
-		const timeOut = setTimeout(() => {
-			if(error) {
-				navigate('/')
-			} 
-		}, 4000)
+	if(typeof window === "undefined" || error) {
+		window.location.assign('/')
+	} 
 
-		return () => clearTimeout(timeOut)
-	}, [error])
- 
-	if (isLoading) {
+	if (loading) {
 		return (
 			<div className="loader">
 				<ClipLoader color="#0006B1" size={30} />
@@ -29,9 +21,10 @@ export const AuthWrapper = () => {
 	}
 
 
-  return (
-    <>
-      <Outlet />
-    </>
-  );
+	return (
+		<>
+		<Outlet />
+		</>
+	);
 };
+

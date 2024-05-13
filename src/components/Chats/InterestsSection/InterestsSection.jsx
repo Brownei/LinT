@@ -7,7 +7,7 @@ const InterestsSection = ({interest}) => {
         <div className='interests'>
             <div className="card">
                 <div className='user'>
-					<Link to={`${interest.sender.username}`}>
+					<Link to={`/${interest.sender.username}`}>
 						<img src={interest.sender.profileImage}></img>
 					</Link>
                     <div className='not-image'>

@@ -1,0 +1,35 @@
+#mobile-header {
+    
+    h1 {
+        font-size: 24px;
+        color: #060A0A;
+        font-weight: 600;
+        margin-bottom: 6px;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .mobile-chats {
+            display: flex;
+            // justify-content: center;
+            align-items: center;
+            gap: 4px;
+
+            .link {
+                padding: 4px 8px;
+                border: 1px solid transparent;
+                border-radius: 8px;
+                text-decoration: none;
+                display: flex;
+                gap: 3px;
+                align-items: center;
+                background-color: #E6E6F7;
+                color: #00034A;
+                font-size: 0.9rem;
+            }
+        }
+    }
+}

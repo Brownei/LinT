@@ -17,3 +17,17 @@
     align-items: center;
     gap: 8px;
 }
+
+@media screen and (max-width: 1225px) {
+    .style {
+        .icon {
+            gap: 3px;
+
+            span {
+                font-size: 0.8rem;
+            }
+        }
+
+        gap: 4px;
+    }
+}

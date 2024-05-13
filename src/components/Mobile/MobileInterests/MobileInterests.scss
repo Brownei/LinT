@@ -1,0 +1,41 @@
+#mobile-interests {
+    display: none;
+}
+
+@media screen and (max-width: 1225px) {
+    #mobile-interests {
+        display: block;
+        // position: relative;
+    
+        .loading, 
+        .error {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100dvh;
+        }
+    
+        .mobile-interests {
+    
+            .all-interests {
+                display: grid;
+                gap: 16px;
+                align-items: center;
+                align-content: center;
+            }
+    
+            .no-interests {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-weight: 600;
+                font-size: 24px;
+                line-height: 30px;
+                text-align: center;
+                color: #8F9191;
+                width: 155px;
+            }
+        }
+    }
+}

@@ -74,6 +74,29 @@
                 align-items: center;
                 gap: 16px;
 
+                span {
+                    margin: 0px;
+                    padding: 0px;
+                    display: flex;
+                    gap: 10px;
+                    align-items: center;
+                    justify-content: center;
+
+                    .logout-button {
+                        animation: spin 1s ease-in-out infinite;
+    
+                        
+                        @keyframes spin {
+                            0% {
+                            transform: rotate(0deg);
+                            }
+                            100% {
+                            transform: rotate(360deg);
+                            }
+                        }
+                    }
+                }
+
                 .edit-profile {
                     text-decoration: none;
                     padding: 10px 60px;
@@ -97,6 +120,12 @@
                     font-size: 1rem;
                     line-height: 22px;
                     cursor: pointer;
+
+                    &:hover {
+                        color: #00034A;
+                        background-color: #ff949e;
+                        transition-duration: 300ms;
+                    }
                 }
             }
 

@@ -2,9 +2,9 @@ import { Icon } from '@iconify/react'
 import { useState } from 'react'
 import './EditProfilePage.scss'
 import { Link } from 'react-router-dom'
-import { useCurrentUser } from '../../hooks/use-current-user'
 import { ClipLoader } from 'react-spinners'
 import Upload from '../../components/Upload/Upload'
+import { useCurrentUser } from '../../hooks/use-current-user'
 
 const EditProfilePage = () => {
     const {data: user, isLoading} = useCurrentUser()

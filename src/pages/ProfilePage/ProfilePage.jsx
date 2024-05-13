@@ -7,21 +7,20 @@ import brownson from '../../assets/images/brownson.svg';
 import gift from '../../assets/images/gift.svg'; 
 import { Icon } from '@iconify/react';
 import { useUserPosts } from '../../hooks/use-user-posts';
-import { useCurrentUser } from '../../hooks/use-current-user';
 import { ClipLoader } from 'react-spinners';
 import LinkIcons from '../../components/LinkIcons';
 import {formatDate} from 'date-fns';
 import { formatDate as dateFormater } from '../../utils/formatDate';
 import { useMutation } from "@tanstack/react-query";
 import axios from 'axios';
-import { useAuthStore } from '../../hooks/use-auth-store';
-import { parsedToken } from '../../utils/api';
+import { getToken } from '../../utils/api';
+import { useCurrentUser } from '../../hooks/use-current-user';
 
 const ProfilePage = () => {
-    const navigate = useNavigate()
-    const authStore = useAuthStore()
-    const {data: user, isFetching: isCurrentUserFetching, error: isCurrentError} = useCurrentUser()
-    const {data: posts, isFetching, error} = useUserPosts(user.profile.username)
+    // const navigate = useNavigate()
+    const {data: user, isLoading: isCurrentUserFetching, error: isCurrentError} = useCurrentUser()
+    console.log(user)
+    const {data: posts, isFetching, error} = useUserPosts(user?.profile.username)
     const location = useLocation()
     const searchParams = new URLSearchParams(location.search);
     const formattedDate = formatDate(user.profile.createdAt, "yyyy-MM-dd")
@@ -37,7 +36,7 @@ const ProfilePage = () => {
             })
         },
         onSuccess() {
-            authStore.clear()
+            // clearUser()
             sessionStorage.removeItem('session')
             window.location.assign('/')
         },
@@ -102,7 +101,12 @@ const ProfilePage = () => {
                         {location.pathname.includes(user.profile.username) || location.pathname === '/profile' ? (
                             <div className='buttons'>
                                 <Link to={'/profile/edit'} className='edit-profile'>Edit Profile</Link>
-                                <button onClick={async () => await signOutMutation.mutateAsync(parsedToken)}>Log Out</button>
+                                <button disabled={signOutMutation.isPending} onClick={async () => await signOutMutation.mutateAsync(getToken())}>{signOutMutation.isPending ? (
+                                    <span>
+                                        <Icon className='logout-button' icon={'formkit:spinner'} fontSize={16}/>
+                                        Running...
+                                    </span>
+                                ) : 'Log Out'}</button>
                             </div>
                         ) : (
                             <button className='collabs'>8 Collabs</button>
