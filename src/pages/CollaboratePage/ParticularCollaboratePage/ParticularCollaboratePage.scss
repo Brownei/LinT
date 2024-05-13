@@ -28,7 +28,7 @@
 			outline: none;
 			border: 0px solid transparent;
 			background-color: transparent;
-			padding: 10px 20px;
+			// padding: 10px 20px;
 			border-radius: 19px;
 			font-size: 0.9rem;
 			line-height: 22px;
@@ -37,7 +37,7 @@
 			cursor: pointer;
 
 			&:hover {
-				background-color: #F5F5F5;
+				color: #0006B1;
 			}
 
 			span {
@@ -146,6 +146,7 @@
 
 				.languages {
 					display: flex;
+					flex-wrap: wrap;
 					gap: 16px;
 					align-items: center;
 
@@ -175,4 +176,63 @@
 		
 
 	}
+}
+
+@media screen and (max-width: 800px) {
+    #particular-page {
+		align-items: start;
+		
+		.container {
+			
+			.back-button {
+				font-size: 0.85rem;
+			}
+
+			.header {
+				width: 100%;
+
+				.header-info {
+					p {
+						.fullName {
+							font-size: 0.9rem;
+						}
+
+						.occupation {
+							font-size: 12px;
+						}
+					}
+				}
+
+				button {
+					font-size: 0.9rem;
+				}
+			}
+
+			.content {
+				width: 100%;
+
+				h2 {
+					font-size: 1rem;
+				}
+
+				p {
+					width: fit-content;
+				}
+
+				tags {
+					p {
+						font-size: 0.9rem;
+					}
+
+					.languages {
+						gap: 8px;
+
+						.language {
+							padding: 1px 14px;
+						}
+					}
+				}
+			}
+		}
+    }
 }

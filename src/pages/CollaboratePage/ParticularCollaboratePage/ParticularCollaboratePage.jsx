@@ -51,13 +51,19 @@ const ParticularCollaboratePage = () => {
                     
                         <div className='tags'>
                             <p>Skill tags</p>
-							<div className='languages'>
-								{particularpost.toolsTags.map((tag, index) => (
-									<div className='language' key={index}>
-										<LanguageIcons language={tag}/>
-									</div> 
-								))}
-							</div>
+							{particularpost.toolsTags.length <= 0 ? (
+                                <span>
+                                    Nothing bruh!
+                                </span>
+                            ) : (
+                                <div className='languages'>
+                                    {particularpost.toolsTags.map((tag, index) => (
+                                        <div className='language' key={index}>
+                                            <LanguageIcons language={tag}/>
+                                        </div> 
+                                    ))}
+					            </div>
+                            )}
                             
                         </div>
                     </div>

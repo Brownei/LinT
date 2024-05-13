@@ -33,7 +33,7 @@ const App = () => {
                         position="bottom-center"
                         richColors
                     />
-                    <ReactQueryDevtools initialIsOpen={false}/>
+                    {/* <ReactQueryDevtools initialIsOpen={false}/> */}
                 </QueryClientProvider>
             </MantineProvider>
         </div>
