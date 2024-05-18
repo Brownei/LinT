@@ -5,18 +5,18 @@ import Ideas from '../../Card/Ideas';
 
 const MobileIdeas = ({isFetching, posts, error}) => {
     return (
-        <div className='all-ideas'>
+        <div className='mobile-all-ideas'>
             {isFetching ? (
-            <div className='loading'>
+            <div className='mobile-loading'>
                 <ClipLoader color="#0006B1" fontSize={30}/>
             </div>
             ) : error ? (<p className='information'>Wanna refresh?..</p>) : (
-            <div className='posts'>
+            <div className='mobile-posts'>
                 {posts.length === 0 ? (
-                <div className='no-data'>Nobody wants to post?</div>
+                <div className='mobile-no-data'>Nobody wants to post?</div>
                 ): (
                     <>
-                        <div className='all-posts'>
+                        <div className='mobile-all-posts'>
                             {posts.map((post) => (
                                 <div key={post.id}>
                                     <Ideas post={post} forProfile={false}/>

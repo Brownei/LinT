@@ -1,19 +1,21 @@
-.all-ideas {
+.mobile-all-ideas {
     display: grid;
     gap: 30px;
     margin: 24px 0px 12px 0px;
 
-    .loading {
+    .mobile-loading {
         // width: 600px;
         text-align: center;
     }
 
-    .posts {
-        .no-data {
+    .mobile-posts {
+        margin-bottom: 70px;
+
+        .mobile-no-data {
             text-align: center;
         }
 
-        .all-posts {
+        .mobile-all-posts {
             display: grid;
             gap: 16px;
         }

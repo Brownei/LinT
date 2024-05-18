@@ -16,4 +16,13 @@ async function getCurrentUser() {
 export const useCurrentUser = () => useQuery({
     queryKey: ['current-user'],
     queryFn: getCurrentUser,
+    refetchOnWindowFocus: false,
+    retry(failureCount, error) {
+        return error.status !== 403 && failureCount < 3;
+    },
+    onError(error) {
+        if (error.status === 403) {
+            window.location.assign("/");
+        }
+    },
 })

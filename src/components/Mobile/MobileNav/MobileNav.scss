@@ -16,14 +16,12 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition-duration: 400ms;
             text-decoration: none;
     
             span,
             .icon {
                 color: #3338C1;
                 text-decoration: none;
-                
             }
         }
     
@@ -37,6 +35,11 @@
             .icon {
                 color: grey;
             }
+        }
+
+        .profile-selected {
+            border: 3px solid #3338C1;
+            border-radius: 100%;
         }
     }
 
