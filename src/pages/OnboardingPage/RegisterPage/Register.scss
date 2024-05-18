@@ -3,6 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 16px;
 
     h1 {
         text-align: start;
@@ -78,6 +79,32 @@
                 color: #FFFFFF;
                 font-size: 1rem;
                 font-weight: 400;
+
+                .google-button-check {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 10px;
+
+                    .loading-google {
+                        animation: spin 1s ease-in-out infinite;
+
+                        
+                        @keyframes spin {
+                            0% {
+                            transform: rotate(0deg);
+                            }
+                            100% {
+                            transform: rotate(360deg);
+                            }
+                        }
+                    }
+                }
+
+                &:disabled {
+                    cursor: progress;
+                    background-color: #B0B2E7;
+                }
             }
     
             .login-button {
@@ -110,3 +137,91 @@
 
 }
 
+
+@media screen and (max-width: 800px) {
+    #register {
+        h1 {
+            font-size: 24px;
+        }
+
+        .register {
+            form {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+                .input-field {
+                    label {
+                        font-size: 0.8rem;
+                    }
+
+                    input {
+                        padding: 12px 14px;
+                        width: 341px;
+                        font-size: 0.8rem;
+                    }
+
+                    button {
+                        padding: 8px 18px;
+                        border-radius: 22px;
+                        font-size: 0.9rem;
+                        margin-top: 8px;
+                    }
+                }
+            }
+
+            .other-options {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 14px;
+                margin: 40px 0px;
+        
+                .google-button {
+                    gap: 8px;
+                    padding: 8px 14px;
+                    border-radius: 42px;
+                    font-size: 0.9rem;
+                }
+            }
+
+            p {
+                font-size: 14px;
+                width: 335px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login {
+        .container {
+            .input {
+                padding: 29px;
+                background-color: transparent;
+
+                form {
+                    .input-values {
+                        gap: 15px;
+                        margin-bottom: 24px;
+        
+                        input {
+                            width: 100%;
+                            padding: 16px 12px;
+                        }
+                    }
+                }
+            }
+
+
+        }
+    }
+}

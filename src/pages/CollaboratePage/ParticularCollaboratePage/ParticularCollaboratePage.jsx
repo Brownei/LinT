@@ -3,16 +3,16 @@ import { useParams } from 'react-router-dom'
 import { Icon } from '@iconify/react'
 import { useIdeaData } from '../../../hooks/use-idea-data'
 import { ClipLoader } from 'react-spinners'
-import {useCurrentUser} from '../../../hooks/use-current-user'
 import RequestModal from '../../../components/RequestModal/RequestModal'
 import {useState} from 'react'
 import LanguageIcons from '../../../components/LanguageIcons/LanguageIcons'
+import { useCurrentUser } from '../../../hooks/use-current-user'
 
 const ParticularCollaboratePage = () => {
 	const [onOpen, setOnOpen] = useState()
 	const { id } = useParams()
     const { data: particularpost, error, isLoading } = useIdeaData(id)
-	const { data: currentUser } = useCurrentUser()
+    const { data: currentUser } = useCurrentUser()
 
 	return (
         <main id='particular-page'>
@@ -36,12 +36,12 @@ const ParticularCollaboratePage = () => {
                         <div className='header-info'>
                             <img src={particularpost.profile.profileImage} alt="My picture" />
                             <p>
-                                <span>{particularpost.profile.fullName}</span>
-                                <span>{particularpost.profile.occupation}</span>
+                                <span className='fullName'>{particularpost.profile.fullName}</span>
+                                <span className='occupation'>{particularpost.profile.occupation}</span>
                             </p>
                         </div>
-                        {currentUser.id !== particularpost.profile.id && (
-							<button disabled={particularpost.requests.some((request) => request.senderId === currentUser.id)} onClick={() => setOnOpen(true)} >{particularpost.requests.some((request) => request.senderId === currentUser.id) ? 'Already Interested' : 'Interested'}</button>
+                        {currentUser?.id !== particularpost.profile.id && (
+							<button disabled={particularpost.requests.some((request) => request.senderId === currentUser?.id)} onClick={() => setOnOpen(true)} >{particularpost.requests.some((request) => request.senderId === currentUser?.id) ? 'Already Interested' : 'Interested'}</button>
 						)}
                     </div>
 
@@ -51,13 +51,19 @@ const ParticularCollaboratePage = () => {
                     
                         <div className='tags'>
                             <p>Skill tags</p>
-							<div className='languages'>
-								{particularpost.toolsTags.map((tag, index) => (
-									<div className='language' key={index}>
-										<LanguageIcons language={tag}/>
-									</div> 
-								))}
-							</div>
+							{particularpost.toolsTags.length <= 0 ? (
+                                <span>
+                                    Nothing bruh!
+                                </span>
+                            ) : (
+                                <div className='languages'>
+                                    {particularpost.toolsTags.map((tag, index) => (
+                                        <div className='language' key={index}>
+                                            <LanguageIcons language={tag}/>
+                                        </div> 
+                                    ))}
+					            </div>
+                            )}
                             
                         </div>
                     </div>

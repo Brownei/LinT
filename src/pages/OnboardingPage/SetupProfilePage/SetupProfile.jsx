@@ -1,44 +1,86 @@
 /* eslint-disable react/prop-types */
 import './SetupProfile.scss'
 import { useNavigate} from 'react-router-dom'
-import { useForm } from "react-hook-form"
-import { useAppState } from '../../../hooks/use-app-state';
+import { useForm, useFieldArray } from "react-hook-form"
 import Upload from '../../../components/Upload/Upload';
 import { useState } from 'react';
-// import { useSession } from '../../../hooks/use-session';
-import { useCurrentUser } from '../../../hooks/use-current-user';
 import { ClipLoader } from 'react-spinners';
 import { useEffect } from 'react';
+import { getToken } from '../../../utils/api';
+import axios from 'axios';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import { ActionIcon, Button, Input, InputLabel, Textarea, TextInput } from '@mantine/core';
+import { Icon } from '@iconify/react/dist/iconify.js';
+import { useCurrentUser } from '../../../hooks/use-current-user';
+import CountrySelect from '../../../components/CountrySelect';
 
 const SetupProfile = ({heading}) => {
+  const queryClient = useQueryClient()
   const {data: user, isLoading} = useCurrentUser()
-  const [state, setState] = useAppState()
-  const [uploadedImage, setUploadedImage] = useState(user.profileImage ? user.profileImage : '');
+  const [locationValue, setLocationValue] = useState(null);
+  const [uploadedImage, setUploadedImage] = useState(user.profileImage ? user.profileImage : 'https://i.pinimg.com/564x/dd/ea/bd/ddeabd5e1886bcfe932a331839ee1cf7.jpg');
   const navigate = useNavigate()
-  const {register, handleSubmit, formState: { errors, isDirty }} = useForm({
-    defaultValues: state,
+  const {register, handleSubmit, control, formState: { errors }} = useForm({
     mode: 'onSubmit'
   })
+  const { fields, append, remove } = useFieldArray({
+    name: 'socialLinks',
+    control
+  })
+
+  const createProfileMutation = useMutation({
+    mutationFn: (data) => {
+        return axios.post(`http://localhost:3131/profile`, {
+            username: data.username,
+            fullName: data.fullName,
+            occupation: data.profileTag,
+            location: locationValue,
+            bio: data.bio,
+            links: data.socialLinks.map((link) => link.url),
+            profileImage: uploadedImage
+        }, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + getToken()
+            }
+        })
+    },
+    onSuccess() {
+      toast.success('Profile set!')
+      queryClient.invalidateQueries("current-user")
+      navigate('/collaborate', { replace: true })
+    },
+    onError() {
+      toast.error('Something wrong happened!')
+    }
+  });
+
 
   function onSubmit(data) {
-    setState({ ...state, ...data, profileImage: uploadedImage })
-    const payload = {...state, ...data, profileImage: uploadedImage}
-    localStorage.setItem('profileSetup', JSON.stringify(payload))
-    navigate('/setup-profile/2')
+    try {
+      createProfileMutation.mutateAsync(data)
+    } catch (error) {
+      console.log(error)
+      toast.error(error.message)
+    }
+    // console.log(data, locationValue)
+    // console.log('Clicked!')
   }
-
-  {isLoading && <ClipLoader />}
-
+  
 	useEffect(() => {
-		const timeOut = setTimeout(() => {
-			if(!user) {
-				window.location.assign('/')
+    const timeOut = setTimeout(() => {
+      if(!user) {
+        window.location.assign('/')
 			}
 		}, 4000)
-
+    
 		return () => clearTimeout(timeOut)
 	}, [user])
-
+  
+  {isLoading && <ClipLoader />}
+  
   return (
     <main id='profile-setup'>
       <div className='logo'>
@@ -71,40 +113,61 @@ const SetupProfile = ({heading}) => {
         <div className="setup">
           <form>
             <div className='input-field'>
-              <label htmlFor="full-name">Your Full Name*</label>
-              <input type="text" name="full-name" id="full-name" placeholder='Full Name' value={user.fullName} {...register("fullName", { required: true })}/>
+              <TextInput disabled={createProfileMutation.isPending} label='Full Name' withAsterisk type="text" name="full-name" id="full-name" placeholder='Full Name' value={user.fullName} {...register("fullName", { required: true })}/>
               {errors.firstName && <span>*Your name is required</span>}
             </div>
             <div className='username-email'>
               <div className='input-field'>
-                <label htmlFor="username">Pick A Username*</label>
-                <input type="text" name="username" id="username" placeholder='Username' {...register("username", { required: true })}/>
+                <TextInput disabled={createProfileMutation.isPending} label='Pick a username' withAsterisk type="text" name="username" id="username" placeholder='Username' {...register("username", { required: true })}/>
                 {errors.username && <span>*Your username is required</span>}
               </div>
               <div className='input-field'>
-                <label htmlFor="email">Your Email Address*</label>
-                <input type="text" name="email" id="email" placeholder='Email' value={user.email} {...register("email", { required: true })}/>
+                <TextInput disabled={createProfileMutation.isPending} label='Your email address' withAsterisk type="text" name="email" id="email" placeholder='Email' value={user.email} {...register("email", { required: true })}/>
                 {errors.email && <span>*Your email address is required</span>}
               </div>
             </div>
 
+            <CountrySelect value={locationValue} setValue={setLocationValue}/>
+
+            <div className='input-field profile-bio'>
+              <Textarea disabled={createProfileMutation.isPending} autosize radius={'8px'} label='Profile Bio' className='textarea' type="text" name="bio" id="bio" placeholder='Tell us more about you' {...register("bio")}/>
+            </div>
+
             <div className='input-field profile-tag'>
-              <label htmlFor="profile-tag">Profile Tag</label>
-              <input type="text" name="profile-tag" id="profile-tag" placeholder='E.g FullStack Developer' {...register("profileTag", { required: true })}/>
+              <TextInput disabled={createProfileMutation.isPending} label='Profile Tag' withAsterisk type="text" name="profile-tag" id="profile-tag" placeholder='E.g FullStack Developer' {...register("profileTag", { required: true })}/>
               {errors.profileTag && <span>*Your profile tag is required</span>}
             </div>
 
+            <div className='links'>
+              <InputLabel>Social Links</InputLabel>
+              <div className='link'>
+                {fields.map((field, index) => (
+                    <div className='particular-link' key={field.id}>
+                        <Input disabled={createProfileMutation.isPending} className='input' bg='#fff' type="text" name="links" id="links" placeholder='Twitter, Facebook and so on' {...register(`socialLinks.${index}.url`)}/>
+                        {index > 0 && (
+                            <ActionIcon disabled={createProfileMutation.isPending} variant="default" aria-label="Settings" className='add-remove-button' type='button' onClick={() => remove(index)}>
+                                <Icon icon={'bi:trash-fill'} color='#ff6347' fontSize={23}/>
+                            </ActionIcon>
+                        )}
+                    </div>
+                ))}
+                <ActionIcon disabled={createProfileMutation.isPending} variant="default" aria-label="Addition" type='button' onClick={() => append({url: ''})}>
+                    <Icon icon={'carbon:add-filled'} color='#0006B1' fontSize={23}/>
+                </ActionIcon>
+              </div>
+            </div>
+
             <p className='terms'>By continuing to next step you agree to LinT&apos;s <span>privacy policy</span> and <span>terms of use</span></p>
-            {/* <button type='submit'>Continue</button> */}
           </form>
 
           <div className='progress'>
-            <button type='button' onClick={handleSubmit(onSubmit)} disabled={!isDirty}>Continue</button>
-            <button onClick={() => navigate('/collaborate')} type='button'>Skip</button>
+            <Button disabled={createProfileMutation.isPending} type='button' onClick={handleSubmit(onSubmit)}>Save</Button>
+            {/* <button onClick={() => navigate('/collaborate')} type='button'>Skip</button> */}
           </div>
 
         </div>
       </div>
+      <p></p>
     </main>
   )
 }

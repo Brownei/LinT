@@ -4,14 +4,13 @@ import { Icon } from '@iconify/react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useMutation } from "@tanstack/react-query";
 import { signInWithGoogle } from '../../../utils/firebase';
-import { useAuthStore } from '../../../hooks/use-auth-store';
 import axios from 'axios';
 import { useCurrentUser } from '../../../hooks/use-current-user';
+import { Button } from '@mantine/core';
 
 const Login = () => {
   const navigate = useNavigate();
-  const {data: session} = useCurrentUser()
-  const authStore = useAuthStore();
+  const {data: user} = useCurrentUser()
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   // const URL = import.meta.env.VITE_API_ENDPOINT
@@ -28,17 +27,14 @@ const Login = () => {
         })
     },
     onSuccess({data}) {
-        authStore.set(data.userInfo)
-        sessionStorage.setItem('session', data.sessionCookie)
-
-        console.log(data.userInfo)
-
-        if (data.userInfo.profile === null) {
-          navigate('/setup-profile');
-        } else {
-          navigate('/collaborate')
-        }
-    },
+      sessionStorage.setItem('session', data.sessionCookie)
+      console.log(data.userInfo)
+      if (data.userInfo.profile === null) {
+        navigate('/setup-profile');
+      } else {
+        navigate('/collaborate')
+      }
+    }
   });
 
   async function handleGoogleSignIn() {
@@ -48,16 +44,16 @@ const Login = () => {
         const accessToken = await userCredentials.user.getIdToken();
         await googleLoginMutation.mutateAsync(accessToken)
       } catch (error) {
-        console.error(error.response.data);
+        console.error(error.response?.data);
         setError(JSON.stringify(error))
       } finally {
         setIsLoading(false)
       }
   }
 
-  if(session) {
-    setIsLoading(false)
-    navigate('/collaborate')
+  if(user) {
+    setIsLoading(true)
+    navigate('/collaborate', {replace: true})
   }
 
   return (
@@ -91,18 +87,32 @@ const Login = () => {
                   <input type="text" placeholder='Input your email'/>
                   <input type="text" placeholder='Input your password'/>
                 </div>
-                <button type='submit' className='login-button'>Login</button>
+                <Button type='submit' className='login-button'>Login</Button>
               </form>
 
-              <button disabled={isLoading} onClick={handleGoogleSignIn} type='button' className='google-button'>
-                <Icon icon={'ri:google-fill'} fontSize={24}/>
-                <span>Continue with Google</span>
-              </button>
+              <Button disabled={isLoading} onClick={() => handleGoogleSignIn()} type='button' className='google-button'>
+                {isLoading ? (
+                  <span className='google-button-check'>
+                    <Icon className='loading-google' icon={'formkit:spinner'} fontSize={22}/>
+                    <span>Opening up Google</span>
+                  </span>
+                ) : googleLoginMutation.isPending ? (
+                  <span className='google-button-check'>
+                    <Icon className='loading-google' icon={'formkit:spinner'} fontSize={22}/>
+                    <span>Logging in....</span>
+                  </span>
+                ) : (
+                  <span className='google-button-check'>
+                    <Icon icon={'ri:google-fill'} fontSize={22}/>
+                    <span>Continue with Google</span>
+                  </span>
+                )}
+              </Button>
 
               <div className='few-details'>
                 <p>Do not have an account?</p>
                 <Link to={'/create-account'}>
-                  <button type='button'>Create Account</button>
+                  <Button className='button' type='button'>Create Account</Button>
                 </Link>
 
                 <p className='terms'>By logging in or Signing up Using the process above you agree to Lint privacy <span>Terms and Conditions</span></p>

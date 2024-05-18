@@ -3,11 +3,14 @@ import './IdeasSection.scss'
 import Ideas from '../../Card/Ideas'
 import { NavLink } from 'react-router-dom'
 import { ClipLoader } from 'react-spinners'
-import { useAllPosts } from '../../../hooks/use-all-posts'
+// import { toast } from 'sonner'
+// import { infoToast } from '../../../utils/toast'
 
-const IdeasSection = () => {
-  const {data: posts, isLoading, isError} = useAllPosts()
+const IdeasSection = ({isFetching, error, posts}) => {
 
+  // function renderMyToast() {
+	// 	infoToast('TOAST RENDERED')
+	// }
   return (
     <>
       <main id='ideas-section'>
@@ -15,14 +18,15 @@ const IdeasSection = () => {
           <div className='ideas-header'>
             <h1>Explore Ideas and collaborate</h1>
             <NavLink className='button' to={'/collaborate/create-post'}>Share your idea</NavLink>
+            {/* <button onClick={renderMyToast}>toast</button> */}
           </div>
 
           <div className='all-ideas'>
-            {isLoading ? (
+            {isFetching ? (
               <div className='loading'>
                 <ClipLoader color="#0006B1" fontSize={30}/>
               </div>
-            ) : isError ? (<p className='information'>Wanna refresh?..</p>) : (
+            ) : error ? (<p className='information'>Wanna refresh?..</p>) : (
               <div>
                 {posts.length === 0 ? (
                   <div className='no-data'>Nobody wants to post?</div>

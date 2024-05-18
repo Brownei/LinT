@@ -1,19 +1,21 @@
+/* eslint-disable react/prop-types */
 import ModalContainer from '../Modal/ModalContainer';
 import './RequestModal.scss';
 import ModalHeader from '../Modal/ModalHeader/ModalHeader';
 import ModalContent from '../Modal/ModalContent/ModalContent'
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {useState} from 'react';
 import { Icon } from '@iconify/react';
 import { ClipLoader } from 'react-spinners';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import {parsedToken} from '../../utils/api';
+import {getToken} from '../../utils/api';
+import { toast } from 'sonner';
 
 
 const RequestModal = ({post}) => {
-	console.log(post.profile.id, post.id)
 	const ownerOfPost = post.profile.fullName.split(' ')
+	const queryClient = useQueryClient()
 	const [content, setContent] = useState('')
 	const sendInterestMutation = useMutation({
 		mutationFn: () => {
@@ -25,19 +27,19 @@ const RequestModal = ({post}) => {
 				withCredentials: true,
 				headers: {
 					'Content-Type': 'application/json',
-					'Authorization': `Bearer ${parsedToken}`
+					'Authorization': `Bearer ${getToken()}`
 				}
 			})
 		},
 		onSuccess() {
-			alert('Request Sent!')
+			toast.success('Request Sent!')
+			queryClient.invalidateQueries('all-posts')
 		},
 		onError(error) {
 			console.log(error)
-			alert('Request failed!')
+			toast.error('Request failed!')
 		}
 	});	
-	
 
 	return (
 		<div>

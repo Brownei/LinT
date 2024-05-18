@@ -3,34 +3,51 @@ import { Textarea, TextInput } from '@mantine/core';
 import './CreatePostPage.scss';
 import { Icon } from '@iconify/react';
 import { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
-import { parsedToken } from '../../utils/api';
+import { getToken } from '../../utils/api';
+import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
+import { useFieldArray, useForm } from 'react-hook-form';
 
 const CreatePostPage = () => {
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
+  const queryClient = useQueryClient()
+  const {register, handleSubmit, formState: { errors }} = useForm({mode: 'onSubmit'})
+  const navigate = useNavigate()
   const [tags, setTags] = useState([])
 
   const createCollabMutation = useMutation({
-    mutationFn: () => {
+    mutationFn: (data) => {
         return axios.post(`http://localhost:3131/posts`, {
-          description,
+          description: data.description,
           toolsTags: tags.map((tag) => tag),
-          title,
+          title: data.title,
         }, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${parsedToken}`
+                'Authorization': `Bearer ${getToken()}`
             }
         })
     },
     onSuccess() {
-      window.location.assign('/collaborate')
-      alert('Post created')
+      toast.success('Post created')
+      queryClient.invalidateQueries('all-posts')
+      navigate('/collaborate')
     },
+    onError() {
+      toast.error('Error creating your idea!')
+    }
   });
+
+  async function onSubmit(data) {
+    try {
+      createCollabMutation.mutateAsync(data)
+    } catch (error) {
+      console.log(error)
+      toast.error(error.message)
+    }
+  }
 
   return (
     <main>
@@ -63,23 +80,37 @@ const CreatePostPage = () => {
                   Back
                 </span>
               </button>
-              <button className='post-button' onClick={async () => await createCollabMutation.mutateAsync()}>Post your idea</button>
+              <button className='post-button' disabled={createCollabMutation.isPending} onClick={async () => await createCollabMutation.mutateAsync()}>{createCollabMutation.isPending ? (
+                <span className='pending'>
+                  <Icon className='loading-post-create' icon={'formkit:spinner'} fontSize={16}/>
+                  Posting...
+                </span>
+              ) : 'Post your idea'}</button>
             </div>
 
             <div className="content">
               <h1>Collaborate Today</h1>
 
               <div className='input-title'>
-                <TextInput radius={'md'} className='text-inputs' label='Project Title' placeholder="Input your project Idea" value={title} onChange={(e) => setTitle(e.target.value)}/>
+                <TextInput radius={'md'} className='text-inputs' label='Project Title' withAsterisk error={!!errors.title} placeholder="Input your project Idea" {...register("title", { required: true })} />
+                {errors.title && (<p className='error'>*We need the topic of the project</p>)}
               </div>
 
               <div className='input-description'>
-                <Textarea label='Project Description' className='text-inputs' minRows={10}  radius={'md'} placeholder="Describe your amazing project idea here" value={description} onChange={(e) => setDescription(e.target.value)}/>
+                <Textarea autosize label='Project Description' withAsterisk error={!!errors.description} className='text-inputs'  radius={'md'} placeholder="Describe your amazing project idea here" {...register("description", { required: true })}/>
+                {errors.description && (<p className='error'>*Say something at least</p>)}
               </div>
 
               <div className='input-tags'>
                 <SelectTagsInput style={'input'} setValue={setTags} value={tags}/>
               </div>
+
+              <button className='mobile-post-button' disabled={createCollabMutation.isPending} onClick={handleSubmit(onSubmit)}>{createCollabMutation.isPending ? (
+                <span className='pending'>
+                  <Icon className='loading-post-create' icon={'formkit:spinner'} fontSize={16}/>
+                  Posting...
+                </span>
+              ) : 'Post your idea'}</button>
             </div>
         </div>
       </div>

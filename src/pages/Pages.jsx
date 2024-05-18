@@ -11,28 +11,11 @@ import CreatePostPage from './CreatePostPage/CreatePostPage'
 import ParticularCollaboratePage from './CollaboratePage/ParticularCollaboratePage/ParticularCollaboratePage';
 import NotFoundPage from './NotFoundPage/NotFoundPage';
 import { AuthWrapper } from '../components/AuthWrapper/AuthWrapper';
-import { AppProvider } from '../components/Provider/AppProvider';
-import { useLocation } from 'react-router-dom';
-import SecondSetupPage from './OnboardingPage/SetupProfilePage/SecondSetup/SecondSetupPage';
-import SetupConfirmPage from './OnboardingPage/SetupProfilePage/SetupConfirmPage/SetupConfirmPage';
 import EditProfilePage from './EditProfilePage/EditProfilePage';
+import UserProfilePage from './UserProfilePage/UserProfilePage';
+import MobileInterests from '../components/Mobile/MobileInterests/MobileInterests';
 
 const Pages = () => {
-  const location = useLocation()
-  let heading;
-
-  switch (location.pathname) {
-    case '/setup-profile':
-      heading = 'Set up your profile'
-      break;
-    case '/setup-profile/2':
-      heading = 'Your bio and links'
-      break;
-    default:
-      heading = 'Set up your profile'
-      break;
-  }
-
   return (
     <section className='pages'>
         <Routes>
@@ -42,15 +25,13 @@ const Pages = () => {
             <Route path='/notifications' element={<Notifications />}/>
             <Route path='/collaborate/:id' element={<ParticularCollaboratePage />}/>
             <Route path='/profile/edit' element={<EditProfilePage />}/>
+            <Route path='/:username' element={<UserProfilePage />} />
+            <Route path='collaborate/interests' element={<MobileInterests />}/>
           </Route>
 
           <Route element={<AuthWrapper />}>
             <Route path='/collaborate/create-post' element={<CreatePostPage />}/>
-            <Route element={<AppProvider />}>
-              <Route path='/setup-profile' element={<SetupProfile heading={heading}/>}/>
-              <Route path='/setup-profile/2' element={<SecondSetupPage heading={heading}/>}/>
-              <Route path='/setup-profile/confirm' element={<SetupConfirmPage />}/>
-            </Route>
+            <Route path='/setup-profile' element={<SetupProfile heading={'Set up your profile'}/>}/>
           </Route>
 
           <Route path='/' element={<Login />}/>

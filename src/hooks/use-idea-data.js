@@ -1,13 +1,14 @@
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
-import { parsedToken } from "../utils/api"
+import { getToken } from "../utils/api"
+
 
 async function getIdeaData(id) {
     const {data} = await axios.get(`http://localhost:3131/posts/${id}`, {
         withCredentials: true,
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ` + parsedToken
+            'Authorization': `Bearer ` + getToken()
         }
     })
     return data

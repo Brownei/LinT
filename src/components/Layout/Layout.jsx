@@ -5,23 +5,19 @@ import { Outlet } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 import { useCurrentUser } from '../../hooks/use-current-user';
-import {useEffect} from 'react';
+import MobileNav from '../Mobile/MobileNav/MobileNav';
+import MobileSettings from '../Mobile/MobileSettings/MobileSettings';
 
 export default function Layout() {
-  const {data: session, isLoading} = useCurrentUser()
+  // const {isLoading} = useCurrentUser()
   const navigate = useNavigate();
+	const {data: user, error, isLoading} = useCurrentUser();
 
-	useEffect(() => {
-		const timeOut = setTimeout(() => {
-			if(!session) {
-				navigate('/')
-			} else if (session && session.profile === null) {
-				navigate('/setup-profile')
-			}
-		}, 4000)
-
-		return () => clearTimeout(timeOut)
-	}, [session])
+  if(typeof window === "undefined" || error) {
+    window.location.assign('/')
+  } else if (user && user?.profile === null) {
+    navigate('/setup-profile', { replace: true })
+  }
 
   if (isLoading) {
     return (
@@ -34,8 +30,16 @@ export default function Layout() {
 
   return (
       <main id="body">
+        <div className='mobile-settings'>
+          <MobileSettings />
+        </div>
+
         <Nav />
         <Outlet />
+
+        <div className="collaborate-mobile-page">
+          <MobileNav user={user}/>
+        </div>
       </main>
   )
 }

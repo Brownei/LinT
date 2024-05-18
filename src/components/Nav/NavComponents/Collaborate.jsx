@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { useState } from "react";
 
-const Collaborate = () => {
+export default function Collaborate() {
     const [mouseEnter, setMouseEnter] = useState(false)
     const location = useLocation()
     return (
@@ -13,6 +13,4 @@ const Collaborate = () => {
         </NavLink>
     )
 }
-
-export default Collaborate;
 
