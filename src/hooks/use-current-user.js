@@ -1,20 +1,13 @@
 import { useQuery } from "@tanstack/react-query"
-import axios from "axios"
-import { getToken } from "../utils/api"
+import { api } from "../utils/api"
 
 async function getCurrentUser() {
-    const {data} = await axios.get(`http://localhost:3131/auth/user`, {
-        withCredentials: true,
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ` + getToken() 
-        }
-    })
+    const {data} = await api.get(`/api/auth/user`)
     return data
 }
 
 export const useCurrentUser = () => useQuery({
-    queryKey: ['current-user'],
+    queryKey: ['current'],
     queryFn: getCurrentUser,
     refetchOnWindowFocus: false,
     retry(failureCount, error) {

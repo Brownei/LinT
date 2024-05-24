@@ -131,3 +131,43 @@
         }
     }
 }
+
+@media screen and (max-width: 800px) {
+    #edit-profile-page {
+        display: block;
+
+        .edit-profile-page {
+            .header {
+                .link {
+                    padding: 0px;
+                    gap: 2px;
+                    border-radius: 0px;
+                    font-size: 0.75rem;
+
+                    span {
+                        font-size: 1rem;
+                    }
+                    
+                    &:hover {
+                        background-color: transparent;
+                    }
+                }
+
+                button {
+                    padding: 10px 20px;
+                    font-size: 0.85rem;
+                }
+            }
+
+            .content {
+                .inputs {
+                    gap: 16px;
+
+                    .input {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,10 +1,21 @@
-import { create } from "zustand";
+import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
-export const useAuthStore = create((set) => ({
-    user: null,
-    status: "loading",
-    clearUser: () => set({ user: null, status: "unauthenticated" }),
-    setNewUser: (newData) => {
-        set((state) => ({ user: {...state.user, ...newData}, status: "authenticated"}));
-    },
-}));
+const initialState = {
+    user: null
+}
+
+export const useAuthStore = create(
+    persist(
+        (set) => ({
+            ...initialState,
+            setUser: (newData) => set((state) => ({ user: { ...state.user, ...newData } })),
+            clear: () => set({ ...initialState })
+        }),
+        {
+            name: "auth-store",
+        }
+    )
+)
+
+

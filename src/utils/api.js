@@ -1,22 +1,26 @@
 import axios from "axios";
 
-export function getToken () {
+export const getToken = () => {
     if (typeof window !== "undefined") {
+        // Client-side-only code
         return sessionStorage.getItem("session");
     } else {
-    return "";
+        return "";
     }
-}
+};
 
-const axiosClient = axios.create({ baseURL: 'http://localhost:3131' });
-const config = {
-    withCredentials: true,
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ` + getToken() 
+export const api = axios.create({
+    headers: { "Content-Type": "application/json" },
+});
+
+api.interceptors.request.use(
+    (config) => {
+        if (typeof window !== "undefined") {
+        config.headers.Authorization = "Bearer " + getToken();
+        }
+        return config;
+    },
+    function (error) {
+        return Promise.reject(error);
     }
-}
-
-export const getUser = () => axiosClient.get('/auth/user', config)
-
-
+);

@@ -13,38 +13,38 @@
         align-items: start;
         gap: 30px;
         margin-left: 180px;
-        max-width: 628px;
+        width: 628px;
 
-        .h-container{
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: calc(17px + 24px);
+        // .h-container{
+        //     position: relative;
+        //     display: flex;
+        //     align-items: center;
+        //     justify-content: center;
+        //     gap: calc(17px + 24px);
     
-            .element {
-                font-size: 1rem;
-                color: #8F9191;
-                font-weight: 600;
-                text-decoration: none;
+        //     .element {
+        //         font-size: 1rem;
+        //         color: #8F9191;
+        //         font-weight: 600;
+        //         text-decoration: none;
 
-            }
+        //     }
     
-            .selected {
-                font-weight: 600;
-                font-size: 1rem;
-                color: #00034A;
-                background-color: #E6E6F7;
-                padding: 8px 24px;
-                border-radius: 32px;
-                text-decoration: none;
-            }
+        //     .selected {
+        //         font-weight: 600;
+        //         font-size: 1rem;
+        //         color: #00034A;
+        //         background-color: #E6E6F7;
+        //         padding: 8px 24px;
+        //         border-radius: 32px;
+        //         text-decoration: none;
+        //     }
     
-            p {
-                color: red;
-                font-weight: 600;
-            }
-        }
+        //     p {
+        //         color: red;
+        //         font-weight: 600;
+        //     }
+        // }
     
         .notifications {
 
@@ -60,4 +60,25 @@
         }
     }
 
+}
+
+@media screen and (max-width: 800px) {
+    #notifications_page {
+        display: block;
+
+        .notification-page {
+            width: 100%;
+            margin-left: 0px;
+
+            .notifications {
+                display: grid;
+                gap: 16px;
+                margin-bottom: 100px;
+
+                .particulare-notif {
+                    background-color: #F5F5F5;
+                }
+            }
+        }
+    }
 }

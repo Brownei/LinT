@@ -12,41 +12,31 @@ import LinkIcons from '../../components/LinkIcons';
 import {formatDate} from 'date-fns';
 import { formatDate as dateFormater } from '../../utils/formatDate';
 import { useMutation } from "@tanstack/react-query";
-import axios from 'axios';
-import { getToken } from '../../utils/api';
-import { useCurrentUser } from '../../hooks/use-current-user';
+import { api } from '../../utils/api';
+// import { useCurrentUser } from '../../hooks/use-current-user';
 // import MobileIdeas from '../../components/Mobile/MobileIdeas/MobileIdeas';
 import { useMediaQuery } from 'react-responsive';
+import { useSession } from '../../hooks/use-session';
 
 const ProfilePage = () => {
     const isMobile = useMediaQuery({maxWidth: 800})
-    console.log(isMobile)
     const navigate = useNavigate()
-    const {data: user, isLoading: isCurrentUserFetching, error: isCurrentError} = useCurrentUser()
-    // console.log(user)
+    const {user, loading, error: isCurrentError, signOut} = useSession()
     const {data: posts, isFetching, error} = useUserPosts(user?.profile.username)
     const location = useLocation()
     const searchParams = new URLSearchParams(location.search);
-    const formattedDate = formatDate(user.profile.createdAt, "yyyy-MM-dd")
+    const formattedDate = formatDate(user?.profile.createdAt, "yyyy-MM-dd")
     // console.log(location.pathname)
     const signOutMutation = useMutation({
-        mutationFn: (token) => {
-            return axios.post(`http://localhost:3131/auth/logout`, {}, {
-                withCredentials: true,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': "Bearer " + token  
-                }
-            })
+        mutationFn: () => {
+            return api.post(`/api/auth/logout`)
         },
         onSuccess() {
-            // clearUser()
-            sessionStorage.removeItem('session')
-            window.location.assign('/')
+            signOut()
         },
     });
     
-    if(isCurrentUserFetching) {
+    if(loading) {
         return (
             <div className="loader">
                 <ClipLoader color="#0006B1" size={30} />
@@ -105,7 +95,7 @@ const ProfilePage = () => {
                         {location.pathname.includes(user.profile.username) || location.pathname === '/profile' ? (
                             <div className='buttons'>
                                 <Link to={'/profile/edit'} className='edit-profile'>Edit Profile</Link>
-                                <button className='logout' disabled={signOutMutation.isPending} onClick={async () => await signOutMutation.mutateAsync(getToken())}>{signOutMutation.isPending ? (
+                                <button className='logout' disabled={signOutMutation.isPending} onClick={async () => await signOutMutation.mutateAsync()}>{signOutMutation.isPending ? (
                                     <span>
                                         <Icon className='logout-button' icon={'formkit:spinner'} fontSize={16}/>
                                         Running...
@@ -153,11 +143,11 @@ const ProfilePage = () => {
 
                     <div className='mobile-loc-cal'>
                         <div className='mobile-location'>
-                            <Icon icon={'mdi:location'} fontSize={24}/>
+                            <Icon icon={'mdi:location'} fontSize={18}/>
                             <p>{user?.profile.location}</p>
                         </div>
                         <div className='mobile-calendar'>
-                            <Icon icon={'bx:calendar'} fontSize={24}/>
+                            <Icon icon={'bx:calendar'} fontSize={18}/>
                             <p>{dateFormater(formattedDate)}</p>
                         </div>
                     </div>
@@ -176,7 +166,7 @@ const ProfilePage = () => {
                                     {posts.length === 0 ? (
                                         <p className='information'>No ideas yet? Share and Collaborate!</p>
                                     ) : (
-                                        <div>
+                                        <div className='posts'>
                                             {posts.map((post) => (
                                                 <div key={post.id}>
                                                     <Ideas post={post} forProfile={true}/>

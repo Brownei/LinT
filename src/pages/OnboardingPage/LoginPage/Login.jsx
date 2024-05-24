@@ -5,33 +5,37 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useMutation } from "@tanstack/react-query";
 import { signInWithGoogle } from '../../../utils/firebase';
 import axios from 'axios';
-import { useCurrentUser } from '../../../hooks/use-current-user';
+// import { useCurrentUser } from '../../../hooks/use-current-user';
 import { Button } from '@mantine/core';
+import { useAuthStore } from '../../../hooks/use-auth-store';
+import { useSession } from '../../../hooks/use-session';
 
 const Login = () => {
   const navigate = useNavigate();
-  const {data: user} = useCurrentUser()
+  const {user} = useSession()
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  // const URL = import.meta.env.VITE_API_ENDPOINT
+  const setUser = useAuthStore((state) => state.setUser)
 
 
   const googleLoginMutation = useMutation({
     mutationFn: (token) => {
-        return axios.post(`http://localhost:3131/auth/google/login`, {}, {
+        return axios.post(`/api/auth/google/login`, {}, {
             withCredentials: true,
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
             }
         })
     },
     onSuccess({data}) {
       sessionStorage.setItem('session', data.sessionCookie)
-      console.log(data.userInfo)
+      
       if (data.userInfo.profile === null) {
+        setUser(data.userInfo)
         navigate('/setup-profile');
       } else {
+        setUser(data.userInfo)
         navigate('/collaborate')
       }
     }
@@ -53,7 +57,7 @@ const Login = () => {
 
   if(user) {
     setIsLoading(true)
-    navigate('/collaborate', {replace: true})
+    window.location.assign('/collaborate')
   }
 
   return (

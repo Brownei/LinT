@@ -2,13 +2,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100dvh;
     padding-top: 30px;
     padding-bottom: 90px;
+    
 
     .profile-page {
         padding: 0px;
-        border: 1px solid black;
 
         .profile {
             display: flex;
@@ -237,8 +236,7 @@
 
 @media screen and (max-width: 800px) {
     #profile-page {
-        justify-content: inherit;
-        align-items: inherit;
+        display: block;
 
         .profile-page {
 
@@ -261,7 +259,7 @@
                         }
 
                         h2 {
-                            font-size: 1rem;
+                            font-size: 1.2rem;
                             line-height: 22px;
                         }
 
@@ -309,14 +307,14 @@
                         margin: 0px;
                         color: #4B4B4B;
                         font-weight: 600;
-                        font-size: 1rem;
+                        font-size: 0.85rem;
                         line-height: 20px;
                     }
     
                     p {
                         padding: 0px;
                         margin: 0px;
-                        font-size: 1rem;
+                        font-size: 0.85rem;
                         line-height: 22px;
                         font-weight: 400;
                     }
@@ -342,11 +340,13 @@
             }
     
             .ideas-collabs {
-                flex-direction: column;
+                display: block;
+                gap: 10px;
 
                 h3,
                 .h3 {
                     font-size: 0.9rem;
+                    margin-top: 20px;
                 }
 
                 .active {
@@ -361,6 +361,11 @@
     
                         .information {
                             width: 100%;
+                        }
+
+                        .posts {
+                            display: grid;
+                            gap: 16px;
                         }
                     }
                 }

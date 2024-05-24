@@ -4,10 +4,10 @@ import './EditProfilePage.scss'
 import { Link } from 'react-router-dom'
 import { ClipLoader } from 'react-spinners'
 import Upload from '../../components/Upload/Upload'
-import { useCurrentUser } from '../../hooks/use-current-user'
+import {useSession} from '../../hooks/use-session'
 
 const EditProfilePage = () => {
-    const {data: user, isLoading} = useCurrentUser()
+    const {user, loading: isLoading} = useSession()
     const [uploadedImage, setUploadedImage] = useState(user.profile.profileImage ? user.profile.profileImage : '');
 
     if(isLoading) {

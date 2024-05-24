@@ -4,7 +4,7 @@ import { getToken } from "../utils/api"
 
 
 async function getIdeaData(id) {
-    const {data} = await axios.get(`http://localhost:3131/posts/${id}`, {
+    const {data} = await axios.get(`/api/posts/${id}`, {
         withCredentials: true,
         headers: {
             'Content-Type': 'application/json',

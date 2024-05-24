@@ -2,11 +2,11 @@
 import "./AuthWrapper.scss"
 import { Outlet } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
-import { useCurrentUser } from "../../hooks/use-current-user";
+import { useSession } from "../../hooks/use-session";
 
 
 export const AuthWrapper = () => {
-	const {error, isLoading: loading} = useCurrentUser()
+	const {error, isLoading: loading} = useSession()
 
 	if(typeof window === "undefined" || error) {
 		window.location.assign('/')
@@ -23,7 +23,7 @@ export const AuthWrapper = () => {
 
 	return (
 		<>
-		<Outlet />
+			<Outlet />
 		</>
 	);
 };

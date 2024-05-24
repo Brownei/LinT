@@ -90,11 +90,13 @@
 
 @media screen and (max-width: 800px) {
     .ideas {
+        display: block;
         width: 100%;
         background-color: #F5F5F5;
         padding: 16px;
 
         .card {
+            // display: block;
             gap: 8px;
 
             .user {
