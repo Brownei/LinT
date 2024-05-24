@@ -1,15 +1,27 @@
 import { Link, useLocation } from 'react-router-dom';
 import './Notifications.scss';
+import FloatingIndicator from '../../components/FloatingIndicator/FloatingIndicator';
 
 const Notifications = () => {
     const location = useLocation();
+    const routes = [
+        {
+            name: 'All',
+            url: '/notifications'
+        },
+        {
+            name: 'Unread',
+            url: '/notifications?=unread'
+        }
+    ]
 
     return (
         <main id="notifications_page">
             <div className='notification-page'>
                 <div className="h-container">
-                    <Link to='/notifications' className={location.search === '' ? 'selected' : 'element'}>All</Link>
-                    <Link to='/notifications?=unread' className={location.search === '?=unread' ? 'selected' : 'element'}>Unread</Link>
+                    {/* <Link to='/notifications' className={location.search === '' ? 'selected' : 'element'}>All</Link>
+                    <Link to='/notifications?=unread' className={location.search === '?=unread' ? 'selected' : 'element'}>Unread</Link> */}
+                    <FloatingIndicator data={routes}/>
                 </div> 
                 <div className='notifications'>
                     <div className='particulare-notif'>

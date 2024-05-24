@@ -58,9 +58,9 @@ const SetupProfile = ({heading}) => {
   });
 
 
-  function onSubmit(data) {
+  async function onSubmit(data) {
     try {
-      createProfileMutation.mutateAsync(data)
+      await createProfileMutation.mutateAsync(data)
     } catch (error) {
       console.log(error)
       toast.error(error.message)
