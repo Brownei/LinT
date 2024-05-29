@@ -13,20 +13,21 @@ import {formatDate} from 'date-fns';
 import { formatDate as dateFormater } from '../../utils/formatDate';
 import { useMutation } from "@tanstack/react-query";
 import { api } from '../../utils/api';
-// import { useCurrentUser } from '../../hooks/use-current-user';
 // import MobileIdeas from '../../components/Mobile/MobileIdeas/MobileIdeas';
-import { useMediaQuery } from 'react-responsive';
+// import { useMediaQuery } from 'react-responsive';
 import { useSession } from '../../hooks/use-session';
+import { useCurrentUser } from '../../hooks/use-current-user';
 
 const ProfilePage = () => {
-    const isMobile = useMediaQuery({maxWidth: 800})
+    // const isMobile = useMediaQuery({maxWidth: 800})
     const navigate = useNavigate()
-    const {user, loading, error: isCurrentError, signOut} = useSession()
-    const {data: posts, isFetching, error} = useUserPosts(user?.profile.username)
+    const {signOut} = useSession()
+    const {data: user, isLoading: loading, error: isCurrentError} = useCurrentUser()
+    console.log(user)
+    const {data: posts, isFetching, error} = useUserPosts(user?.profile?.username)
     const location = useLocation()
     const searchParams = new URLSearchParams(location.search);
-    const formattedDate = formatDate(user?.profile.createdAt, "yyyy-MM-dd")
-    // console.log(location.pathname)
+    const formattedDate = formatDate(user?.profile?.createdAt, "yyyy-MM-dd")
     const signOutMutation = useMutation({
         mutationFn: () => {
             return api.post(`/api/auth/logout`)
@@ -86,8 +87,8 @@ const ProfilePage = () => {
                             <h2>{user.profile.fullName}</h2>
                             <span>@{user.profile.username}</span>
                             <div>
-                                <p className='occupation'>{user?.profile.occupation}</p>
-                                <p>{user?.profile.bio}</p>
+                                <p className='occupation'>{user.profile?.occupation}</p>
+                                <p>{user.profile?.bio}</p>
                             </div>
                         </div>
                     </div>
@@ -103,7 +104,7 @@ const ProfilePage = () => {
                                 ) : 'Log Out'}</button>
                             </div>
                         ) : (
-                            <button className='collabs'>8 Collabs</button>
+                            <button className='collabs'>{collaborations.length} Collabs</button>
                         )}
                         
                         <div className='icons'>
@@ -116,7 +117,7 @@ const ProfilePage = () => {
                         <div className='loc-cal'>
                             <div className='location'>
                                 <Icon icon={'mdi:location'} fontSize={24}/>
-                                <p>{user?.profile.location}</p>
+                                <p>{user.profile?.location}</p>
                             </div>
                             <div className='calendar'>
                                 <Icon icon={'bx:calendar'} fontSize={24}/>
@@ -129,8 +130,8 @@ const ProfilePage = () => {
 
                 <div className='mobile-unnecessary'>
                     <div className='mobile-profile-info'>
-                        <p className='occupation'>{user?.profile.occupation}</p>
-                        <p>{user?.profile.bio}</p>
+                        <p className='occupation'>{user.profile?.occupation}</p>
+                        <p>{user.profile?.bio}</p>
                     </div>
 
                     <div className='mobile-icons'>
@@ -144,7 +145,7 @@ const ProfilePage = () => {
                     <div className='mobile-loc-cal'>
                         <div className='mobile-location'>
                             <Icon icon={'mdi:location'} fontSize={18}/>
-                            <p>{user?.profile.location}</p>
+                            <p>{user.profile?.location}</p>
                         </div>
                         <div className='mobile-calendar'>
                             <Icon icon={'bx:calendar'} fontSize={18}/>
@@ -155,7 +156,12 @@ const ProfilePage = () => {
 
                 <div className='ideas-collabs'>
                     <div className='card-title'>
-                        {isMobile ? (<NavLink className={`h3 ${location.pathname === '/profile' && 'active'}`} to={'/profile'}>Ideas</NavLink>) : (<h3>Ideas</h3>)}
+                        <div className='idea-collab-nav'>
+                            <NavLink className={location.search === '' ? 'active' : 'h3'} to={'/profile'}>Ideas</NavLink>
+                            <NavLink className={location.search === '?query=interests' ? 'active' : 'h3'} to={'/profile?query=interests'}>Interest</NavLink>
+                            <NavLink className={location.search === '?query=collaborations' ? 'active' : 'h3'} to={'/profile?query=collaborations'}>Collaborations</NavLink>
+                        </div>
+
                         <div className='user-ideas'>
                             {isFetching ? (
                                 <div className='loading'>

@@ -18,7 +18,7 @@ const CreatePostPage = () => {
 
   const createCollabMutation = useMutation({
     mutationFn: (data) => {
-        return axios.post(`http://localhost:3131/posts`, {
+        return axios.post(`/api/posts`, {
           description: data.description,
           toolsTags: tags.map((tag) => tag),
           title: data.title,

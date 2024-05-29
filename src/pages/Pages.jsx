@@ -14,6 +14,7 @@ import { AuthWrapper } from '../components/AuthWrapper/AuthWrapper';
 import EditProfilePage from './EditProfilePage/EditProfilePage';
 import UserProfilePage from './UserProfilePage/UserProfilePage';
 import MobileInterests from '../components/Mobile/MobileInterests/MobileInterests';
+import MessagesPage from './MessagesPage/MessagesPage';
 
 const Pages = () => {
   return (
@@ -27,13 +28,14 @@ const Pages = () => {
             <Route path='/profile/edit' element={<EditProfilePage />}/>
             <Route path='/:username' element={<UserProfilePage />} />
             <Route path='collaborate/interests' element={<MobileInterests />}/>
+            <Route path='/messages' element={<MessagesPage />}/>
           </Route>
 
           <Route element={<AuthWrapper />}>
             <Route path='/collaborate/create-post' element={<CreatePostPage />}/>
-            <Route path='/setup-profile' element={<SetupProfile heading={'Set up your profile'}/>}/>
           </Route>
 
+          <Route path='/setup-profile' element={<SetupProfile heading={'Set up your profile'}/>}/>
           <Route path='/' element={<Login />}/>
           <Route path='/create-account' element={<Register />}/>
 

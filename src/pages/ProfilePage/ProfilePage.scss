@@ -199,6 +199,28 @@
             .card-title {
                 display: grid;
                 gap: 16px;
+
+                .idea-collab-nav {
+                    display: flex;
+                    align-items: center;
+                    gap: 14px;
+
+                    .h3 {
+                        // font-size: 0.9rem;
+                        margin-top: 20px;
+                        font-weight: 600;
+                        color: #8F9191;
+                        // text-decoration: none;
+                    }
+
+                    .active {
+                        font-size: 0.9rem;
+                        margin-top: 20px;
+                        font-weight: 600;
+                        color: #00034A;
+                        text-decoration: none;
+                    }
+                }
     
                 .user-ideas {
                     display: grid;
@@ -333,7 +355,7 @@
     
                         p {
                             margin: 0px;
-                            font-size: 0.8rem;
+                            font-size: 0.7rem;
                         }
                     }
                 }
@@ -342,18 +364,9 @@
             .ideas-collabs {
                 display: block;
                 gap: 10px;
-
-                h3,
-                .h3 {
-                    font-size: 0.9rem;
-                    margin-top: 20px;
-                }
-
-                .active {
-                    color: #00034A;
-                }
     
                 .card-title {
+
                     .user-ideas {
                         .loading {
                             width: 100%;

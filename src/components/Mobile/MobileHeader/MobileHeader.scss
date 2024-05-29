@@ -30,6 +30,19 @@
                 color: #00034A;
                 font-size: 0.9rem;
             }
+
+            .active-link {
+                background-color: #00034A;
+                padding: 4px 8px;
+                border: 1px solid transparent;
+                border-radius: 8px;
+                text-decoration: none;
+                display: flex;
+                gap: 3px;
+                align-items: center;
+                color: #E6E6F7;
+                font-size: 0.9rem;
+            }
         }
     }
 }

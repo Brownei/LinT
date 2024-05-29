@@ -10,6 +10,9 @@ const LinkIcons = ({ link, styles }) => {
         case link.includes('https://twitter.com'):
             icon = <Icon icon={'mdi:twitter'} fontSize={isMobile ? 18 : 24}/>
             break;
+        case link.includes('https://x.com'):
+            icon = <Icon icon={'prime:twitter'} fontSize={isMobile ? 18 : 24}/>
+            break;
         case link.includes('https://www.linkedin.com'):
             icon = <Icon icon={'mdi:linkedin'} fontSize={isMobile ? 18 : 24}/>
             break;

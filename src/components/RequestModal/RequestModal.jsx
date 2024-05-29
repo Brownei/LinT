@@ -8,27 +8,20 @@ import {useState} from 'react';
 import { Icon } from '@iconify/react';
 import { ClipLoader } from 'react-spinners';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import {getToken} from '../../utils/api';
+import {api} from '../../utils/api';
 import { toast } from 'sonner';
 
 
 const RequestModal = ({post}) => {
 	const ownerOfPost = post.profile.fullName.split(' ')
 	const queryClient = useQueryClient()
-	const [content, setContent] = useState('')
+	const [content, setContent] = useState()
 	const sendInterestMutation = useMutation({
 		mutationFn: () => {
-			return axios.post(`http://localhost:3131/collaborators/requests`, {
+			return api.post(`/api/collaborators/requests`, {
 				receiverId: post.profile.id,
 				postId: post.id,
-				content: `Hello ${ownerOfPost[0]}, I’m interested in working with you.`
-			}, {
-				withCredentials: true,
-				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': `Bearer ${getToken()}`
-				}
+				content: content ? content : `Hello ${ownerOfPost[0]}, I’m interested in working with you.`
 			})
 		},
 		onSuccess() {
@@ -65,7 +58,7 @@ const RequestModal = ({post}) => {
 					</ModalHeader>
 					<ModalContent>
 						<textarea placeholder={`Hello ${ownerOfPost[0]}, I’m interested in working with you.`} type='text' onChange={(e) => setContent(e.target.value)}/>
-						<button disabled={content === ''}>Submit</button>
+						<button onClick={() => sendInterestMutation.mutateAsync()} disabled={content === ''}>Submit</button>
 					</ModalContent>
 				</ModalContainer>
 			)}

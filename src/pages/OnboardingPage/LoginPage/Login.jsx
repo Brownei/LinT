@@ -5,9 +5,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useMutation } from "@tanstack/react-query";
 import { signInWithGoogle } from '../../../utils/firebase';
 import axios from 'axios';
-// import { useCurrentUser } from '../../../hooks/use-current-user';
 import { Button } from '@mantine/core';
-import { useAuthStore } from '../../../hooks/use-auth-store';
+import { useAuthStore, useSettingProfileStore } from '../../../hooks/use-auth-store';
 import { useSession } from '../../../hooks/use-session';
 
 const Login = () => {
@@ -16,7 +15,7 @@ const Login = () => {
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const setUser = useAuthStore((state) => state.setUser)
-
+  const setProfile = useSettingProfileStore((state) => state.setProfile)
 
   const googleLoginMutation = useMutation({
     mutationFn: (token) => {
@@ -32,10 +31,10 @@ const Login = () => {
       sessionStorage.setItem('session', data.sessionCookie)
       
       if (data.userInfo.profile === null) {
-        setUser(data.userInfo)
+        setProfile(data.userInfo)
         navigate('/setup-profile');
       } else {
-        setUser(data.userInfo)
+        setUser(data.userInfo.profile)
         navigate('/collaborate')
       }
     }

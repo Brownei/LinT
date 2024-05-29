@@ -181,6 +181,10 @@
 @media screen and (max-width: 800px) {
     #particular-page {
 		align-items: start;
+
+		.overlay {
+			z-index: 90;
+		}
 		
 		.container {
 			
@@ -204,7 +208,14 @@
 				}
 
 				button {
-					font-size: 0.9rem;
+					font-size: 0.85rem;
+
+					&:disabled {
+						padding: 8px 20px;
+						border-radius: 22px;
+						color: #00034A;
+						font-size: 0.85rem;
+					}
 				}
 			}
 

@@ -18,4 +18,20 @@ export const useAuthStore = create(
     )
 )
 
+const profileState = {
+    profile: null
+}
 
+
+export const useSettingProfileStore = create(
+    persist(
+        (set) => ({
+            ...profileState,
+            setProfile: (newData) => set((state) => ({ profile: { ...state.profile, ...newData } })),
+            clearProfile: () => set({ ...profileState })
+        }),
+        {
+            name: "profile-store",
+        }
+    )
+)
