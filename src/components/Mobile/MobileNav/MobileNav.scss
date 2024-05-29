@@ -2,7 +2,7 @@
     position: fixed;
     background-color: #fff;
     bottom: 0;
-    z-index: 999;
+    z-index: 70;
     left: 0px;
     right: 0px;
 
@@ -38,7 +38,7 @@
         }
 
         .profile-selected {
-            border: 3px solid #3338C1;
+            border: 2px solid #3338C1;
             border-radius: 100%;
         }
     }

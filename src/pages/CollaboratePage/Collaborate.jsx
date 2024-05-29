@@ -29,7 +29,7 @@ const Collaborate = () => {
 
         {/* MOBILE VIEW BABY */}
         <div className="mobile-collaborate-page">
-          <MobileHeader />
+          <MobileHeader collaboratorPage={true}/>
           <MobileIdeas error={postError} isFetching={isFetching} posts={posts}/>
         </div>
       </main>

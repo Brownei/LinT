@@ -6,13 +6,13 @@ import { ClipLoader } from 'react-spinners'
 import RequestModal from '../../../components/RequestModal/RequestModal'
 import {useState} from 'react'
 import LanguageIcons from '../../../components/LanguageIcons/LanguageIcons'
-import { useCurrentUser } from '../../../hooks/use-current-user'
+import { useSession } from '../../../hooks/use-session'
 
 const ParticularCollaboratePage = () => {
 	const [onOpen, setOnOpen] = useState()
 	const { id } = useParams()
     const { data: particularpost, error, isLoading } = useIdeaData(id)
-    const { data: currentUser } = useCurrentUser()
+    const { user: currentUser } = useSession()
 
 	return (
         <main id='particular-page'>
@@ -41,7 +41,7 @@ const ParticularCollaboratePage = () => {
                             </p>
                         </div>
                         {currentUser?.id !== particularpost.profile.id && (
-							<button disabled={particularpost.requests.some((request) => request.senderId === currentUser?.id)} onClick={() => setOnOpen(true)} >{particularpost.requests.some((request) => request.senderId === currentUser?.id) ? 'Already Interested' : 'Interested'}</button>
+							<button disabled={particularpost.requests.some((request) => request.senderId === currentUser?.userId)} onClick={() => setOnOpen(true)} >{particularpost.requests.some((request) => request.senderId === currentUser?.userId) ? 'Already Interested' : 'Interested'}</button>
 						)}
                     </div>
 

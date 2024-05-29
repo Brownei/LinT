@@ -6,20 +6,22 @@ import Upload from '../../../components/Upload/Upload';
 import { useState } from 'react';
 import { ClipLoader } from 'react-spinners';
 import { useEffect } from 'react';
-import { getToken } from '../../../utils/api';
-import axios from 'axios';
+import { api } from '../../../utils/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { ActionIcon, Button, Input, InputLabel, Textarea, TextInput } from '@mantine/core';
 import { Icon } from '@iconify/react/dist/iconify.js';
-import { useCurrentUser } from '../../../hooks/use-current-user';
 import CountrySelect from '../../../components/CountrySelect';
+import { useSession } from '../../../hooks/use-session';
+import { useAuthStore, useSettingProfileStore } from '../../../hooks/use-auth-store';
 
 const SetupProfile = ({heading}) => {
   const queryClient = useQueryClient()
-  const {data: user, isLoading} = useCurrentUser()
+  const setUser = useAuthStore((state) => state.setUser)
+  const clearProfile = useSettingProfileStore((state => state.clearProfile))
+  const {profile, profileLoading: loading} = useSession()
   const [locationValue, setLocationValue] = useState(null);
-  const [uploadedImage, setUploadedImage] = useState(user.profileImage ? user.profileImage : 'https://i.pinimg.com/564x/dd/ea/bd/ddeabd5e1886bcfe932a331839ee1cf7.jpg');
+  const [uploadedImage, setUploadedImage] = useState(profile.profileImage ? profile.profileImage : 'https://i.pinimg.com/564x/dd/ea/bd/ddeabd5e1886bcfe932a331839ee1cf7.jpg');
   const navigate = useNavigate()
   const {register, handleSubmit, control, formState: { errors }} = useForm({
     mode: 'onSubmit'
@@ -31,7 +33,7 @@ const SetupProfile = ({heading}) => {
 
   const createProfileMutation = useMutation({
     mutationFn: (data) => {
-        return axios.post(`http://localhost:3131/profile`, {
+        return api.post(`/api/profile`, {
             username: data.username,
             fullName: data.fullName,
             occupation: data.profileTag,
@@ -39,15 +41,11 @@ const SetupProfile = ({heading}) => {
             bio: data.bio,
             links: data.socialLinks.map((link) => link.url),
             profileImage: uploadedImage
-        }, {
-            withCredentials: true,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + getToken()
-            }
         })
     },
-    onSuccess() {
+    onSuccess({data}) {
+      console.log(data)
+      setUser(data)
       toast.success('Profile set!')
       queryClient.invalidateQueries("current-user")
       navigate('/collaborate', { replace: true })
@@ -71,15 +69,16 @@ const SetupProfile = ({heading}) => {
   
 	useEffect(() => {
     const timeOut = setTimeout(() => {
-      if(!user) {
+      if(!profile) {
+        clearProfile()
         window.location.assign('/')
 			}
 		}, 4000)
     
 		return () => clearTimeout(timeOut)
-	}, [user])
+	}, [profile])
   
-  {isLoading && <ClipLoader />}
+  {loading && <ClipLoader />}
   
   return (
     <main id='profile-setup'>
@@ -113,7 +112,7 @@ const SetupProfile = ({heading}) => {
         <div className="setup">
           <form>
             <div className='input-field'>
-              <TextInput disabled={createProfileMutation.isPending} label='Full Name' withAsterisk type="text" name="full-name" id="full-name" placeholder='Full Name' value={user.fullName} {...register("fullName", { required: true })}/>
+              <TextInput disabled={createProfileMutation.isPending} label='Full Name' withAsterisk type="text" name="full-name" id="full-name" placeholder='Full Name' value={profile.fullName} {...register("fullName", { required: true })}/>
               {errors.firstName && <span>*Your name is required</span>}
             </div>
             <div className='username-email'>
@@ -122,7 +121,7 @@ const SetupProfile = ({heading}) => {
                 {errors.username && <span>*Your username is required</span>}
               </div>
               <div className='input-field'>
-                <TextInput disabled={createProfileMutation.isPending} label='Your email address' withAsterisk type="text" name="email" id="email" placeholder='Email' value={user.email} {...register("email", { required: true })}/>
+                <TextInput disabled={createProfileMutation.isPending} label='Your email address' withAsterisk type="text" name="email" id="email" placeholder='Email' value={profile.email} {...register("email", { required: true })}/>
                 {errors.email && <span>*Your email address is required</span>}
               </div>
             </div>

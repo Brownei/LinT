@@ -126,6 +126,14 @@
                         outline: none;
                         border: none;
                     }
+
+                    textarea {
+                        outline: none;
+                        border: none;
+                        resize: none;
+                        // overflow-y: hidden;
+                        min-height: 150px;
+                    }
                 }
             }
         }
@@ -135,6 +143,7 @@
 @media screen and (max-width: 800px) {
     #edit-profile-page {
         display: block;
+        margin-bottom: 100px;
 
         .edit-profile-page {
             .header {

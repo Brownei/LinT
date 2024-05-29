@@ -13,9 +13,10 @@ export const useCurrentUser = () => useQuery({
     retry(failureCount, error) {
         return error.status !== 403 && failureCount < 3;
     },
-    onError(error) {
-        if (error.status === 403) {
-            window.location.assign("/");
-        }
+    onError({status}) {
+        // if (error.status === 403) {
+        //     window.location.assign("/");
+        // }
+        console.log(status)
     },
 })

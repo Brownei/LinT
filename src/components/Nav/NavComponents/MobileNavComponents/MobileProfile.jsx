@@ -6,7 +6,7 @@ const MobileProfile = ({user}) => {
     const location = useLocation()
     return (
         <NavLink to="/profile" className={location.pathname.includes('/profile') ? 'profile-selected' : 'profile'}>
-            <Avatar size={30} src={user.profile.profileImage}/>
+            <Avatar size={30} src={user.profileImage}/>
         </NavLink>
     )
 }

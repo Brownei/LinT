@@ -1,0 +1,40 @@
+#messages-page {
+    display: hidden;
+}
+
+@media screen and (max-width: 800px) {
+    #messages-page {
+        margin-top: 60px;
+        display: block;
+
+        button {
+			outline: none;
+			border: 0px solid transparent;
+			background-color: transparent;
+			margin-bottom: 30px;
+			border-radius: 19px;
+			font-size: 0.9rem;
+			line-height: 22px;
+			font-weight: 600;
+			width: fit-content;
+			cursor: pointer;
+
+			&:hover {
+				color: #0006B1;
+			}
+
+			span {
+				display: flex;
+				gap: 8px;
+				align-items: center;
+
+			}
+		}
+    }
+}
+
+@media screen and (max-width: 350px) {
+    #collaborate-page {
+
+    }
+}

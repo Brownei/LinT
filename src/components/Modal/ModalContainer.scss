@@ -10,7 +10,7 @@
     transition-duration: 150ms;
 	border-radius: 10px;
 	transition-duration: 500ms;
-	z-index: 50;
+	z-index: 999;
 	width: 553px;
 	background-color: #ffffff;
 
@@ -64,4 +64,14 @@
 	}
 }
 
+@media screen and (max-width: 800px) {
+    .modal-container {
+		width: 90%;
+	}
+}
 
+@media screen and (max-width: 350px) {
+    #collaborate-page {
+
+    }
+}

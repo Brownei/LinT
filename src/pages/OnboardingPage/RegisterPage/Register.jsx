@@ -6,18 +6,18 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import axios from 'axios'
 import { signInWithGoogle } from '../../../utils/firebase'
-// import { useAuth } from '../../../hooks/use-auth'
+import { useSettingProfileStore } from '../../../hooks/use-auth-store'
 
 const Register = () => {
   const navigate = useNavigate();
-  // const {user, loading} = useAuth();
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const setProfile = useSettingProfileStore((state) => state.setProfile)
 
 
   const googleRegisterMutation = useMutation({
       mutationFn: (token) => {
-          return axios.post(`http://localhost:3131/auth/google/register`, {}, {
+          return axios.post(`/api/auth/google/register`, {}, {
               withCredentials: true,
               headers: {
                   'Content-Type': 'application/json',
@@ -27,6 +27,7 @@ const Register = () => {
       },
       onSuccess({data}) {
         sessionStorage.setItem('session', data.sessionCookie)
+        setProfile(data.userInfo)
         navigate("/setup-profile", {replace: true});
       },
   });
