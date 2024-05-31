@@ -8,6 +8,7 @@ import { ClipLoader } from 'react-spinners'
 
 const IdeasSection = ({isFetching, error, posts}) => {
 
+
   // function renderMyToast() {
 	// 	infoToast('TOAST RENDERED')
 	// }
