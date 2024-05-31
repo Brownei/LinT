@@ -51,7 +51,7 @@ const Chats = ({interests, isLoading, error}) => {
             </div>
           ) : (
             <div className='interest-section'>
-              {interests.length > 0 ? (
+              {interests?.length > 0 ? (
                 <div className='all-interests'>
                   <span>View people interested in your Idea!!</span>
                   {interests.map((interest) => (

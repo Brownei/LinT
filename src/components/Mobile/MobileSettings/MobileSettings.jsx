@@ -1,7 +1,21 @@
+import { Menu } from '@mantine/core';
 import './MobileSettings.scss'
 import { Icon } from '@iconify/react/dist/iconify.js';
+import { useMutation } from '@tanstack/react-query';
+import { useSession } from '../../../hooks/use-session';
+import { api } from '../../../utils/api';
 
 const MobileSettings = () => {
+    const {signOut} = useSession()
+    const signOutMutation = useMutation({
+        mutationFn: () => {
+            return api.post(`/api/auth/logout`)
+        },
+        onSuccess() {
+            signOut()
+        },
+    });
+
     return (
         <nav id="mobile-settings">
         <div className="settings">
@@ -24,7 +38,27 @@ const MobileSettings = () => {
                     <path d="M22.2445 4.70728C22.1654 4.70729 22.0881 4.68357 22.0226 4.63917C21.9571 4.59477 21.9065 4.53175 21.8772 4.45825L21.1301 2.63413C21.0888 2.5363 21.0881 2.42608 21.1281 2.32771C21.1681 2.22935 21.2455 2.1509 21.3434 2.10962C21.4412 2.06834 21.5514 2.06761 21.6498 2.1076C21.7481 2.14759 21.8266 2.22502 21.8679 2.32285L22.6149 4.14697C22.6352 4.19536 22.6457 4.2473 22.6457 4.29976C22.6456 4.35223 22.6352 4.40416 22.6149 4.45255C22.5946 4.50093 22.5649 4.5448 22.5275 4.58158C22.4901 4.61837 22.4458 4.64734 22.397 4.66682C22.3497 4.6911 22.2977 4.70491 22.2445 4.70728Z" fill="#0006B1"/>
                 </svg>
             </div>
-            <Icon icon={'entypo:dots-three-vertical'} color='#8F9191' fontSize={20}/>
+
+            <Menu shadow='md' width={200}>
+                <Menu.Target>
+                    <Icon icon={'entypo:dots-three-vertical'} color='#8F9191' fontSize={20}/>
+                </Menu.Target>
+
+                <Menu.Dropdown>
+                    <Menu.Item
+                        leftSection={<Icon icon={'solar:settings-broken'} fontSize={14} />}
+                    >
+                        Settings
+                    </Menu.Item>
+                    <Menu.Item
+                        color="red"
+                        leftSection={<Icon icon={'solar:logout-2-broken'} fontSize={14}/>}
+                        onClick={() => signOutMutation.mutateAsync()}
+                    >
+                        {signOutMutation.isPending ? 'Running..' : 'Logout'}
+                    </Menu.Item>
+                </Menu.Dropdown>
+            </Menu>
         </div>
     </nav>
             

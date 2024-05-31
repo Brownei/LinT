@@ -7,10 +7,10 @@ const Ideas = ({post, forProfile}) => {
         <Link to={`/collaborate/${post.id}`} className='ideas'>
             <div className="card">
                 <div className='user'>
-                    <img src={post.profile.profileImage} alt={'Profile picture'} />
+                    <img src={post.profile?.profileImage} alt={'Profile picture'} />
                     <div className='not-image'>
-                        <h5>{post.profile.fullName}</h5>
-                        <p>{post.profile.occupation}</p>
+                        <h5>{post.profile?.fullName}</h5>
+                        <p>{post.profile?.occupation}</p>
                     </div> 
                 </div>
                 <h4>{post.title}</h4>
