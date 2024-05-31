@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
         '/api': {
-            target: 'http://localhost:3131',
+            target: 'https://lint-api.vercel.app',
             changeOrigin: true,
             secure: false,
             ws: true
