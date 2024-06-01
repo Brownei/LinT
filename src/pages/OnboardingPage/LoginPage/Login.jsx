@@ -7,11 +7,11 @@ import { signInWithGoogle } from '../../../utils/firebase';
 import axios from 'axios';
 import { Button } from '@mantine/core';
 import { useAuthStore, useSettingProfileStore } from '../../../hooks/use-auth-store';
-import { useCurrentUser } from '../../../hooks/use-current-user';
+// import { useCurrentUser } from '../../../hooks/use-current-user';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { data: user } = useCurrentUser()
+  // const { data: user } = useCurrentUser()
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const setUser = useAuthStore((state) => state.setUser)
@@ -54,10 +54,10 @@ const Login = () => {
       }
   }
 
-  if(user) {
-    setIsLoading(true)
-    window.location.assign('/collaborate')
-  }
+  // if(user) {
+  //   setIsLoading(true)
+  //   window.location.assign('/collaborate')
+  // }
 
   return (
     <main>
