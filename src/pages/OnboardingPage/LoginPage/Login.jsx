@@ -90,7 +90,9 @@ const Login = () => {
                   <input type="text" placeholder='Input your email'/>
                   <input type="text" placeholder='Input your password'/>
                 </div>
-                <Button type='submit' className='login-button'>Login</Button>
+                <Button disabled={isLoading || googleLoginMutation.isPending} type='submit' className='login-button'>
+                  {isLoading || googleLoginMutation.isPending ? 'Logging in...' : 'Login'}
+                </Button>
               </form>
 
               <Button disabled={isLoading} onClick={() => handleGoogleSignIn()} type='button' className='google-button'>

@@ -2,14 +2,14 @@
 import "./AuthWrapper.scss"
 import { Outlet } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
-import { useSession } from "../../hooks/use-session";
 import { useAuthStore } from "../../hooks/use-auth-store";
+import { useCurrentUser } from "../../hooks/use-current-user";
 
 export const AuthWrapper = () => {
-	const {error, loading} = useSession()
+	const {error, isLoading: loading} = useCurrentUser()
     const clear = useAuthStore((state => state.clear))
 
-	if(typeof window === "undefined" || error) {
+	if(error) {
 		clear()
 		window.location.assign('/')
 	} 

@@ -9,14 +9,13 @@ import MobileNav from '../Mobile/MobileNav/MobileNav';
 import MobileSettings from '../Mobile/MobileSettings/MobileSettings';
 
 export default function Layout() {
-  // const {isLoading} = useCurrentUser()
-  const navigate = useNavigate();
 	const {data: user, error, isLoading} = useCurrentUser();
+  const navigate = useNavigate();
 
-  if(typeof window === "undefined" || error) {
+  if(error) {
     window.location.assign('/')
   } else if (user && user?.profile === null) {
-    navigate('/setup-profile', { replace: true })
+    window.location.assign('/setup-profile')
   }
 
   if (isLoading) {
