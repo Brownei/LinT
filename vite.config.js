@@ -5,12 +5,12 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   server: {
     proxy: {
-        '/api': {
-            target: 'https://lint-api.vercel.app',
-            changeOrigin: true,
-            secure: false,
-            ws: true
-        }
+      '/api': {
+        target: 'https://lint-api.vercel.app',
+        changeOrigin: true,
+        secure: false,
+        ws: true
+      }
     }
   },
   plugins: [react()],

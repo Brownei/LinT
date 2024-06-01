@@ -19,7 +19,7 @@ const Login = () => {
 
   const googleLoginMutation = useMutation({
     mutationFn: (token) => {
-        return axios.post(`/api/auth/google/login`, {}, {
+        return axios.post(`https://lint-api.vercel.app/api/auth/google/login`, {}, {
             withCredentials: true,
             headers: {
               'Content-Type': 'application/json',
