@@ -1,4 +1,4 @@
-"./MobileInterests.scss"
+import "./MobileInterests.scss"
 import { useEffect, useState } from "react"
 import { useAllInterests } from "../../../hooks/use-all-interests"
 import { ClipLoader } from "react-spinners"
