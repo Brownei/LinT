@@ -3,21 +3,16 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  plugins: [react()],
   build: {
     manifest: true,
   },
   server: {
     proxy: {
       '/api': {
-        target: 'https://lint-api.vercel.app',
+        target: 'https://lint-api.onrender.com',
         changeOrigin: true,
       },
     },
-    cors: {
-      preflightContinue: true,
-      methods: ['GET', 'POST', 'OPTIONS', 'PATCH', 'PUT'],
-      credentials: true
-    }
   },
-  plugins: [react()],
 })
