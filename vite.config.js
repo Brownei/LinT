@@ -11,7 +11,12 @@ export default defineConfig({
       '/api': {
         target: 'https://lint-api.vercel.app',
         changeOrigin: true,
-      }
+      },
+    },
+    cors: {
+      preflightContinue: true,
+      methods: ['GET', 'POST', 'OPTIONS', 'PATCH', 'PUT'],
+      credentials: true
     }
   },
   plugins: [react()],
