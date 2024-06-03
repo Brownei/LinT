@@ -7,12 +7,12 @@ import { signInWithGoogle } from '../../../utils/firebase';
 import axios from 'axios';
 import { Button } from '@mantine/core';
 import { useAuthStore, useSettingProfileStore } from '../../../hooks/use-auth-store';
+import { toast } from 'sonner';
 // import { useCurrentUser } from '../../../hooks/use-current-user';
 
 const Login = () => {
   const navigate = useNavigate();
   // const { data: user } = useCurrentUser()
-  const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const setUser = useAuthStore((state) => state.setUser)
   const setProfile = useSettingProfileStore((state) => state.setProfile)
@@ -36,7 +36,7 @@ const Login = () => {
         setUser(data.userInfo.profile)
         navigate('/collaborate')
       }
-    }
+    },
   });
 
   async function handleGoogleSignIn() {
@@ -46,8 +46,10 @@ const Login = () => {
         const accessToken = await userCredentials.user.getIdToken();
         await googleLoginMutation.mutateAsync(accessToken)
       } catch (error) {
-        console.error(error.response?.data);
-        setError(JSON.stringify(error))
+        console.log(error.response?.data)
+        if(error.response?.data.statusCode === 401) {
+          toast.error('Why not register an account?')
+        }
       } finally {
         setIsLoading(false)
       }
@@ -123,9 +125,9 @@ const Login = () => {
               </div>
             </div>
 
-            {error && (
+            {/* {error && (
               <span className='error'>{error}</span>
-            )}
+            )} */}
           </div>
         </div>
     </main>

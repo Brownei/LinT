@@ -7,18 +7,17 @@ import { useState } from 'react'
 import axios from 'axios'
 import { signInWithGoogle } from '../../../utils/firebase'
 import { useSettingProfileStore } from '../../../hooks/use-auth-store'
+import { toast } from 'sonner'
 
 const Register = () => {
   const navigate = useNavigate();
-  const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const setProfile = useSettingProfileStore((state) => state.setProfile)
 
 
   const googleRegisterMutation = useMutation({
       mutationFn: (token) => {
-          return axios.post(`/api/auth/google/register`, {}, {
-              withCredentials: true,
+          return axios.post(`https://lint-api.onrender.com/auth/google/register`, {}, {
               headers: {
                   'Content-Type': 'application/json',
                   'Authorization': `Bearer ${token}`
@@ -28,8 +27,16 @@ const Register = () => {
       onSuccess({data}) {
         sessionStorage.setItem('session', data.sessionCookie)
         setProfile(data.userInfo)
-        navigate("/setup-profile", {replace: true});
+
+        if (data.userInfo.profile === null) {
+          navigate('/setup-profile', {replace: true});
+        } else {
+          navigate('/collaborate', {replace: true});
+        }
       },
+      onError(error) {
+        toast.error(error.message)
+      }
   });
 
   async function handleGoogleRegister() {
@@ -39,8 +46,7 @@ const Register = () => {
         const accessToken = await userCredentials.user.getIdToken();
         await googleRegisterMutation.mutateAsync(accessToken)
       } catch (error) {
-        console.error(error.response.data);
-        setError(JSON.stringify(error))
+        console.error(error.response?.data);
       } finally {
         setIsLoading(false)
       }
@@ -121,10 +127,6 @@ const Register = () => {
 
           <p className='terms'>By continuing to next step you agree to <span>privacy policy</span> and <span>terms of use</span></p>
         </div>
-
-        {error && (
-          <span className='error'>{error}</span>
-        )}
       </div>
     </main>
   )
