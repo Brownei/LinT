@@ -15,7 +15,7 @@ export function useSession() {
     const navigate = useNavigate();
 
     async function getCurrentUser() {
-        const {data} = await api.get(`/api/auth/user`)
+        const {data} = await api.get(`/auth/user`)
         return data
     }
 

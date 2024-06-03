@@ -3,7 +3,7 @@ import { api } from "../utils/api"
 
 
 async function getAllPosts() {
-    const {data} = await api.get(`/api/posts`)
+    const {data} = await api.get(`/posts`)
     return data
 }
 

@@ -1,16 +1,9 @@
 import { useQuery } from "@tanstack/react-query"
-import axios from "axios"
-import { getToken } from "../utils/api"
+import { api } from "../utils/api"
 
 
 async function getIdeaData(id) {
-    const {data} = await axios.get(`/api/posts/${id}`, {
-        withCredentials: true,
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ` + getToken()
-        }
-    })
+    const {data} = await api.get(`/posts/${id}`)
     return data
 }
 
