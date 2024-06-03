@@ -12,16 +12,17 @@ import { toast } from 'sonner';
 import { ActionIcon, Button, Input, InputLabel, Textarea, TextInput } from '@mantine/core';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import CountrySelect from '../../../components/CountrySelect';
-import { useSession } from '../../../hooks/use-session';
+import { useCurrentUser } from '../../../hooks/use-current-user';
 import { useAuthStore, useSettingProfileStore } from '../../../hooks/use-auth-store';
 
 const SetupProfile = ({heading}) => {
   const queryClient = useQueryClient()
   const setUser = useAuthStore((state) => state.setUser)
   const clearProfile = useSettingProfileStore((state => state.clearProfile))
-  const {profile, profileLoading: loading} = useSession()
+  // const {profile, profileLoading: loading} = useSession()
+  const {data: profile, isLoading: loading} = useCurrentUser()
   const [locationValue, setLocationValue] = useState(null);
-  const [uploadedImage, setUploadedImage] = useState(profile.profileImage ? profile.profileImage : 'https://i.pinimg.com/564x/dd/ea/bd/ddeabd5e1886bcfe932a331839ee1cf7.jpg');
+  const [uploadedImage, setUploadedImage] = useState(profile?.profileImage ? profile.profileImage : 'https://i.pinimg.com/564x/dd/ea/bd/ddeabd5e1886bcfe932a331839ee1cf7.jpg');
   const navigate = useNavigate()
   const {register, handleSubmit, control, formState: { errors }} = useForm({
     mode: 'onSubmit'
@@ -33,7 +34,7 @@ const SetupProfile = ({heading}) => {
 
   const createProfileMutation = useMutation({
     mutationFn: (data) => {
-        return api.post(`/api/profile`, {
+        return api.post(`/profile`, {
             username: data.username,
             fullName: data.fullName,
             occupation: data.profileTag,
@@ -63,8 +64,6 @@ const SetupProfile = ({heading}) => {
       console.log(error)
       toast.error(error.message)
     }
-    // console.log(data, locationValue)
-    // console.log('Clicked!')
   }
   
 	useEffect(() => {
@@ -112,7 +111,7 @@ const SetupProfile = ({heading}) => {
         <div className="setup">
           <form>
             <div className='input-field'>
-              <TextInput disabled={createProfileMutation.isPending} label='Full Name' withAsterisk type="text" name="full-name" id="full-name" placeholder='Full Name' value={profile.fullName} {...register("fullName", { required: true })}/>
+              <TextInput disabled={createProfileMutation.isPending} label='Full Name' withAsterisk type="text" name="full-name" id="full-name" placeholder='Full Name' value={profile?.fullName} {...register("fullName", { required: true })}/>
               {errors.firstName && <span>*Your name is required</span>}
             </div>
             <div className='username-email'>
@@ -121,7 +120,7 @@ const SetupProfile = ({heading}) => {
                 {errors.username && <span>*Your username is required</span>}
               </div>
               <div className='input-field'>
-                <TextInput disabled={createProfileMutation.isPending} label='Your email address' withAsterisk type="text" name="email" id="email" placeholder='Email' value={profile.email} {...register("email", { required: true })}/>
+                <TextInput disabled={createProfileMutation.isPending} label='Your email address' withAsterisk type="text" name="email" id="email" placeholder='Email' value={profile?.email} {...register("email", { required: true })}/>
                 {errors.email && <span>*Your email address is required</span>}
               </div>
             </div>

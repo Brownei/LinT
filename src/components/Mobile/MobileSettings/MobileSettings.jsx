@@ -9,7 +9,7 @@ const MobileSettings = () => {
     const {signOut} = useSession()
     const signOutMutation = useMutation({
         mutationFn: () => {
-            return api.post(`/api/auth/logout`)
+            return api.post(`/auth/logout`)
         },
         onSuccess() {
             signOut()
@@ -39,7 +39,7 @@ const MobileSettings = () => {
                 </svg>
             </div>
 
-            <Menu shadow='md' width={200}>
+            <Menu closeOnItemClick={false} shadow='md' width={200}>
                 <Menu.Target>
                     <Icon icon={'entypo:dots-three-vertical'} color='#8F9191' fontSize={20}/>
                 </Menu.Target>
