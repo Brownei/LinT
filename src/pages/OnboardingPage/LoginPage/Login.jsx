@@ -19,8 +19,7 @@ const Login = () => {
 
   const googleLoginMutation = useMutation({
     mutationFn: (token) => {
-        return axios.post('/api/auth/google/login', {}, {
-            withCredentials: true,
+        return axios.post('https://lint-api.onrender.com/auth/google/login', {}, {
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${token}`
