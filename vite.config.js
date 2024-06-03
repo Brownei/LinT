@@ -10,7 +10,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://lint-api.vercel.app',
+        target: 'https://lint-api.onrender.com',
         changeOrigin: true,
       },
     },
