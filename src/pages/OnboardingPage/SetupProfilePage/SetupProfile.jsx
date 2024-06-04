@@ -22,7 +22,7 @@ const SetupProfile = ({heading}) => {
   // const {profile, profileLoading: loading} = useSession()
   const {data: profile, isLoading: loading} = useCurrentUser()
   const [locationValue, setLocationValue] = useState(null);
-  const [uploadedImage, setUploadedImage] = useState(profile?.profileImage ? profile.profileImage : 'https://i.pinimg.com/564x/dd/ea/bd/ddeabd5e1886bcfe932a331839ee1cf7.jpg');
+  const [uploadedImage, setUploadedImage] = useState(profile?.profileImage ? profile?.profileImage : 'https://i.pinimg.com/564x/dd/ea/bd/ddeabd5e1886bcfe932a331839ee1cf7.jpg');
   const navigate = useNavigate()
   const {register, handleSubmit, control, formState: { errors }} = useForm({
     mode: 'onSubmit'
@@ -128,7 +128,7 @@ const SetupProfile = ({heading}) => {
             <CountrySelect value={locationValue} setValue={setLocationValue}/>
 
             <div className='input-field profile-bio'>
-              <Textarea disabled={createProfileMutation.isPending} autosize radius={'8px'} label='Profile Bio' className='textarea' type="text" name="bio" id="bio" placeholder='Tell us more about you' {...register("bio")}/>
+              <Textarea disabled={createProfileMutation.isPending} autosize radius={'8px'} label='Profile Bio' className='textarea' type="text" name="bio" id="bio" placeholder='Tell us more about you' {...register("bio", { required: true })}/>
             </div>
 
             <div className='input-field profile-tag'>

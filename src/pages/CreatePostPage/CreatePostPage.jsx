@@ -4,8 +4,7 @@ import './CreatePostPage.scss';
 import { Icon } from '@iconify/react';
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
-import { getToken } from '../../utils/api';
+import { api } from '../../utils/api';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import { useFieldArray, useForm } from 'react-hook-form';
@@ -18,16 +17,10 @@ const CreatePostPage = () => {
 
   const createCollabMutation = useMutation({
     mutationFn: (data) => {
-        return axios.post(`/api/posts`, {
+        return api.post(`/posts`, {
           description: data.description,
           toolsTags: tags.map((tag) => tag),
           title: data.title,
-        }, {
-            withCredentials: true,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${getToken()}`
-            }
         })
     },
     onSuccess() {
