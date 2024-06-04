@@ -30,7 +30,7 @@ const ProfilePage = () => {
     const formattedDate = formatDate(user?.profile?.createdAt, "yyyy-MM-dd")
     const signOutMutation = useMutation({
         mutationFn: () => {
-            return api.post(`/api/auth/logout`)
+            return api.post(`/auth/logout`)
         },
         onSuccess() {
             signOut()

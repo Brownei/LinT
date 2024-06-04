@@ -18,7 +18,7 @@ const RequestModal = ({post}) => {
 	const [content, setContent] = useState()
 	const sendInterestMutation = useMutation({
 		mutationFn: () => {
-			return api.post(`/api/collaborators/requests`, {
+			return api.post(`/collaborators/requests`, {
 				receiverId: post.profile.id,
 				postId: post.id,
 				content: content ? content : `Hello ${ownerOfPost[0]}, I’m interested in working with you.`
