@@ -38,18 +38,32 @@
                     display: grid;
                     gap: 16px;
                     margin-bottom: 24px;
+
+                    .input-login-field {
+                        display: grid;
+                        gap: 4px;
+                        width: 100%;
+
+                        input {
+                            outline: none;
+                            border: 1px solid #8F9191;
+                            width: 426px;
+                            padding: 20px 16px;
+                            border-radius: 8px;
+                            background-color: #FFFFFF;
+                            color: #000;
+                            font-weight: 400;
+                            font-size: 1rem;
+                        }
     
-                    input {
-                        outline: none;
-                        border: 1px solid #8F9191;
-                        width: 426px;
-                        padding: 20px 16px;
-                        border-radius: 8px;
-                        background-color: #FFFFFF;
-                        color: #000;
-                        font-weight: 400;
-                        font-size: 1rem;
+                        span {
+                            font-weight: 600;
+                            font-size: 12px;
+                            line-height: 18px;
+                            color: red;
+                        }
                     }
+    
                 }
     
                 .login-button {

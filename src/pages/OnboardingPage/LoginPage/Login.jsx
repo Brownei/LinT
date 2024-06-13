@@ -3,15 +3,19 @@ import { useState } from 'react';
 import { Icon } from '@iconify/react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useMutation } from "@tanstack/react-query";
-import { signInWithGoogle } from '../../../utils/firebase';
+import { signInWithGoogle, signInWthCredentials } from '../../../utils/firebase';
 import axios from 'axios';
 import { Button } from '@mantine/core';
 import { useAuthStore, useSettingProfileStore } from '../../../hooks/use-auth-store';
 import { toast } from 'sonner';
+import { useForm } from 'react-hook-form';
 // import { useCurrentUser } from '../../../hooks/use-current-user';
 
 const Login = () => {
   const navigate = useNavigate();
+  const {register, handleSubmit, control, formState: { errors }} = useForm({
+    mode: 'onSubmit'
+  })
   // const { data: user } = useCurrentUser()
   const [isLoading, setIsLoading] = useState(false)
   const setUser = useAuthStore((state) => state.setUser)
@@ -40,19 +44,58 @@ const Login = () => {
   });
 
   async function handleGoogleSignIn() {
-      try {
-        setIsLoading(true)
-        const userCredentials = await signInWithGoogle();
-        const accessToken = await userCredentials.user.getIdToken();
-        await googleLoginMutation.mutateAsync(accessToken)
-      } catch (error) {
-        console.log(error.response?.data)
-        if(error.response?.data.statusCode === 401) {
-          toast.error('Why not register an account?')
-        }
-      } finally {
-        setIsLoading(false)
+    try {
+      setIsLoading(true)
+      const userCredentials = await signInWithGoogle();
+      const accessToken = await userCredentials.user.getIdToken();
+      await googleLoginMutation.mutateAsync(accessToken)
+    } catch (error) {
+      console.log(error.response?.data)
+      if(error.response?.data.statusCode === 401) {
+        toast.error('Why not register an account?')
       }
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const emailAndPasswordLoginMutation = useMutation({
+    mutationFn: (token) => {
+      return axios.post('http://ec2-107-22-133-44.compute-1.amazonaws.com:3131/auth/login', {}, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+      })
+    },
+    onSuccess({data}) {
+      sessionStorage.setItem('session', data.sessionCookie)
+      
+      if (data.userInfo.profile === null) {
+        setProfile(data.userInfo)
+        navigate('/setup-profile');
+      } else {
+        setUser(data.userInfo.profile)
+        navigate('/collaborate')
+      }
+    },
+  })
+
+  async function handleEmailAndPasswordSignIn(data) {
+    console.log(data)
+    // try {
+    //   setIsLoading(true)
+    //   const userCredentials = await signInWthCredentials(data.email, data.password);
+    //   const accessToken = await userCredentials.user.getIdToken();
+    //   await googleLoginMutation.mutateAsync(accessToken)
+    // } catch (error) {
+    //   console.log(error.response?.data)
+    //   if(error.response?.data.statusCode === 401) {
+    //     toast.error('Why not register an account?')
+    //   }
+    // } finally {
+    //   setIsLoading(false)
+    // }
   }
 
   // if(user) {
@@ -86,10 +129,16 @@ const Login = () => {
           <div className='container'>
             <h1>Welcome back to <span>LinT</span></h1>
             <div className='input'>
-              <form>
+              <form onSubmit={handleSubmit(handleEmailAndPasswordSignIn)}>
                 <div className='input-values'>
-                  <input type="text" placeholder='Input your email'/>
-                  <input type="text" placeholder='Input your password'/>
+                  <div className='input-login-field'>
+                    <input type="text" placeholder='Input your email' {...register('email', { required: true })}/>
+                    {errors.email && <span>*Your email is required</span>}
+                  </div>
+                  <div className='input-login-field'>
+                    <input type="text" placeholder='Input your password' {...register('password', { required: true })}/>
+                    {errors.password && <span>*Your password is required</span>}
+                  </div>  
                 </div>
                 <Button disabled={isLoading || googleLoginMutation.isPending} type='submit' className='login-button'>
                   {isLoading || googleLoginMutation.isPending ? 'Logging in...' : 'Login'}

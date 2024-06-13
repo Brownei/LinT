@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, getAuth, signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
 
 // Initialize Firebase
 const app = initializeApp({
@@ -13,6 +13,11 @@ const app = initializeApp({
 const auth = getAuth(app)
 const googleAuthProvider = new GoogleAuthProvider();
 
+
 export async function signInWithGoogle() {
     return await signInWithPopup(auth, googleAuthProvider);
+}
+
+export async function signInWthCredentials(email, password) {
+    return await signInWithEmailAndPassword(auth, email, password)
 }
