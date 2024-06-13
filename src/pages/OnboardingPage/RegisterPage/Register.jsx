@@ -17,7 +17,7 @@ const Register = () => {
 
   const googleRegisterMutation = useMutation({
       mutationFn: (token) => {
-          return axios.post(`https://lint-api.onrender.com/auth/google/register`, {}, {
+          return axios.post(`http://ec2-107-22-133-44.compute-1.amazonaws.com:3131/auth/google/register`, {}, {
               headers: {
                   'Content-Type': 'application/json',
                   'Authorization': `Bearer ${token}`
