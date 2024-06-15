@@ -4,7 +4,8 @@
 
 @media screen and (max-width: 800px) {
     #messages-page {
-        margin-top: 60px;
+        margin-top: 55px;
+		margin-bottom: 30px;
         display: block;
 
         button {
@@ -13,7 +14,7 @@
 			background-color: transparent;
 			margin-bottom: 30px;
 			border-radius: 19px;
-			font-size: 0.9rem;
+			font-size: 1rem;
 			line-height: 22px;
 			font-weight: 600;
 			width: fit-content;
