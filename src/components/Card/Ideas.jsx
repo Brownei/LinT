@@ -4,7 +4,7 @@ import './Ideas.scss';
 
 const Ideas = ({post, forProfile}) => {
     return (
-        <Link to={`/collaborate/${post.id}`} className='ideas'>
+        <Link key={post.id} to={`/collaborate/${post.id}`} className='ideas'>
             <div className="card">
                 <div className='user'>
                     <img src={post.profile?.profileImage} alt={'Profile picture'} />

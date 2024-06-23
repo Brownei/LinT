@@ -2,6 +2,7 @@
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'; 
 import './ProfilePage.scss'; 
 import Ideas from '../../components/Card/Ideas'; 
+import ProfileInterests from '../../components/Card/ProfileInterests'
 import Coll from '../../components/Card/Coll'; 
 import brownson from '../../assets/images/brownson.svg'; 
 import gift from '../../assets/images/gift.svg'; 
@@ -17,14 +18,15 @@ import { api } from '../../utils/api';
 // import { useMediaQuery } from 'react-responsive';
 import { useSession } from '../../hooks/use-session';
 import { useCurrentUser } from '../../hooks/use-current-user';
+import { useSentRequests } from '../../hooks/use-requests-sent';
 
 const ProfilePage = () => {
     // const isMobile = useMediaQuery({maxWidth: 800})
     const navigate = useNavigate()
     const {signOut} = useSession()
     const {data: user, isLoading: loading, error: isCurrentError} = useCurrentUser()
-    console.log(user)
     const {data: posts, isFetching, error} = useUserPosts(user?.profile?.username)
+    const {data: sentInterests, isFetching: isFetchingSentRequests, error: sentRequestsError} = useSentRequests()
     const location = useLocation()
     const searchParams = new URLSearchParams(location.search);
     const formattedDate = formatDate(user?.profile?.createdAt, "yyyy-MM-dd")
@@ -157,32 +159,61 @@ const ProfilePage = () => {
                 <div className='ideas-collabs'>
                     <div className='card-title'>
                         <div className='idea-collab-nav'>
-                            <NavLink className={location.search === '' ? 'active' : 'h3'} to={'/profile'}>Ideas</NavLink>
-                            <NavLink className={location.search === '?query=interests' ? 'active' : 'h3'} to={'/profile?query=interests'}>Interest</NavLink>
-                            <NavLink className={location.search === '?query=collaborations' ? 'active' : 'h3'} to={'/profile?query=collaborations'}>Collaborations</NavLink>
+                            <Link className={location.search === '' ? 'active' : 'h3'} to={'/profile'}>Ideas</Link>
+                            <Link className={location.search === '?query=interests' ? 'active' : 'h3'} to={'/profile?query=interests'}>Interest</Link>
+                            <Link className={location.search === '?query=collaborations' ? 'active' : 'h3'} to={'/profile?query=collaborations'}>Collaborations</Link>
                         </div>
-
-                        <div className='user-ideas'>
-                            {isFetching ? (
+                        {location.search === '?query=collaborations' ? (
+                          <div className='user-ideas'>
+                              {isFetching ? (
                                 <div className='loading'>
                                     <ClipLoader />
                                 </div>
-                            ) : error ? (<p className='information'>Wanna refresh?..</p>) : (
-                                <div>
-                                    {posts.length === 0 ? (
-                                        <p className='information'>No ideas yet? Share and Collaborate!</p>
-                                    ) : (
-                                        <div className='posts'>
-                                            {posts.map((post) => (
-                                                <div key={post.id}>
-                                                    <Ideas post={post} forProfile={true}/>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
+                              ) : error ? (<p className='information'>Wanna refresh?..</p>) : (
+                                <p>Help brother</p>
+                              )}
+                          </div>
+                        ) : location.search === '?query=interests' ? (
+                          <div className='interests-section'>
+                            {isFetchingSentRequests ? (
+                              <div>
+                                <ClipLoader />
+                              </div>
+                            ) : sentRequestsError ? (<p>Error</p>) : (
+                            <div>
+                              {sentInterests.length === 0 ? (
+                                <p className='information'>No ideas yet? Share and Collaborate!</p>
+                            ) : (
+                              <div className='posts'>
+                                {sentInterests.map((interests) => (
+                                    <ProfileInterests key={interests.id} interest={interests} />
+                                ))}
+                              </div>
                             )}
+                          </div> 
+                        )} 
                         </div>
+                        ) : (
+                            <div className='posts-section'>
+                              {isFetching ? (
+                                <div>
+                                  <ClipLoader />
+                                </div>
+                              ) : error ? (<p>Error</p>) : (
+                               <div>
+                                {posts.length === 0 ? (
+                                <p className='information'>No ideas yet? Share and Collaborate!</p>
+                              ) : (
+                                <div className='posts'>
+                                  {posts.map((post) => (
+                                    <Ideas key={post.id} post={post} forProfile={true}/>
+                                  ))}
+                                </div>
+                              )}
+                                </div> 
+                              )}
+                            </div>
+                        )}
                     </div>
 
                     <div className='coll-1'>

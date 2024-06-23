@@ -23,7 +23,7 @@ const Login = () => {
 
   const googleLoginMutation = useMutation({
     mutationFn: (token) => {
-        return axios.post('http://ec2-107-22-133-44.compute-1.amazonaws.com:3131/auth/google/login', {}, {
+        return axios.post('https://api.lintapp.com/auth/google/login', {}, {
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${token}`
