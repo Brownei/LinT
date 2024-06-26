@@ -11,32 +11,21 @@ import { ClipLoader } from 'react-spinners';
 import LinkIcons from '../../components/LinkIcons';
 import { formatDate } from 'date-fns';
 import { formatDate as dateFormater } from '../../utils/formatDate';
-import { useMutation } from "@tanstack/react-query";
-import { getToken } from '../../utils/api';
 import { useProfile } from '../../hooks/use-profile';
 import { api } from '../../utils/api';
 import { useCurrentUser } from '../../hooks/use-current-user';
+
 
 const UserProfilePage = () => {
   const { username } = useParams()
   const navigate = useNavigate()
   const { data: user } = useCurrentUser()
-  const { data: profile, isFetching: profileIsFetching, error: profileError } = useProfile(username)
-  const { data: posts, isFetching, error } = useUserPosts(profile.username)
+  const { data: profile, isLoading: profileIsFetching, error: profileError } = useProfile(username)
+  const { data: posts, isFetching, error } = useUserPosts(username)
   const location = useLocation()
-  console.log({ profile, user })
+  console.log({ profile, posts, user })
   const searchParams = new URLSearchParams(location.search);
   const formattedDate = formatDate(profile.createdAt, "yyyy-MM-dd")
-
-  const signOutMutation = useMutation({
-    mutationFn: () => {
-      return api.post(`/auth/logout`)
-    },
-    onSuccess() {
-      sessionStorage.removeItem('session')
-      window.location.assign('/')
-    },
-  });
 
   if (profileIsFetching) {
     return (
@@ -94,10 +83,10 @@ const UserProfilePage = () => {
             </div>
           </div>
           <div className="sidebar">
-            {location.pathname.includes(profile.username) || location.pathname === '/profile' ? (
+            {location.pathname.includes(user.username) || location.pathname === '/profile' ? (
               <div className='buttons'>
                 <Link to={'/profile/edit'} className='edit-profile'>Edit Profile</Link>
-                <button onClick={async () => await signOutMutation.mutateAsync(getToken())}>Log Out</button>
+                <button onClick={() => console.log('Hello fuck off!')}>Log Out</button>
               </div>
             ) : (
               <button className='collabs'>8 Collabs</button>
