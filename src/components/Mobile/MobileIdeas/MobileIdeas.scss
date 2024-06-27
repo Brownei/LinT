@@ -1,0 +1,30 @@
+.mobile-all-ideas {
+    display: grid;
+    gap: 30px;
+    margin: 24px 0px 12px 0px;
+
+    .mobile-loading {
+        // width: 600px;
+        text-align: center;
+    }
+
+    .mobile-posts {
+        margin-bottom: 70px;
+
+        .mobile-no-data {
+            text-align: center;
+        }
+
+        .mobile-all-posts {
+            display: grid;
+            gap: 16px;
+        }
+
+        p {
+            text-align: center;
+            font-size: 0.6rem;
+            font-weight: 500;
+            color: '#00034A';
+        }
+    }
+}
