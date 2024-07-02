@@ -1,0 +1,281 @@
+.logo {
+  position: fixed;
+  top: 0;
+  padding: 30px 90px 30px;
+}
+
+
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 16px;
+
+  .container {
+    display: grid;
+    gap: 5px;
+
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.9rem;
+
+      span {
+        color: #0006B1;
+      }
+    }
+
+    .input {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #F5F5F5;
+      padding: 32px;
+
+      form {
+        .input-values {
+          display: grid;
+          gap: 16px;
+          margin-bottom: 24px;
+
+          .input-login-field {
+            display: grid;
+            gap: 4px;
+            width: 100%;
+
+            .input-field {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              outline: none;
+              border: 1px solid #8F9191;
+              border-radius: 8px;
+              background-color: #FFFFFF;
+              color: #000;
+              font-weight: 400;
+              font-size: 1rem;
+              padding-right: 16px;
+
+              input {
+                outline: none;
+                background-color: transparent;
+                border: none;
+                width: 100%;
+                padding: 20px 16px;
+              }
+
+            }
+
+            input {
+              outline: none;
+              border: 1px solid #8F9191;
+              width: 426px;
+              padding: 20px 16px;
+              border-radius: 8px;
+              background-color: #FFFFFF;
+              color: #000;
+              font-weight: 400;
+              font-size: 1rem;
+            }
+
+            span {
+              font-weight: 600;
+              font-size: 12px;
+              line-height: 18px;
+              color: red;
+            }
+          }
+        }
+
+        .login-button {
+          // cursor: pointer;
+          border-radius: 44px;
+          border: 1px solid transparent;
+          background-color: #0006B1;
+          width: 100%;
+          // // padding: 16px;
+          color: #FFFFFF;
+          font-weight: 400;
+          font-size: 0.9rem;
+          margin-bottom: 32px;
+
+          .loading-google {
+            animation: spin 1s ease-in-out infinite;
+
+
+            @keyframes spin {
+              0% {
+                transform: rotate(0deg);
+              }
+
+              100% {
+                transform: rotate(360deg);
+              }
+            }
+          }
+
+          &:disabled {
+            background-color: #B0B2E7;
+
+          }
+        }
+      }
+
+      .google-button {
+        cursor: pointer;
+        background-color: #E6E6F7;
+        // padding: 10px 16px;
+        border-radius: 44px;
+        outline: none;
+        border: none;
+        color: #00034A;
+        font-size: 0.9rem;
+        font-weight: 400;
+        margin-bottom: 60px;
+
+        .google-button-check {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 10px;
+
+          .loading-google {
+            animation: spin 1s ease-in-out infinite;
+
+
+            @keyframes spin {
+              0% {
+                transform: rotate(0deg);
+              }
+
+              100% {
+                transform: rotate(360deg);
+              }
+            }
+          }
+        }
+
+        &:disabled {
+          cursor: progress;
+          background-color: #B0B2E7;
+        }
+      }
+
+      .few-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+
+        p {
+          font-size: 0.9rem;
+          font-weight: 400;
+          color: #2A2A2A;
+          line-height: 18px;
+          width: 355px;
+          text-align: center;
+        }
+
+        .button {
+          cursor: pointer;
+          border-radius: 24px;
+          // padding: 10px 20px;
+          background-color: #E6E6F7;
+          border: 1px solid #0006B1;
+          font-weight: 400;
+          font-size: 0.9rem;
+          color: #00034A;
+        }
+
+        .terms {
+          font-size: 0.7rem;
+          font-weight: 400;
+          color: #2A2A2A;
+          line-height: 18px;
+          width: 355px;
+          text-align: center;
+
+          span {
+            font-weight: 600;
+          }
+        }
+      }
+    }
+
+    .error {
+      font-weight: 600;
+      color: red;
+    }
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .login {
+    .container {
+      .input {
+        background-color: transparent;
+
+        form {
+          .input-values {
+            gap: 15px;
+            margin-bottom: 24px;
+
+            .input-login-field {
+              input {
+                width: 345px;
+                padding: 18px 14px;
+              }
+            }
+          }
+        }
+
+        .few-details {
+          p {
+            width: 325px;
+          }
+        }
+      }
+
+
+    }
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .login {
+    .container {
+      .input {
+        padding: 29px;
+        background-color: transparent;
+
+        form {
+          .input-values {
+            gap: 15px;
+            margin-bottom: 24px;
+
+            input {
+              width: 100%;
+              padding: 16px 12px;
+            }
+          }
+        }
+      }
+
+
+    }
+  }
+}

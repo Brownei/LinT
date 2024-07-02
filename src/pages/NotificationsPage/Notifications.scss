@@ -1,0 +1,52 @@
+#notifications_page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 30px;
+    
+
+    .notification-page {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: start;
+        gap: 30px;
+        margin-left: 180px;
+        width: 628px;
+    
+        .notifications {
+
+            .particulare-notif {
+                padding: 16px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #F5F5F5;
+                }
+            }
+        }
+    }
+
+}
+
+@media screen and (max-width: 800px) {
+    #notifications_page {
+        display: block;
+
+        .notification-page {
+            width: 100%;
+            margin-left: 0px;
+
+            .notifications {
+                display: grid;
+                gap: 16px;
+                margin-bottom: 100px;
+
+                .particulare-notif {
+                    background-color: #E6E6F7;
+                }
+            }
+        }
+    }
+}
