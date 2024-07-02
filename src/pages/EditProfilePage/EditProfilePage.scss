@@ -1,0 +1,182 @@
+#edit-profile-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 30px;
+
+    .edit-profile-page {
+        display: grid;
+        gap: 16px;
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+
+            .link {
+                text-decoration: none;
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+                outline: none;
+                border: 0px solid transparent;
+                background-color: transparent;
+                padding: 10px 20px;
+                border-radius: 19px;
+                font-size: 0.9rem;
+                line-height: 22px;
+                font-weight: 600;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #F5F5F5;
+                }
+
+                span {
+                    font-weight: 600;
+                    font-size: 21px;
+                    line-height: 30px;
+                    color: black;
+                }
+            }
+
+            button {
+                padding: 8px 40px;
+                background-color: #0006B1;
+                border: 1px solid transparent;
+                border-radius: 24px;
+                font-weight: 600;
+                font-size: 1rem;
+                line-height: 22px;
+                color: white;
+                cursor: pointer;
+            }
+        }
+
+        .content {
+            display: grid;
+            gap: 16px;
+
+            .upload {
+                .btn {
+                    border: 1px solid transparent;
+                    width: 94px;
+                    height: 94px;
+                    border-radius: 100%;
+
+                    .spinner {
+                        animation: spin 2s linear infinite;
+
+                        @keyframes spin {
+                            from {
+                              transform: rotate(0deg); /* Start rotation from 0 degrees */
+                            }
+                            to {
+                              transform: rotate(360deg); /* Rotate to 360 degrees */
+                            }
+                        }
+                    }
+                }
+
+                .viewed-image {
+                    position: relative;
+                    display: inline-block;
+
+                    img {
+                        width: 94px;
+                        height: 94px;
+                        border-radius: 100%;
+                    }
+
+                    button {
+                        border: 1px solid transparent;
+                        background-color: transparent;
+                        position: absolute;
+                        left: 50%;
+                        top: 50%;
+                        transform: translate(-50%, -50%);
+                        cursor: pointer;
+                    }
+                }
+
+            }
+
+            .inputs {
+                display: grid;
+                gap: 24px;
+
+                .input {
+                    border: 1px solid #8F9191;
+                    padding: 8px 16px;
+                    width: 648px;
+                    display: grid;
+                    gap: 8px;
+                    border-radius: 8px;
+
+                    label {
+                        font-weight: 400;
+                        font-size: 14px;
+                        line-height: 20px;
+                        color: #939393;
+                    }
+
+                    input {
+                        width: 90%;
+                        outline: none;
+                        border: none;
+                    }
+
+                    textarea {
+                        outline: none;
+                        border: none;
+                        resize: none;
+                        // overflow-y: hidden;
+                        min-height: 150px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 800px) {
+    #edit-profile-page {
+        display: block;
+        margin-bottom: 100px;
+
+        .edit-profile-page {
+            .header {
+                .link {
+                    padding: 0px;
+                    gap: 2px;
+                    border-radius: 0px;
+                    font-size: 0.75rem;
+
+                    span {
+                        font-size: 1rem;
+                    }
+                    
+                    &:hover {
+                        background-color: transparent;
+                    }
+                }
+
+                button {
+                    padding: 10px 20px;
+                    font-size: 0.85rem;
+                }
+            }
+
+            .content {
+                .inputs {
+                    gap: 16px;
+
+                    .input {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}
