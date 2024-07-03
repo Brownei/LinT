@@ -9,5 +9,10 @@ async function getProfile(username) {
 export const useProfile = (username) => useQuery({
   queryKey: ['person-profile'],
   queryFn: () => getProfile(username),
+  refetchOnWindowFocus: true,
+  refetchOnMount: true,
+  refetchOnReconnect: true,
+  staleTime: 0,
+  gcTime: 0
 })
 

@@ -17,6 +17,7 @@
     }
 
     .collaborate-page {
+.collaborate-section {
         display: flex;
         flex-direction: column;
         flex-grow: 1;
@@ -67,11 +68,13 @@
     .mobile-collaborate-page {
         display: none;
     }
+    }
 }
 
 @media screen and (max-width: 800px) {
     #collaborate-page {
         .collaborate-page {
+.collaborate-section {
             .collaborate-view {
                 display: none;
             }
@@ -79,6 +82,7 @@
 
         .mobile-collaborate-page {
             display: block;
+        }
         }
     }
 }
