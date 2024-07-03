@@ -7,7 +7,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../../utils/api';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 const CreatePostPage = () => {
   const queryClient = useQueryClient()
