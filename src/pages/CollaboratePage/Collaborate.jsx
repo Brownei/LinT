@@ -62,10 +62,6 @@ const Collaborate = () => {
     }
   }, [user?.profile?.id])
 
-  if (currentUserError) {
-    window.location.assign('/')
-  }
-
   return (
     <main id="collaborate-page">
       {currentUserLoading ? (
@@ -82,7 +78,7 @@ const Collaborate = () => {
               </div>
 
               <div className="ideas-view">
-                <IdeasSection error={postError} isFetching={isFetching} posts={allPosts} />
+                <IdeasSection error={postError} isFetching={isLoading} posts={allPosts} />
               </div>
 
             </div >
@@ -91,7 +87,7 @@ const Collaborate = () => {
           {/* MOBILE VIEW BABY */}
           <div className="mobile-collaborate-page" >
             <MobileHeader interests={interests} collaboratorPage={true} />
-            <MobileIdeas error={postError} isFetching={isFetching} posts={allPosts} />
+            <MobileIdeas error={postError} isFetching={isLoading} posts={allPosts} />
           </div >
         </div >
       )}
