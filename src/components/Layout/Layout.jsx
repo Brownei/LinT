@@ -9,7 +9,7 @@ import MobileNav from '../Mobile/MobileNav/MobileNav';
 import MobileSettings from '../Mobile/MobileSettings/MobileSettings';
 
 export default function Layout() {
-  const { data: user, error, isFetching: isLoading } = useCurrentUser();
+  const { data: user, error, isLoading } = useCurrentUser();
   const navigate = useNavigate();
 
   if (error) {

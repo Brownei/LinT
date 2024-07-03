@@ -12,10 +12,10 @@ import { useCurrentUser } from "../../hooks/use-current-user";
 import { ClipLoader } from "react-spinners";
 
 const Collaborate = () => {
-  const { data: user, isFetching: currentUserLoading, error: currentUserError } = useCurrentUser()
+  const { data: user, isLoading: currentUserLoading, error: currentUserError } = useCurrentUser()
   const queryClient = useQueryClient()
-  const { data: interests, isFetching: interestsLoading, error } = useAllInterests()
-  const { data: posts, isFetching, error: postError } = useAllPosts()
+  const { data: interests, isLoading: interestsLoading, error } = useAllInterests()
+  const { data: posts, isLoading, error: postError } = useAllPosts()
   const [friendRequests, setFriendRequests] = useState([])
   const [allPosts, setAllPosts] = useState([])
 
@@ -62,10 +62,6 @@ const Collaborate = () => {
     }
   }, [user?.profile?.id])
 
-  if (currentUserError) {
-    window.location.assign('/')
-  }
-
   return (
     <main id="collaborate-page">
       {currentUserLoading ? (
@@ -82,7 +78,7 @@ const Collaborate = () => {
               </div>
 
               <div className="ideas-view">
-                <IdeasSection error={postError} isFetching={isFetching} posts={allPosts} />
+                <IdeasSection error={postError} isFetching={isLoading} posts={allPosts} />
               </div>
 
             </div >
@@ -91,7 +87,7 @@ const Collaborate = () => {
           {/* MOBILE VIEW BABY */}
           <div className="mobile-collaborate-page" >
             <MobileHeader interests={interests} collaboratorPage={true} />
-            <MobileIdeas error={postError} isFetching={isFetching} posts={allPosts} />
+            <MobileIdeas error={postError} isFetching={isLoading} posts={allPosts} />
           </div >
         </div >
       )}

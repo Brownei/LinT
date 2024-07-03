@@ -10,7 +10,7 @@ import { useCurrentUser } from '../../hooks/use-current-user'
 const EditProfilePage = () => {
   const textareaRef = useRef(null)
   // const {user, loading: isLoading} = useSession()
-  const { data: user, isFetching: isLoading } = useCurrentUser()
+  const { data: user, isLoading } = useCurrentUser()
   const [bio, setBio] = useState(user.profile.bio ? user.profile.bio : '')
   const [uploadedImage, setUploadedImage] = useState(user.profile.profileImage ? user.profileImage : '');
 

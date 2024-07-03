@@ -9,7 +9,7 @@ import MessagesPage from "../../../pages/MessagesPage/MessagesPage"
 
 const MobileInterests = () => {
   const { data: user } = useCurrentUser()
-  const { data: interests, isFetching: isLoading, error } = useAllInterests()
+  const { data: interests, isLoading, error } = useAllInterests()
   const [friendRequests, setFriendRequests] = useState([])
 
   useEffect(() => {
