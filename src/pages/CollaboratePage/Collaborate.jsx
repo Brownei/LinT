@@ -12,10 +12,10 @@ import { useCurrentUser } from "../../hooks/use-current-user";
 import { ClipLoader } from "react-spinners";
 
 const Collaborate = () => {
-  const { data: user, isFetching: currentUserLoading, error: currentUserError } = useCurrentUser()
+  const { data: user, isLoading: currentUserLoading, error: currentUserError } = useCurrentUser()
   const queryClient = useQueryClient()
-  const { data: interests, isFetching: interestsLoading, error } = useAllInterests()
-  const { data: posts, isFetching, error: postError } = useAllPosts()
+  const { data: interests, isLoading: interestsLoading, error } = useAllInterests()
+  const { data: posts, isLoading, error: postError } = useAllPosts()
   const [friendRequests, setFriendRequests] = useState([])
   const [allPosts, setAllPosts] = useState([])
 

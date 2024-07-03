@@ -18,7 +18,7 @@ import { useAuthStore, useSettingProfileStore } from '../../../hooks/use-auth-st
 const SetupProfile = ({ heading }) => {
   const queryClient = useQueryClient()
   const clearProfile = useSettingProfileStore((state => state.clearProfile))
-  const { data: profile, isFetching: loading, error } = useCurrentUser()
+  const { data: profile, isLoading: loading, error } = useCurrentUser()
   const [locationValue, setLocationValue] = useState(null);
   const [uploadedImage, setUploadedImage] = useState(profile?.profileImage ? profile?.profileImage : 'https://i.pinimg.com/564x/dd/ea/bd/ddeabd5e1886bcfe932a331839ee1cf7.jpg');
   const navigate = useNavigate()

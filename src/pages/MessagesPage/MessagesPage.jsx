@@ -6,7 +6,7 @@ import { useAllInterests } from '../../hooks/use-all-interests'
 import { ClipLoader } from 'react-spinners'
 
 const MessagesPage = () => {
-  const { data: interests, isFetching: isLoading, error } = useAllInterests()
+  const { data: interests, isLoading, error } = useAllInterests()
   const navigate = useNavigate()
 
   if (isLoading) {
