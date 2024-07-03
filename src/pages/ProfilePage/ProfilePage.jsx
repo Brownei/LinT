@@ -25,8 +25,8 @@ const ProfilePage = () => {
   const navigate = useNavigate()
   const { signOut } = useSession()
   const { data: user, isLoading: loading, error: isCurrentError } = useCurrentUser()
-  const { data: posts, isFetching, error } = useUserPosts(user?.profile?.username)
-  const { data: sentInterests, isFetching: isFetchingSentRequests, error: sentRequestsError } = useSentRequests()
+  const { data: posts, isLoading: isFetching, error } = useUserPosts(user?.profile?.username)
+  const { data: sentInterests, isLoading: isFetchingSentRequests, error: sentRequestsError } = useSentRequests()
   const location = useLocation()
   const searchParams = new URLSearchParams(location.search);
   const formattedDate = formatDate(user?.profile?.createdAt, "yyyy-MM-dd")

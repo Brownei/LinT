@@ -6,7 +6,7 @@ import { useAuthStore } from "../../hooks/use-auth-store";
 import { useCurrentUser } from "../../hooks/use-current-user";
 
 export const AuthWrapper = () => {
-  const { error, isFetching: loading } = useCurrentUser()
+  const { error, isLoading: loading } = useCurrentUser()
   const clear = useAuthStore((state => state.clear))
 
   if (error) {
