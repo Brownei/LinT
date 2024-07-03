@@ -5,6 +5,7 @@
     align-items: center;
     margin: 16px;
 
+    .profile-setup {
     .header {
         display: flex;
         justify-content: space-between;
@@ -128,10 +129,12 @@
             }
         }
     }
+    }
 }
 
 @media screen and (max-width: 800px) {
     #profile-setup {
+      .profile-setup {
         .header {
             flex-direction: column;
             margin-bottom: 16px;
@@ -172,6 +175,7 @@
                 }
             }
         }
+      }
     }
 }
 

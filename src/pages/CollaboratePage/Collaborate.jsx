@@ -2,19 +2,20 @@ import "./Collaborate.scss"
 import Chats from "../../components/Chats/Chats";
 import IdeasSection from "../../components/Chats/IdeasSection/IdeasSection";
 import { useAllPosts } from '../../hooks/use-all-posts'
-import {useAllInterests} from '../../hooks/use-all-interests';
+import { useAllInterests } from '../../hooks/use-all-interests';
 import { useState, useEffect } from "react";
 import MobileHeader from "../../components/Mobile/MobileHeader/MobileHeader";
 import MobileIdeas from "../../components/Mobile/MobileIdeas/MobileIdeas";
 import { pusherClient } from "../../utils/pusherClient";
 import { useQueryClient } from "@tanstack/react-query";
 import { useCurrentUser } from "../../hooks/use-current-user";
+import { ClipLoader } from "react-spinners";
 
 const Collaborate = () => {
-  const {data: user} = useCurrentUser()
+  const { data: user, isFetching: currentUserLoading, error: currentUserError } = useCurrentUser()
   const queryClient = useQueryClient()
-  const { data: interests, isLoading, error } = useAllInterests()
-  const {data: posts, isFetching, error: postError} = useAllPosts()
+  const { data: interests, isFetching: interestsLoading, error } = useAllInterests()
+  const { data: posts, isFetching, error: postError } = useAllPosts()
   const [friendRequests, setFriendRequests] = useState([])
   const [allPosts, setAllPosts] = useState([])
 
@@ -23,7 +24,7 @@ const Collaborate = () => {
       setAllPosts(posts);
     }
 
-    if(interests) {
+    if (interests) {
       setFriendRequests(interests)
     }
   }, [posts, interests]);
@@ -61,28 +62,40 @@ const Collaborate = () => {
     }
   }, [user?.profile?.id])
 
+  if (currentUserError) {
+    window.location.assign('/')
+  }
+
   return (
-      <main id="collaborate-page">
+    <main id="collaborate-page">
+      {currentUserLoading ? (
+        <div>
+          <ClipLoader />
+        </div>
+      ) : (
         <div className="collaborate-page">
-          <div className="collaborate-view">
-            
-            <div className="chats-view">
-              <Chats error={error} interests={friendRequests} isLoading={isLoading}/>
-            </div>
+          <div className="collaborate-section">
+            <div className="collaborate-view">
 
-            <div className="ideas-view">
-              <IdeasSection error={postError} isFetching={isFetching} posts={allPosts}/>
-            </div>
+              <div className="chats-view">
+                <Chats error={error} interests={friendRequests} isLoading={interestsLoading} />
+              </div>
 
-          </div>
-        </div>
+              <div className="ideas-view">
+                <IdeasSection error={postError} isFetching={isFetching} posts={allPosts} />
+              </div>
 
-        {/* MOBILE VIEW BABY */}
-        <div className="mobile-collaborate-page">
-          <MobileHeader interests={interests} collaboratorPage={true}/>
-          <MobileIdeas error={postError} isFetching={isFetching} posts={allPosts}/>
-        </div>
-      </main>
+            </div >
+          </div >
+
+          {/* MOBILE VIEW BABY */}
+          <div className="mobile-collaborate-page" >
+            <MobileHeader interests={interests} collaboratorPage={true} />
+            <MobileIdeas error={postError} isFetching={isFetching} posts={allPosts} />
+          </div >
+        </div >
+      )}
+    </main >
   )
 }
 

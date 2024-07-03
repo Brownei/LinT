@@ -9,10 +9,10 @@ import MobileNav from '../Mobile/MobileNav/MobileNav';
 import MobileSettings from '../Mobile/MobileSettings/MobileSettings';
 
 export default function Layout() {
-	const {data: user, error, isLoading} = useCurrentUser();
+  const { data: user, error, isFetching: isLoading } = useCurrentUser();
   const navigate = useNavigate();
 
-  if(error) {
+  if (error) {
     window.location.assign('/')
   } else if (user && user?.profile === null) {
     window.location.assign('/setup-profile')
@@ -22,23 +22,23 @@ export default function Layout() {
     return (
       <div className="loader">
         <ClipLoader color="#0006B1" size={30} />
-    </div>
+      </div>
     )
   }
 
 
   return (
-      <main id="body">
-        <div className='mobile-settings'>
-          <MobileSettings />
-        </div>
+    <main id="body">
+      <div className='mobile-settings'>
+        <MobileSettings />
+      </div>
 
-        <Nav />
-        <Outlet />
+      <Nav />
+      <Outlet />
 
-        <div className="collaborate-mobile-page">
-          <MobileNav user={user}/>
-        </div>
-      </main>
+      <div className="collaborate-mobile-page">
+        <MobileNav user={user} />
+      </div>
+    </main>
   )
 }
