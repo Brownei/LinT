@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 import { api } from "../utils/api"
 
 async function getCurrentUser() {
-  const { data } = await api.get(`http://localhost:3131/auth/user`)
+  const { data } = await api.get(`/auth/user`)
   return data
 }
 
