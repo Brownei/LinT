@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './ProfilePage.scss';
 import Ideas from '../../components/Card/Ideas';
 import ProfileInterests from '../../components/Card/ProfileInterests'
@@ -86,46 +86,51 @@ const ProfilePage = () => {
           <div className='profile-details'>
             <img src={user.profile.profileImage} alt={'Profile Image'} />
             <div className='write-ups'>
-              <h2>{user.profile.fullName}</h2>
-              <span>@{user.profile.username}</span>
-              <div>
-                <p className='occupation'>{user.profile?.occupation}</p>
-                <p>{user.profile?.bio}</p>
+              <div className='flex'>
+                <div className='writings'>
+                  <h2>{user.profile.fullName}</h2>
+                  <span>@{user.profile.username}</span>
+                </div>
+                <div className="sidebar">
+                  {location.pathname.includes(user.profile.username) || location.pathname === '/profile' ? (
+                    <div className='buttons'>
+                      <Link to={'/profile/edit'} className='edit-profile'>Edit Profile</Link>
+                      <button className='logout' disabled={signOutMutation.isPending} onClick={async () => await signOutMutation.mutateAsync()}>{signOutMutation.isPending ? (
+                        <span>
+                          <Icon className='logout-button' icon={'formkit:spinner'} fontSize={16} />
+                          Running...
+                        </span>
+                      ) : 'Log Out'}</button>
+                    </div>
+                  ) : (
+                    <button className='collabs'>{collaborations.length} Collabs</button>
+                  )}
+
+                  <div className='icons'>
+                    {user.profile.links.map((link) => (
+                      <div key={link.id}>
+                        <LinkIcons link={link} styles={'particular-icon'} />
+                      </div>
+                    ))}
+                  </div>
+                  <div className='loc-cal'>
+                    <div className='location'>
+                      <Icon icon={'mdi:location'} fontSize={24} />
+                      <p>{user.profile?.location}</p>
+                    </div>
+                    <div className='calendar'>
+                      <Icon icon={'bx:calendar'} fontSize={24} />
+                      <p>{dateFormater(formattedDate)}</p>
+                    </div>
+                  </div>
+                </div>
               </div>
+
             </div>
           </div>
-          <div className="sidebar">
-            {location.pathname.includes(user.profile.username) || location.pathname === '/profile' ? (
-              <div className='buttons'>
-                <Link to={'/profile/edit'} className='edit-profile'>Edit Profile</Link>
-                <button className='logout' disabled={signOutMutation.isPending} onClick={async () => await signOutMutation.mutateAsync()}>{signOutMutation.isPending ? (
-                  <span>
-                    <Icon className='logout-button' icon={'formkit:spinner'} fontSize={16} />
-                    Running...
-                  </span>
-                ) : 'Log Out'}</button>
-              </div>
-            ) : (
-              <button className='collabs'>{collaborations.length} Collabs</button>
-            )}
-
-            <div className='icons'>
-              {user.profile.links.map((link) => (
-                <div key={link.id}>
-                  <LinkIcons link={link} styles={'particular-icon'} />
-                </div>
-              ))}
-            </div>
-            <div className='loc-cal'>
-              <div className='location'>
-                <Icon icon={'mdi:location'} fontSize={24} />
-                <p>{user.profile?.location}</p>
-              </div>
-              <div className='calendar'>
-                <Icon icon={'bx:calendar'} fontSize={24} />
-                <p>{dateFormater(formattedDate)}</p>
-              </div>
-            </div>
+          <div className='div'>
+            <p className='occupation'>{user.profile?.occupation}</p>
+            <p>{user.profile?.bio}</p>
           </div>
 
         </div>
@@ -160,8 +165,8 @@ const ProfilePage = () => {
           <div className='card-title'>
             <div className='idea-collab-nav'>
               <Link className={location.search === '' ? 'active' : 'h3'} to={'/profile'}>Ideas</Link>
-              <Link className={location.search === '?query=interests' ? 'active' : 'h3'} to={'/profile?query=interests'}>Interest</Link>
-              <Link className={location.search === '?query=collaborations' ? 'active' : 'h3'} to={'/profile?query=collaborations'}>Collaborations</Link>
+              <Link className={location.search === '?query=interests' ? 'active' : 'h3'} to={'/profile?query=interests'}>Interests</Link>
+              <Link className={location.search === '?query=collaborations' ? 'active' : 'coll-link'} to={'/profile?query=collaborations'}>Collaborations</Link>
             </div>
             {location.search === '?query=collaborations' ? (
               <div className='user-ideas'>
@@ -218,15 +223,11 @@ const ProfilePage = () => {
 
           <div className='coll-1'>
             <h3>Collaborations</h3>
-            {searchParams.get('params') === null && (
-              <div className='user-collabs'>
-                {collaborations.map((collaborations, index) => (
-                  <div key={index}>
-                    <Coll collaborations={collaborations} currentUser={user.profile} />
-                  </div>
-                ))}
-              </div>
-            )}
+            <div className='user-collabs'>
+              {collaborations.map((collaborations, index) => (
+                <Coll collaborations={collaborations} currentUser={user.profile} index={index} />
+              ))}
+            </div>
           </div>
         </div>
       </div>
