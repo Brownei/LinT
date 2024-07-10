@@ -62,6 +62,10 @@ const Collaborate = () => {
     }
   }, [user?.profile?.id])
 
+  if(currentUserError) {
+    window.location.assign('/')
+  }
+
   return (
     <main id="collaborate-page">
       {currentUserLoading ? (
