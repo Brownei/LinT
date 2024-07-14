@@ -3,12 +3,11 @@ import './Chats.scss'
 import { useLocation } from 'react-router-dom'
 import InterestsSection from './InterestsSection/InterestsSection'
 import { Link } from 'react-router-dom';
-import {ClipLoader} from 'react-spinners';
+import { ClipLoader } from 'react-spinners';
 
-const Chats = ({interests, isLoading, error}) => {
+const Chats = ({ interests, isLoading, error, onOpen, setOnOpen }) => {
   const location = useLocation()
-
-  let numberOfInterest =  interests?.length
+  let numberOfInterest = interests?.length
   let numberOfChats = 5
   const chatsSection = location.search === '?=chats' && 'chat-chats'
 
@@ -38,36 +37,36 @@ const Chats = ({interests, isLoading, error}) => {
         </div>
         {isLoading ? (
           <div className='loading'>
-          <ClipLoader fontSize={30}/>
+            <ClipLoader fontSize={30} />
           </div>
         ) : error ? (
-        <div>You gotta make a little refresh</div>
+          <div>You gotta make a little refresh</div>
         ) : (
-        <div>
-          {location.search === '?=chats' ? (
-            <div className='chat-section'>
-              <input type="text" placeholder='Search'/>
-              <h1>Chats</h1>
-            </div>
-          ) : (
-            <div className='interest-section'>
-              {interests?.length > 0 ? (
-                <div className='all-interests'>
-                  <span>View people interested in your Idea!!</span>
-                  {interests.map((interest) => (
-                    <div key={interest.id}>
-                      <InterestsSection interest={interest}/>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className='no-interests'>
-                  <p>No interests yet!</p>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
+          <div>
+            {location.search === '?=chats' ? (
+              <div className='chat-section'>
+                <input type="text" placeholder='Search' />
+                <h1>Chats</h1>
+              </div>
+            ) : (
+              <div className='interest-section'>
+                {interests?.length > 0 ? (
+                  <div className='all-interests'>
+                    <span>View people interested in your Idea!!</span>
+                    {interests.map((interest) => (
+                      <div key={interest.id}>
+                        <InterestsSection interest={interest} onOpen={onOpen} setOnOpen={setOnOpen} />
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className='no-interests'>
+                    <p>No interests yet!</p>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         )}
       </div>
     </main>
