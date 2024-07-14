@@ -11,16 +11,21 @@
     .profile {
       padding: 10px;
 
-      .backing {
-        .button {
-          display: flex;
-          flex-direction: column;
-          background-color: #000;
-        }
-
-        .hello {
-          font-size: 10rem;
-        }
+      .button {
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        outline: none;
+        border: 0px solid transparent;
+        background-color: transparent;
+        padding: 10px 20px;
+        border-radius: 19px;
+        font-size: 0.9rem;
+        line-height: 22px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-bottom: 16px;
 
       }
 
@@ -276,9 +281,19 @@
         display: block;
         gap: 16px;
 
-        .user-collabs {
-          display: grid;
-          gap: 16px;
+        .coll-2 {
+
+          .user-collabs {
+            display: grid;
+            gap: 16px;
+          }
+
+          .empty-state {
+            color: #8F9191;
+            font-weight: 600;
+            font-size: 24px;
+          }
+
         }
       }
     }

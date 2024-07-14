@@ -19,6 +19,7 @@ import { api } from '../../utils/api';
 import { useSession } from '../../hooks/use-session';
 import { useCurrentUser } from '../../hooks/use-current-user';
 import { useSentRequests } from '../../hooks/use-requests-sent';
+import { useAllCollaborators } from '../../hooks/use-collaborators';
 
 const ProfilePage = () => {
   // const isMobile = useMediaQuery({maxWidth: 800})
@@ -27,6 +28,8 @@ const ProfilePage = () => {
   const { data: user, isLoading: loading, error: isCurrentError } = useCurrentUser()
   const { data: posts, isLoading: isFetching, error } = useUserPosts(user?.profile?.username)
   const { data: sentInterests, isLoading: isFetchingSentRequests, error: sentRequestsError } = useSentRequests()
+  const { data: collaborators, isLoading: isCollaboratorsLoading, error: collaboratorsError } = useAllCollaborators()
+
   const location = useLocation()
   const searchParams = new URLSearchParams(location.search);
   const formattedDate = formatDate(user?.profile?.createdAt, "yyyy-MM-dd")
@@ -97,10 +100,13 @@ const ProfilePage = () => {
                       <Link to={'/profile/edit'} className='edit-profile'>Edit Profile</Link>
                       <button className='logout' disabled={signOutMutation.isPending} onClick={async () => await signOutMutation.mutateAsync()}>{signOutMutation.isPending ? (
                         <span>
-                          <Icon className='logout-button' icon={'formkit:spinner'} fontSize={16} />
-                          Running...
+                          <Icon className='logout-button' icon={'formkit:spinner'} color={'#E30000'} fontSize={16} />
                         </span>
-                      ) : 'Log Out'}</button>
+                      ) : (
+                        <span>
+                          <Icon icon={'mingcute:exit-line'} fontSize={16} />
+                        </span>
+                      )}</button>
                     </div>
                   ) : (
                     <button className='collabs'>{collaborations.length} Collabs</button>
@@ -223,15 +229,29 @@ const ProfilePage = () => {
 
           <div className='coll-1'>
             <h3>Collaborations</h3>
-            <div className='user-collabs'>
-              {collaborations.map((collaborations, index) => (
-                <Coll collaborations={collaborations} currentUser={user.profile} index={index} />
-              ))}
+            <div>
+              {isCollaboratorsLoading ? (
+                <div>
+                  <ClipLoader />
+                </div>
+              ) : collaborators.length <= 0 ? (
+                <span>
+                  No collaborations yet!
+                </span>
+              ) : (
+                <div className='user-collabs'>
+                  {collaborations.map((collaborations, index) => (
+                    <div key={index}>
+                      <Coll collaborations={collaborations} currentUser={profile} />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
       </div>
-    </main>
+    </main >
 
   );
 }
