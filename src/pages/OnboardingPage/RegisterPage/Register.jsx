@@ -24,7 +24,7 @@ const Register = () => {
 
   const googleRegisterMutation = useMutation({
     mutationFn: (token) => {
-      return axios.post(`https://lint-api.onrender.com/auth/google/register`, {}, {
+      return axios.post(`https://api.lintapp.com/auth/google/register`, {}, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
@@ -48,7 +48,7 @@ const Register = () => {
 
   const emailAndPasswordRegisterMutation = useMutation({
     mutationFn: ({ token, data }) => {
-      return axios.post(`https://lint-api.onrender.com/auth/register`, {
+      return axios.post(`https://api.lintapp.com/auth/register`, {
         password: data.password,
         fullName: data.fullName
       }, {
