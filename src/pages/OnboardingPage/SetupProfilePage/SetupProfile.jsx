@@ -20,7 +20,7 @@ const SetupProfile = ({ heading }) => {
   const clearProfile = useSettingProfileStore((state => state.clearProfile))
   const { data: profile, isLoading: loading, error } = useCurrentUser()
   const [locationValue, setLocationValue] = useState(null);
-  const [uploadedImage, setUploadedImage] = useState(profile?.profileImage ? profile?.profileImage : 'https://i.pinimg.com/564x/dd/ea/bd/ddeabd5e1886bcfe932a331839ee1cf7.jpg');
+  const [uploadedImage, setUploadedImage] = useState(profile && profile.profileImage !== "" ? profile?.profileImage : 'https://i.pinimg.com/564x/dd/ea/bd/ddeabd5e1886bcfe932a331839ee1cf7.jpg');
   const navigate = useNavigate()
   const { register, handleSubmit, control, formState: { errors } } = useForm({
     mode: 'onSubmit'
@@ -29,6 +29,7 @@ const SetupProfile = ({ heading }) => {
     name: 'socialLinks',
     control
   })
+  console.log(profile)
 
   const createProfileMutation = useMutation({
     mutationFn: (data) => {
