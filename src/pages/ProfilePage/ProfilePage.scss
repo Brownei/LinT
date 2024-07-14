@@ -10,16 +10,34 @@
     padding: 0px;
 
     .profile {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       padding: 10px;
+
+      .div {
+        max-width: 502px;
+        gap: 0px;
+
+        p {
+          font-weight: 400;
+          font-size: 1rem;
+          line-height: 22px;
+          margin: 2px;
+        }
+
+        .occupation {
+          font-weight: 600;
+          font-size: 1rem;
+          line-height: 22px;
+          margin: 2px;
+          text-transform: capitalize;
+        }
+      }
+
 
       .profile-details {
         display: flex;
         justify-content: start;
-        align-items: start;
-        gap: 16px;
+        align-items: center;
+        gap: 12px;
 
         img {
           width: 90px;
@@ -29,27 +47,128 @@
         }
 
         .write-ups {
-          display: grid;
-          // gap: 16px;
-          width: 426px;
+          width: 100%;
 
-          div {
-            display: block;
-            margin-top: 16px;
+          .flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            padding: 10px;
 
-            p {
-              margin: 0px;
-              font-weight: 400;
-              font-size: 1rem;
-              line-height: 22px;
-            }
+            .sidebar {
+              display: grid;
+              place-items: end;
+              gap: 16px;
 
-            .occupation {
-              font-weight: 600;
-              font-size: 1rem;
-              line-height: 22px;
+              .buttons {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 16px;
+
+                .logout {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  background-color: #FCE6E6;
+                  color: #E30000;
+                  text-decoration: none;
+                  border-radius: 100%;
+                  width: 42px;
+                  height: 42px;
+                  padding: 4px 8px;
+                  border: 1px solid transparent;
+                  font-weight: 600;
+                  font-size: 1rem;
+                  cursor: pointer;
+
+                  span {
+                    display: flex;
+                    gap: 10px;
+                    align-items: center;
+                    justify-content: center;
+
+                    .logout-button {
+                      animation: spin 1s ease-in-out infinite;
+
+
+                      @keyframes spin {
+                        0% {
+                          transform: rotate(0deg);
+                        }
+
+                        100% {
+                          transform: rotate(360deg);
+                        }
+                      }
+                    }
+                  }
+
+                  &:hover {
+                    color: #fff;
+                    background-color: #ff949e;
+                    transition-duration: 300ms;
+                  }
+
+                }
+
+                .edit-profile {
+                  text-decoration: none;
+                  padding: 10px 60px;
+                  border-radius: 24px;
+                  border: 1px solid #00034A;
+                  background-color: #E6E6F7;
+                  color: #00034A;
+                  font-weight: 600;
+                  font-size: 1rem;
+                }
+
+              }
+
+
+              .collabs {
+                padding: 8px 16px;
+                border-radius: 6px;
+                background-color: #E6E6F7;
+                color: #00034A;
+                font-weight: 700;
+                font-size: 1.5rem;
+                line-height: 29.05px;
+                cursor: pointer;
+              }
+
+              .icons {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+
+                .particular-icon {
+                  cursor: pointer;
+                  text-decoration: none;
+                  color: black;
+                }
+              }
+
+              .loc-cal {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+
+                .location,
+                .calendar {
+                  display: flex;
+                  align-items: center;
+                  gap: 5px;
+
+                  p {
+                    margin: 0px;
+                  }
+                }
+              }
             }
           }
+
+
 
           h2 {
             margin: 0px;
@@ -66,117 +185,7 @@
         }
       }
 
-      .sidebar {
-        display: grid;
-        place-items: end;
-        gap: 16px;
 
-        .buttons {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          gap: 16px;
-
-          .logout {
-            display: block;
-
-            span {
-              margin: 0px;
-              padding: 0px;
-              display: flex;
-              gap: 10px;
-              align-items: center;
-              justify-content: center;
-
-              .logout-button {
-                animation: spin 1s ease-in-out infinite;
-
-
-                @keyframes spin {
-                  0% {
-                    transform: rotate(0deg);
-                  }
-
-                  100% {
-                    transform: rotate(360deg);
-                  }
-                }
-              }
-            }
-          }
-
-          .edit-profile {
-            text-decoration: none;
-            padding: 10px 60px;
-            border-radius: 24px;
-            border: 1px solid #00034A;
-            background-color: #E6E6F7;
-            color: #00034A;
-            font-weight: 600;
-            font-size: 1rem;
-          }
-
-          button {
-            text-decoration: none;
-            padding: 10px 40px;
-            border-radius: 24px;
-            border: 1px solid transparent;
-            background-color: #F44336;
-            color: #ffffff;
-            font-weight: 600;
-            font-size: 1rem;
-            line-height: 22px;
-            cursor: pointer;
-
-            &:hover {
-              color: #00034A;
-              background-color: #ff949e;
-              transition-duration: 300ms;
-            }
-          }
-        }
-
-
-        .collabs {
-          padding: 8px 16px;
-          border-radius: 6px;
-          background-color: #E6E6F7;
-          color: #00034A;
-          font-weight: 700;
-          font-size: 1.5rem;
-          line-height: 29.05px;
-          cursor: pointer;
-        }
-
-        .icons {
-          display: flex;
-          align-items: center;
-          gap: 16px;
-
-          .particular-icon {
-            cursor: pointer;
-            text-decoration: none;
-            color: black;
-          }
-        }
-
-        .loc-cal {
-          display: flex;
-          align-items: center;
-          gap: 16px;
-
-          .location,
-          .calendar {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-
-            p {
-              margin: 0px;
-            }
-          }
-        }
-      }
     }
 
     .mobile-unnecessary {
@@ -207,15 +216,19 @@
           gap: 14px;
 
           .h3 {
-            font-size: 0.9rem;
+            font-size: 24px;
             margin-top: 20px;
             font-weight: 600;
             color: #8F9191;
             // text-decoration: none;
           }
 
+          .coll-link {
+            display: none;
+          }
+
           .active {
-            font-size: 0.9rem;
+            font-size: 24px;
             margin-top: 20px;
             font-weight: 600;
             color: #00034A;
@@ -251,12 +264,23 @@
       }
 
       .coll-1 {
-        display: block;
-        gap: 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: start;
+        gap: 12px;
+
+        h3 {
+          color: #00034A;
+          font-size: 24px;
+        }
 
         .user-collabs {
-          display: grid;
+          display: flex;
+          flex-direction: column;
           gap: 16px;
+          justify-content: start;
+          align-items: start;
         }
       }
     }
@@ -273,6 +297,11 @@
       .profile {
         padding: 0px;
 
+        .div {
+          display: none;
+        }
+
+
         .profile-details {
 
 
@@ -284,8 +313,28 @@
           .write-ups {
             width: 100%;
 
-            div {
-              display: none;
+            .flex {
+              .sidebar {
+                .buttons {
+                  .logout {
+                    display: none;
+                  }
+
+                  .edit-profile {
+                    padding: 10px 20px;
+                    border-radius: 22px;
+                    font-size: 0.85rem;
+                  }
+                }
+
+                .icons {
+                  display: none;
+                }
+
+                .loc-cal {
+                  display: none;
+                }
+              }
             }
 
             h2 {
@@ -300,27 +349,7 @@
           }
         }
 
-        .sidebar {
-          .buttons {
-            .logout {
-              display: none;
-            }
 
-            .edit-profile {
-              padding: 10px 20px;
-              border-radius: 22px;
-              font-size: 0.85rem;
-            }
-          }
-
-          .icons {
-            display: none;
-          }
-
-          .loc-cal {
-            display: none;
-          }
-        }
       }
 
       .mobile-unnecessary {
@@ -374,6 +403,25 @@
         gap: 10px;
 
         .card-title {
+
+          .idea-collab-nav {
+            .h3 {
+              font-size: 1rem;
+            }
+
+            .active {
+              font-size: 1rem;
+            }
+
+            .coll-link {
+              display: block;
+              font-size: 1rem;
+              margin-top: 20px;
+              font-weight: 600;
+              color: #8F9191;
+              text-decoration: none;
+            }
+          }
 
           .user-ideas {
             .loading {

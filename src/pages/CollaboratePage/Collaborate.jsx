@@ -12,6 +12,7 @@ import { useCurrentUser } from "../../hooks/use-current-user";
 import { ClipLoader } from "react-spinners";
 
 const Collaborate = () => {
+  const [onOpen, setOnOpen] = useState()
   const { data: user, isLoading: currentUserLoading, error: currentUserError } = useCurrentUser()
   const queryClient = useQueryClient()
   const { data: interests, isLoading: interestsLoading, error } = useAllInterests()
@@ -62,6 +63,10 @@ const Collaborate = () => {
     }
   }, [user?.profile?.id])
 
+  if (currentUserError) {
+    window.location.assign('/')
+  }
+
   return (
     <main id="collaborate-page">
       {currentUserLoading ? (
@@ -74,7 +79,7 @@ const Collaborate = () => {
             <div className="collaborate-view">
 
               <div className="chats-view">
-                <Chats error={error} interests={friendRequests} isLoading={interestsLoading} />
+                <Chats error={error} interests={friendRequests} isLoading={interestsLoading} onOpen={onOpen} setOnOpen={setOnOpen} />
               </div>
 
               <div className="ideas-view">
@@ -91,6 +96,16 @@ const Collaborate = () => {
           </div >
         </div >
       )}
+      {onOpen && <div className='overlay' onClick={() => setOnOpen(false)} />}
+
+      {onOpen && (
+        <ModalContainer>
+          <div>
+            jello
+          </div>
+        </ModalContainer>
+      )}
+
     </main >
   )
 }
