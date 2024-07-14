@@ -10,7 +10,7 @@ export const getToken = () => {
 };
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_RENDER_API_ENDPOINT,
+  baseURL: import.meta.env.VITE_API_ENDPOINT,
   headers: { "Content-Type": "application/json" },
 });
 
