@@ -4,8 +4,9 @@ import { useLocation } from 'react-router-dom'
 import InterestsSection from './InterestsSection/InterestsSection'
 import { Link } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
+import ChatsSection from './ChatsSection/ChatsSection';
 
-const Chats = ({ interests, isLoading, error, onOpen, setOnOpen }) => {
+const Chats = ({ interests, isLoading, error, setSelectedConversationId, onOpen, setOnOpen, conversations, isConversationsLoading, conversationsError }) => {
   const location = useLocation()
   let numberOfInterest = interests?.length
   let numberOfChats = 5
@@ -35,11 +36,11 @@ const Chats = ({ interests, isLoading, error, onOpen, setOnOpen }) => {
             <span className={location.search === '?=chats' ? 'active' : ''}></span>
           </div>
         </div>
-        {isLoading ? (
+        {isLoading || isConversationsLoading ? (
           <div className='loading'>
             <ClipLoader fontSize={30} />
           </div>
-        ) : error ? (
+        ) : error || conversationsError ? (
           <div>You gotta make a little refresh</div>
         ) : (
           <div>
@@ -47,6 +48,12 @@ const Chats = ({ interests, isLoading, error, onOpen, setOnOpen }) => {
               <div className='chat-section'>
                 <input type="text" placeholder='Search' />
                 <h1>Chats</h1>
+                {conversations.map((conversation) => (
+                  <div key={conversation.id}>
+                    <ChatsSection conversation={conversation} setSelectedConversationId={setSelectedConversationId} />
+                  </div>
+                ))
+                }
               </div>
             ) : (
               <div className='interest-section'>

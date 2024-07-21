@@ -7,7 +7,6 @@
   padding: 27px 14px;
   transition-property: transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
   border-radius: 10px;
   transition-duration: 500ms;
   z-index: 999;
@@ -33,7 +32,7 @@
 
     p {
       color: #8F9191;
-      font-size: 1.3rem;
+      font-size: 22px;
       line-height: 22px;
       font-weight: 600;
       margin: none;
@@ -45,7 +44,7 @@
       color: #0006B1;
       font-weight: 600;
       line-height: 16px;
-      font-size: 0.8rem;
+      font-size: 12px;
     }
   }
 

@@ -1,25 +1,25 @@
 #body {
-    margin: 98px 50px 0px 50px;
-    
-    .mobile-settings {
-        display: none;
-    }
+  margin: 98px 50px 0px 50px;
 
-    .collaborate-mobile-page {
-        display: none;
-    }
+  .mobile-settings {
+    display: none;
+  }
+
+  .collaborate-mobile-page {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 800px) {
-    #body {
-        margin: 49px 15px 0px 15px;
+  #body {
+    margin: 49px 15px 0px 15px;
 
-        .mobile-settings {
-            display: block;
-        }
-    
-        .collaborate-mobile-page {
-            display: block;
-        }
+    .mobile-settings {
+      display: block;
     }
+
+    .collaborate-mobile-page {
+      display: block;
+    }
+  }
 }

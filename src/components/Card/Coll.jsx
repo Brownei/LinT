@@ -13,10 +13,10 @@ const Coll = ({ collaborations, currentUser, index }) => {
       </div>
       <span>&</span>
       <div className='user'>
-        <img src={collaborations.image} alt={collaborations.name} />
+        <img src={collaborations.profileImage} alt={collaborations.fullName} />
         <div>
-          <h5>{collaborations.name}</h5>
-          <p>{collaborations.profession}</p>
+          <h5>{collaborations.fullName}</h5>
+          <p>{collaborations.occupation}</p>
         </div>
       </div>
     </div>

@@ -82,15 +82,15 @@ const CreatePostPage = () => {
           </div>
 
           <div className="content">
-            <h1>Collaborate Today</h1>
+            <h1>Collaborate Today!</h1>
 
             <div className='input-title'>
-              <TextInput radius={'md'} className='text-inputs' label='Project Title' withAsterisk error={!!errors.title} placeholder="Input your project Idea" {...register("title", { required: true })} />
+              <TextInput size={'lg'} radius={'md'} className='text-inputs' label='Project Title' withAsterisk error={!!errors.title} placeholder="Input your project Idea" {...register("title", { required: true })} />
               {errors.title && (<p className='error'>*We need the topic of the project</p>)}
             </div>
 
             <div className='input-description'>
-              <Textarea autosize label='Project Description' withAsterisk error={!!errors.description} className='text-inputs' radius={'md'} placeholder="Describe your amazing project idea here" {...register("description", { required: true })} />
+              <Textarea size={'lg'} autosize label='Project Description' withAsterisk error={!!errors.description} className='text-inputs' radius={'md'} placeholder="Describe your amazing project idea here" {...register("description", { required: true })} />
               {errors.description && (<p className='error'>*Say something at least</p>)}
             </div>
 

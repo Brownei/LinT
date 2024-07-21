@@ -2,7 +2,7 @@ import './Login.scss'
 import { useState } from 'react';
 import { Icon } from '@iconify/react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { signInWithGoogle, signInWthCredentials } from '../../../utils/firebase';
 import axios from 'axios';
 import { Button } from '@mantine/core';
@@ -13,6 +13,7 @@ import { useForm } from 'react-hook-form';
 
 const Login = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient()
   const { register, handleSubmit, control, formState: { errors } } = useForm({
     mode: 'onSubmit'
   })
@@ -33,6 +34,7 @@ const Login = () => {
     },
     onSuccess({ data }) {
       sessionStorage.setItem('session', data.sessionCookie)
+      queryClient.invalidateQueries('current-user')
 
       if (data.userInfo.profile === null) {
         setProfile(data.userInfo)

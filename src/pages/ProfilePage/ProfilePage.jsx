@@ -10,7 +10,7 @@ import { Icon } from '@iconify/react';
 import { useUserPosts } from '../../hooks/use-user-posts';
 import { ClipLoader } from 'react-spinners';
 import LinkIcons from '../../components/LinkIcons';
-import { formatDate } from 'date-fns';
+import { formatDate, getDay } from 'date-fns';
 import { formatDate as dateFormater } from '../../utils/formatDate';
 import { useMutation } from "@tanstack/react-query";
 import { api } from '../../utils/api';
@@ -29,7 +29,7 @@ const ProfilePage = () => {
   const { data: posts, isLoading: isFetching, error } = useUserPosts(user?.profile?.username)
   const { data: sentInterests, isLoading: isFetchingSentRequests, error: sentRequestsError } = useSentRequests()
   const { data: collaborators, isLoading: isCollaboratorsLoading, error: collaboratorsError } = useAllCollaborators()
-
+  const userLocation = user?.profile?.location.split(',');
   const location = useLocation()
   const searchParams = new URLSearchParams(location.search);
   const formattedDate = formatDate(user?.profile?.createdAt, "yyyy-MM-dd")
@@ -42,6 +42,8 @@ const ProfilePage = () => {
     },
   });
 
+  console.log(collaborators)
+
   if (loading) {
     return (
       <div className="loader">
@@ -52,6 +54,12 @@ const ProfilePage = () => {
 
   if (isCurrentError) {
     navigate('/')
+  }
+
+  function getTheLastElement() {
+    const index = userLocation.length
+
+    return userLocation[index - 1]
   }
 
   const collaborations = [
@@ -100,11 +108,11 @@ const ProfilePage = () => {
                       <Link to={'/profile/edit'} className='edit-profile'>Edit Profile</Link>
                       <button className='logout' disabled={signOutMutation.isPending} onClick={async () => await signOutMutation.mutateAsync()}>{signOutMutation.isPending ? (
                         <span>
-                          <Icon className='logout-button' icon={'formkit:spinner'} color={'#E30000'} fontSize={16} />
+                          <Icon className='logout-button' icon={'formkit:spinner'} color={'#E30000'} fontSize={20} />
                         </span>
                       ) : (
                         <span>
-                          <Icon icon={'mingcute:exit-line'} fontSize={16} />
+                          <Icon color='#E30000' icon={'mingcute:exit-line'} fontSize={20} />
                         </span>
                       )}</button>
                     </div>
@@ -122,7 +130,7 @@ const ProfilePage = () => {
                   <div className='loc-cal'>
                     <div className='location'>
                       <Icon icon={'mdi:location'} fontSize={24} />
-                      <p>{user.profile?.location}</p>
+                      <p>{getTheLastElement()}</p>
                     </div>
                     <div className='calendar'>
                       <Icon icon={'bx:calendar'} fontSize={24} />
@@ -158,7 +166,7 @@ const ProfilePage = () => {
           <div className='mobile-loc-cal'>
             <div className='mobile-location'>
               <Icon icon={'mdi:location'} fontSize={18} />
-              <p>{user.profile?.location}</p>
+              <p>{getTheLastElement()}</p>
             </div>
             <div className='mobile-calendar'>
               <Icon icon={'bx:calendar'} fontSize={18} />
@@ -240,9 +248,9 @@ const ProfilePage = () => {
                 </span>
               ) : (
                 <div className='user-collabs'>
-                  {collaborations.map((collaborations, index) => (
+                  {collaborators.map((collaborator, index) => (
                     <div key={index}>
-                      <Coll collaborations={collaborations} currentUser={profile} />
+                      <Coll collaborations={collaborator.sender} currentUser={user.profile} />
                     </div>
                   ))}
                 </div>

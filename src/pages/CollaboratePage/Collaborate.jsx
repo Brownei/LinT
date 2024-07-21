@@ -3,6 +3,7 @@ import Chats from "../../components/Chats/Chats";
 import IdeasSection from "../../components/Chats/IdeasSection/IdeasSection";
 import { useAllPosts } from '../../hooks/use-all-posts'
 import { useAllInterests } from '../../hooks/use-all-interests';
+import { useAllConversations } from "../../hooks/use-conversations";
 import { useState, useEffect } from "react";
 import MobileHeader from "../../components/Mobile/MobileHeader/MobileHeader";
 import MobileIdeas from "../../components/Mobile/MobileIdeas/MobileIdeas";
@@ -10,12 +11,18 @@ import { pusherClient } from "../../utils/pusherClient";
 import { useQueryClient } from "@tanstack/react-query";
 import { useCurrentUser } from "../../hooks/use-current-user";
 import { ClipLoader } from "react-spinners";
+import ModalContainer from "../../components/Modal/ModalContainer";
+import ChatsViewSection from "../../components/Chats/ChatsViewSection/ChatsViewSection";
+import { useLocation } from "react-router-dom";
 
 const Collaborate = () => {
+  const location = useLocation()
+  const [selectedConversationId, setSelectedConversationId] = useState(null)
   const [onOpen, setOnOpen] = useState()
   const { data: user, isLoading: currentUserLoading, error: currentUserError } = useCurrentUser()
   const queryClient = useQueryClient()
   const { data: interests, isLoading: interestsLoading, error } = useAllInterests()
+  const { data: conversations, isLoading: isConversationsLoading, error: conversationsError } = useAllConversations()
   const { data: posts, isLoading, error: postError } = useAllPosts()
   const [friendRequests, setFriendRequests] = useState([])
   const [allPosts, setAllPosts] = useState([])
@@ -58,7 +65,7 @@ const Collaborate = () => {
     pusherClient.bind('incoming_collaborator_requests', friendRequestHandler)
 
     return () => {
-      pusherClient.unsubscribe(String(user.profile?.id))
+      pusherClient.unsubscribe(String(user?.profile?.id))
       pusherClient.unbind('incoming_collaborator_requests', friendRequestHandler)
     }
   }, [user?.profile?.id])
@@ -79,11 +86,22 @@ const Collaborate = () => {
             <div className="collaborate-view">
 
               <div className="chats-view">
-                <Chats error={error} interests={friendRequests} isLoading={interestsLoading} onOpen={onOpen} setOnOpen={setOnOpen} />
+                <Chats
+                  error={error}
+                  interests={friendRequests}
+                  isLoading={interestsLoading}
+                  conversations={conversations}
+                  isConversationsLoading={isConversationsLoading}
+                  conversationsError={conversationsError}
+                  setSelectedConversationId={setSelectedConversationId}
+                  onOpen={onOpen}
+                  setOnOpen={setOnOpen}
+                />
               </div>
 
               <div className="ideas-view">
-                <IdeasSection error={postError} isFetching={isLoading} posts={allPosts} />
+                {location.search === '?=chats' ? <ChatsViewSection selectedConversationId={selectedConversationId} /> : <IdeasSection error={postError} isFetching={isLoading} posts={allPosts} />
+                }
               </div>
 
             </div >
@@ -96,7 +114,13 @@ const Collaborate = () => {
           </div >
         </div >
       )}
-      {onOpen && <div className='overlay' onClick={() => setOnOpen(false)} />}
+      {onOpen &&
+        <div
+          className='overlay'
+          role='button'
+          onClick={() => setOnOpen(false)}
+        />
+      }
 
       {onOpen && (
         <ModalContainer>
