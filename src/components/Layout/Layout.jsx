@@ -37,7 +37,7 @@ export default function Layout() {
       <Outlet />
 
       <div className="collaborate-mobile-page">
-        <MobileNav user={user} />
+        <MobileNav user={user.userInfo} />
       </div>
     </main>
   )

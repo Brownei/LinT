@@ -23,10 +23,6 @@ export const AuthWrapper = () => {
   }
 
 
-  return (
-    <>
-      <Outlet />
-    </>
-  );
+  return <Outlet />
 };
 

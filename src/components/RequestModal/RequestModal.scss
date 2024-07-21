@@ -1,39 +1,37 @@
 .modal-body {
-	width: 80%;
+  width: 80%;
 
-	p {
-		font-weight: 600;
-		font-size: 1rem;
-		line-height: 22px;
-		margin-bottom: 10px;
-		color: #00034A;
-	}
+  p {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    margin-bottom: 10px;
+    color: #00034A;
+  }
 
-	input {
-		width: inherit;
-		border: 1px solid #8F9191;
-		border-radius: 8px;
-		padding: 10px 16px;
-	}
+  input {
+    width: inherit;
+    border: 1px solid #8F9191;
+    border-radius: 8px;
+    padding: 10px 16px;
+  }
 }
 
 .modal-close {
-	font-weight: 300;
-	color: green($color: #000000);
+  font-weight: 300;
+  color: green($color: #000000);
 
 }
 
 
 @media screen and (max-width: 800px) {
-	// .modal-body {
-	// 	width: 100%;
+  // .modal-body {
+  // 	width: 100%;
 
-	// 	input {
-	// 		width: 100%;
-	// 	}
-	// }
+  // 	input {
+  // 		width: 100%;
+  // 	}
+  // }
 }
 
-@media screen and (max-width: 350px) {
-    
-}
+@media screen and (max-width: 350px) {}

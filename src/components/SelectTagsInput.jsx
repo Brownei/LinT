@@ -5,116 +5,117 @@ import { programmingAndDesignTools } from '../utils/data';
 import LanguageIcons from './LanguageIcons/LanguageIcons';
 
 export function SelectTagsInput({ style, value, setValue }) {
-    const MAX_DISPLAYED_VALUES = 4;
-    const combobox = useCombobox({
-        onDropdownClose: () => combobox.resetSelectedOption(),
-        onDropdownOpen: () => combobox.updateSelectedOptionIndex('active'),
-    });
-    
-    const [search, setSearch] = useState('');
-    const [data, setData] = useState(programmingAndDesignTools);
-    // const [value, setValue] = useState([]);
-    
-    const exactOptionMatch = data.some((item) => item === search);
-    
-    const handleValueSelect = (val) => {
-        setSearch('');
-    
-        if (val === '$create') {
-            setData((current) => [...current, search]);
-            setValue((current) => [...current, search]);
-        } else {
-        setValue((current) =>
-            current.includes(val) ? current.filter((v) => v !== val) : [...current, val]
-        );
-        }
-    };
-    
-    const handleValueRemove = (val) => setValue((current) => current.filter((v) => v !== val));
-    
-    const values = value.slice(0, MAX_DISPLAYED_VALUES === value.length ? MAX_DISPLAYED_VALUES : MAX_DISPLAYED_VALUES - 1).map((item) => (
-        <Pill key={item} withRemoveButton onRemove={() => handleValueRemove(item)}>
-            {item}
-        </Pill>
+  const MAX_DISPLAYED_VALUES = 4;
+  const combobox = useCombobox({
+    onDropdownClose: () => combobox.resetSelectedOption(),
+    onDropdownOpen: () => combobox.updateSelectedOptionIndex('active'),
+  });
+
+  const [search, setSearch] = useState('');
+  const [data, setData] = useState(programmingAndDesignTools);
+  // const [value, setValue] = useState([]);
+
+  const exactOptionMatch = data.some((item) => item === search);
+
+  const handleValueSelect = (val) => {
+    setSearch('');
+
+    if (val === '$create') {
+      setData((current) => [...current, search]);
+      setValue((current) => [...current, search]);
+    } else {
+      setValue((current) =>
+        current.includes(val) ? current.filter((v) => v !== val) : [...current, val]
+      );
+    }
+  };
+
+  const handleValueRemove = (val) => setValue((current) => current.filter((v) => v !== val));
+
+  const values = value.slice(0, MAX_DISPLAYED_VALUES === value.length ? MAX_DISPLAYED_VALUES : MAX_DISPLAYED_VALUES - 1).map((item) => (
+    <Pill key={item} withRemoveButton onRemove={() => handleValueRemove(item)}>
+      {item}
+    </Pill>
+  ));
+
+  const options = data
+    .filter((item) => item.toLowerCase().includes(search.trim().toLowerCase()))
+    .slice(0, MAX_DISPLAYED_VALUES === data.length ? MAX_DISPLAYED_VALUES : MAX_DISPLAYED_VALUES - 1)
+    .map((item) => (
+      <Combobox.Option value={item} key={item} active={value.includes(item)}>
+        <Group gap="sm">
+          {value.includes(item) ? <CheckIcon size={12} /> : null}
+          <LanguageIcons language={item} />
+        </Group>
+      </Combobox.Option>
     ));
-    
-    const options = data
-        .filter((item) => item.toLowerCase().includes(search.trim().toLowerCase()))
-        .slice(0, MAX_DISPLAYED_VALUES === data.length ? MAX_DISPLAYED_VALUES : MAX_DISPLAYED_VALUES - 1)
-        .map((item) => (
-            <Combobox.Option value={item} key={item} active={value.includes(item)}>
-                <Group gap="sm">
-                    {value.includes(item) ? <CheckIcon size={12} /> : null}
-                    <LanguageIcons language={item}/>
-                </Group>
-            </Combobox.Option>
-        ));
-    
-    return (
-        <>
-            <Combobox store={combobox} onOptionSubmit={handleValueSelect} withinPortal={false}>
-                <Combobox.DropdownTarget>
-                    <PillsInput
-                        variant='unstyled'
-                        label='Select Tags'
-                        description='Select tags associated with your project'
-                        onClick={() => combobox.openDropdown()}>
-                        <Pill.Group>
-                        {value.length > 0 && (
-                            <>
-                                {values}
-                                {value.length > MAX_DISPLAYED_VALUES && (
-                                    <Pill>+{value.length - (MAX_DISPLAYED_VALUES - 1)} more</Pill>
-                                )}
-                            </>
-                            )
-                        }
 
-                            <Combobox.EventsTarget>
-                                <PillsInput.Field
-                                    onFocus={() => combobox.openDropdown()}
-                                    onBlur={() => combobox.closeDropdown()}
-                                    className={style}
-                                    value={search}
-                                    placeholder="Search tags"
-                                    onChange={(event) => {
-                                        combobox.updateSelectedOptionIndex();
-                                        setSearch(event.currentTarget.value);
-                                    }}
-                                    onKeyDown={(event) => {
-                                        if (event.key === 'Backspace' && search.length === 0) {
-                                        event.preventDefault();
-                                        handleValueRemove(value[value.length - 1]);
-                                        }
-                                    }}
-                                />
-                            </Combobox.EventsTarget>
-                        </Pill.Group>
-                    </PillsInput>
-                </Combobox.DropdownTarget>
+  return (
+    <>
+      <Combobox store={combobox} onOptionSubmit={handleValueSelect} withinPortal={false}>
+        <Combobox.DropdownTarget>
+          <PillsInput
+            variant='unstyled'
+            label='Select Tags'
+            size={'lg'}
+            description='Select tags associated with your project'
+            onClick={() => combobox.openDropdown()}>
+            <Pill.Group>
+              {value.length > 0 && (
+                <>
+                  {values}
+                  {value.length > MAX_DISPLAYED_VALUES && (
+                    <Pill>+{value.length - (MAX_DISPLAYED_VALUES - 1)} more</Pill>
+                  )}
+                </>
+              )
+              }
 
-                <Combobox.Dropdown>
-                    <Combobox.Options>
-                        {options}
+              <Combobox.EventsTarget>
+                <PillsInput.Field
+                  onFocus={() => combobox.openDropdown()}
+                  onBlur={() => combobox.closeDropdown()}
+                  className={style}
+                  value={search}
+                  placeholder="Search tags"
+                  onChange={(event) => {
+                    combobox.updateSelectedOptionIndex();
+                    setSearch(event.currentTarget.value);
+                  }}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Backspace' && search.length === 0) {
+                      event.preventDefault();
+                      handleValueRemove(value[value.length - 1]);
+                    }
+                  }}
+                />
+              </Combobox.EventsTarget>
+            </Pill.Group>
+          </PillsInput>
+        </Combobox.DropdownTarget>
 
-                        {!exactOptionMatch && search.trim().length > 0 && (
-                            <Combobox.Option value="$create">+ Create {search}</Combobox.Option>
-                        )}
+        <Combobox.Dropdown>
+          <Combobox.Options>
+            {options}
 
-                        {exactOptionMatch && search.trim().length > 0 && options.length === 0 && (
-                            <Combobox.Empty>Nothing found</Combobox.Empty>
-                        )}
-                    </Combobox.Options>
-                </Combobox.Dropdown>
-            </Combobox>
+            {!exactOptionMatch && search.trim().length > 0 && (
+              <Combobox.Option value="$create">+ Create {search}</Combobox.Option>
+            )}
 
-            <PillGroup className='pills-group'>
-                {programmingAndDesignTools.slice(0, 7).map((lang, index) => (
-                    <button onClick={() => handleValueSelect(lang)} className={value.includes(lang) ? 'pill-selected' : 'pill'} key={index}>
-                        <LanguageIcons language={lang} value={value}/>
-                    </button>
-                ))}
-            </PillGroup>
-        </>
-    );
+            {exactOptionMatch && search.trim().length > 0 && options.length === 0 && (
+              <Combobox.Empty>Nothing found</Combobox.Empty>
+            )}
+          </Combobox.Options>
+        </Combobox.Dropdown>
+      </Combobox>
+
+      <PillGroup className='pills-group'>
+        {programmingAndDesignTools.slice(0, 7).map((lang, index) => (
+          <button onClick={() => handleValueSelect(lang)} className={value.includes(lang) ? 'pill-selected' : 'pill'} key={index}>
+            <LanguageIcons language={lang} value={value} />
+          </button>
+        ))}
+      </PillGroup>
+    </>
+  );
 }
