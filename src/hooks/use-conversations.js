@@ -10,6 +10,9 @@ async function getAllConversations() {
 export const useAllConversations = () => useQuery({
   queryKey: ['all-conversations'],
   queryFn: getAllConversations,
+  onSuccess({ data }) {
+    console.log(data)
+  }
 })
 
 

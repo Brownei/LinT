@@ -1,15 +1,19 @@
 import { useParticularConversation } from '../../../hooks/use-particular-conversation'
 import './ChatsViewSection.scss'
 import { ClipLoader } from 'react-spinners'
+import { useAllMessages } from '../../../hooks/use-messages'
+import { useGlobalContext } from '../../../context/GlobalContext'
 
-const ChatsViewSection = ({ selectedConversationId }) => {
-  console.log(selectedConversationId)
+const ChatsViewSection = () => {
+  const { selectedConversationId } = useGlobalContext()
+  console.log(typeof selectedConversationId)
   const { data: conversation, isLoading, error } = useParticularConversation(selectedConversationId)
-  console.log(conversation)
+  const { data: messages, isLoading: isMessagesLoading } = useAllMessages(selectedConversationId)
+  console.log({ conversation, messages })
   return (
     <main id='chats-view-section'>
       {
-        isLoading ? (
+        isLoading || isMessagesLoading ? (
           <div className='chats-view-details'>
             <ClipLoader />
           </div >

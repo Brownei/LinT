@@ -14,16 +14,13 @@ import { ClipLoader } from "react-spinners";
 import ModalContainer from "../../components/Modal/ModalContainer";
 import ChatsViewSection from "../../components/Chats/ChatsViewSection/ChatsViewSection";
 import { useLocation } from "react-router-dom";
+import { useGlobalContext } from "../../context/GlobalContext";
 
 const Collaborate = () => {
+  const { user, currentUserError, interestsLoading, interests, error, conversations, isConversationsLoading, conversationsError, posts, isPostsLoading, postError } = useGlobalContext()
   const location = useLocation()
-  const [selectedConversationId, setSelectedConversationId] = useState(null)
   const [onOpen, setOnOpen] = useState()
-  const { data: user, isLoading: currentUserLoading, error: currentUserError } = useCurrentUser()
   const queryClient = useQueryClient()
-  const { data: interests, isLoading: interestsLoading, error } = useAllInterests()
-  const { data: conversations, isLoading: isConversationsLoading, error: conversationsError } = useAllConversations()
-  const { data: posts, isLoading, error: postError } = useAllPosts()
   const [friendRequests, setFriendRequests] = useState([])
   const [allPosts, setAllPosts] = useState([])
 
@@ -76,44 +73,38 @@ const Collaborate = () => {
 
   return (
     <main id="collaborate-page">
-      {currentUserLoading ? (
-        <div>
-          <ClipLoader />
-        </div>
-      ) : (
-        <div className="collaborate-page">
-          <div className="collaborate-section">
-            <div className="collaborate-view">
+      <div className="collaborate-page">
+        <div className="collaborate-section">
+          <div className="collaborate-view">
 
-              <div className="chats-view">
-                <Chats
-                  error={error}
-                  interests={friendRequests}
-                  isLoading={interestsLoading}
-                  conversations={conversations}
-                  isConversationsLoading={isConversationsLoading}
-                  conversationsError={conversationsError}
-                  setSelectedConversationId={setSelectedConversationId}
-                  onOpen={onOpen}
-                  setOnOpen={setOnOpen}
-                />
-              </div>
+            <div className="chats-view">
+              <Chats
+                error={error}
+                interests={friendRequests}
+                isLoading={interestsLoading}
+                conversations={conversations}
+                isConversationsLoading={isConversationsLoading}
+                conversationsError={conversationsError}
+                onOpen={onOpen}
+                setOnOpen={setOnOpen}
+              />
+            </div>
 
-              <div className="ideas-view">
-                {location.search === '?=chats' ? <ChatsViewSection selectedConversationId={selectedConversationId} /> : <IdeasSection error={postError} isFetching={isLoading} posts={allPosts} />
-                }
-              </div>
+            <div className="ideas-view">
+              {location.search === '?=chats' ? <ChatsViewSection /> : <IdeasSection error={postError} isFetching={isPostsLoading} posts={allPosts} />
+              }
+            </div>
 
-            </div >
-          </div >
-
-          {/* MOBILE VIEW BABY */}
-          <div className="mobile-collaborate-page" >
-            <MobileHeader interests={interests} collaboratorPage={true} />
-            <MobileIdeas error={postError} isFetching={isLoading} posts={allPosts} />
           </div >
         </div >
-      )}
+
+        {/* MOBILE VIEW BABY */}
+        <div className="mobile-collaborate-page" >
+          <MobileHeader interests={interests} collaboratorPage={true} />
+          <MobileIdeas error={postError} isFetching={isPostsLoading} posts={allPosts} />
+        </div >
+      </div >
+
       {onOpen &&
         <div
           className='overlay'

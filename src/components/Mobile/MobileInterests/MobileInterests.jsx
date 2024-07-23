@@ -1,16 +1,20 @@
 import "./MobileInterests.scss"
 import { useEffect, useState } from "react"
-import { useAllInterests } from "../../../hooks/use-all-interests"
 import { ClipLoader } from "react-spinners"
 import InterestsSection from "../../Chats/InterestsSection/InterestsSection"
-import { useCurrentUser } from "../../../hooks/use-current-user"
 import { pusherClient } from "../../../utils/pusherClient"
 import MessagesPage from "../../../pages/MessagesPage/MessagesPage"
+import { useQueryClient } from "@tanstack/react-query"
+import { useGlobalContext } from "../../../context/GlobalContext"
+import { Icon } from "@iconify/react"
+import MobileHeader from "../MobileHeader/MobileHeader"
+import { useNavigate } from "react-router-dom"
 
 const MobileInterests = () => {
-  const { data: user } = useCurrentUser()
-  const { data: interests, isLoading, error } = useAllInterests()
+  const { user, interests, interestsLoading, error } = useGlobalContext()
   const [friendRequests, setFriendRequests] = useState([])
+  const queryClient = useQueryClient()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (interests) {
@@ -35,10 +39,21 @@ const MobileInterests = () => {
     }
   }, [user.profile.id])
 
+  useEffect(() => {
+    queryClient.invalidateQueries('all-interests')
+  }, [friendRequests])
+
   return (
     <main id="mobile-interests">
-      <MessagesPage />
-      {isLoading ? (
+      <button onClick={() => navigate('/collaborate')} className='back-button'>
+        <span>
+          <Icon icon={'tabler:arrow-left'} fontSize={23} color='#0006B1' />
+          Ideas
+        </span>
+      </button>
+      <MobileHeader interests={interests} collaboratorPage={false} />
+
+      {interestsLoading ? (
         <div className='loading'>
           <ClipLoader fontSize={30} />
         </div>

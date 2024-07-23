@@ -1,24 +1,15 @@
-import './ChatsSection.scss'
+import { useNavigate } from 'react-router-dom'
 import { useGlobalContext } from '../../../context/GlobalContext'
-import { useLocation, useNavigate } from 'react-router-dom'
 
-const ChatsSection = ({ conversation }) => {
-  const { user, setSelectedConversationId } = useGlobalContext()
-  const location = useLocation()
+const MobileChatsSection = ({ conversation }) => {
+  const { user } = useGlobalContext()
   const navigate = useNavigate()
   const image = conversation.creatorId === user.profile.id ? conversation.recipient.profileImage : conversation.creator.profileImage
   const fullName = conversation.creatorId === user.profile.id ? conversation.recipient.fullName : conversation.creator.fullName
-
-  function onClickHandler() {
-    if (location.pathname === '/messages') {
-      navigate(`/messages/${conversation.id}`)
-    } else {
-      setSelectedConversationId(conversation.id)
-    }
-  }
+  console.log(conversation)
 
   return (
-    <div id='chats-section' role={location.pathname === '/messages' ? 'link' : 'button'} onClick={onClickHandler}>
+    <div id='chats-section' role='link' onClick={() => navigate(`/messages/${conversation.id}`)}>
       <img src={image} />
       <div className='details'>
         <div className='details-header'>
@@ -31,4 +22,4 @@ const ChatsSection = ({ conversation }) => {
   )
 }
 
-export default ChatsSection
+export default MobileChatsSection
