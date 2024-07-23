@@ -17,7 +17,7 @@ import { useLocation } from "react-router-dom";
 
 const Collaborate = () => {
   const location = useLocation()
-  const [selectedConversationId, setSelectedConversationId] = useState(null)
+  const [selectedConversationId, setSelectedConversationId] = useState('')
   const [onOpen, setOnOpen] = useState()
   const { data: user, isLoading: currentUserLoading, error: currentUserError } = useCurrentUser()
   const queryClient = useQueryClient()

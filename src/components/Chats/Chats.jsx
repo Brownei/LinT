@@ -36,23 +36,35 @@ const Chats = ({ interests, isLoading, error, setSelectedConversationId, onOpen,
             <span className={location.search === '?=chats' ? 'active' : ''}></span>
           </div>
         </div>
-        {isLoading || isConversationsLoading ? (
+        {isLoading ? (
           <div className='loading'>
             <ClipLoader fontSize={30} />
           </div>
-        ) : error || conversationsError ? (
+        ) : error ? (
           <div>You gotta make a little refresh</div>
         ) : (
           <div>
             {location.search === '?=chats' ? (
               <div className='chat-section'>
                 <input type="text" placeholder='Search' />
-                <h1>Chats</h1>
-                {conversations.map((conversation) => (
-                  <div key={conversation.id}>
-                    <ChatsSection conversation={conversation} setSelectedConversationId={setSelectedConversationId} />
+                {isConversationsLoading ? (
+                  <div>
+                    <ClipLoader size={30} />
                   </div>
-                ))
+                ) : conversationsError ? (
+                  <div>
+                    You gotta refresh big boy
+                  </div>
+                ) :
+                  <div>
+                    {
+                      conversations.map((conversation) => (
+                        <div key={conversation.id}>
+                          <ChatsSection conversation={conversation} setSelectedConversationId={setSelectedConversationId} />
+                        </div>
+                      ))
+                    }
+                  </div>
                 }
               </div>
             ) : (
