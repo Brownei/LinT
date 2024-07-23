@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 import ChatsSection from './ChatsSection/ChatsSection';
 
-const Chats = ({ interests, isLoading, error, setSelectedConversationId, onOpen, setOnOpen, conversations, isConversationsLoading, conversationsError }) => {
+const Chats = ({ interests, isLoading, error, onOpen, setOnOpen, conversations, isConversationsLoading, conversationsError }) => {
   const location = useLocation()
   let numberOfInterest = interests?.length
   let numberOfChats = 5
@@ -60,7 +60,7 @@ const Chats = ({ interests, isLoading, error, setSelectedConversationId, onOpen,
                     {
                       conversations.map((conversation) => (
                         <div key={conversation.id}>
-                          <ChatsSection conversation={conversation} setSelectedConversationId={setSelectedConversationId} />
+                          <ChatsSection conversation={conversation} />
                         </div>
                       ))
                     }

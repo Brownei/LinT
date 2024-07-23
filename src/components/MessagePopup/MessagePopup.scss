@@ -1,0 +1,50 @@
+#message-popup {
+  display: flex;
+  text-decoration: none;
+  list-style: none;
+  width: 100%;
+  align-items: start;
+  gap: 8px;
+
+  img {
+    width: 43px;
+    height: 43px;
+    border: 1px solid transparent;
+    border-radius: 100%;
+  }
+
+  .message-popup-contents {
+
+    .message-popup-deets {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+
+      p {
+        color: #060A0A;
+        font-weight: 600;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+      }
+
+      span {
+        color: #8F9191;
+        font-weight: 400;
+        font-size: 12px;
+        margin: 0;
+        padding: 0;
+
+      }
+    }
+
+    p {
+      color: #242727;
+      font-size: 16px;
+      font-weight: 400;
+      margin: 0;
+      padding: 0;
+
+    }
+  }
+}

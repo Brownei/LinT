@@ -15,32 +15,34 @@ import EditProfilePage from './EditProfilePage/EditProfilePage';
 import UserProfilePage from './UserProfilePage/UserProfilePage';
 import MobileInterests from '../components/Mobile/MobileInterests/MobileInterests';
 import MessagesPage from './MessagesPage/MessagesPage';
+import ParticularConversation from './ParticularConversation/ParticularConversation';
 
 const Pages = () => {
   return (
     <section className='pages'>
-        <Routes>
-          <Route element={<Layout />}>
-            <Route path="/collaborate" element={<Collaborate />} />
-            <Route path='profile' element={<ProfilePage />}/>
-            <Route path='/notifications' element={<Notifications />}/>
-            <Route path='/collaborate/:id' element={<ParticularCollaboratePage />}/>
-            <Route path='/profile/edit' element={<EditProfilePage />}/>
-            <Route path='/:username' element={<UserProfilePage />} />
-            <Route path='collaborate/interests' element={<MobileInterests />}/>
-            <Route path='/messages' element={<MessagesPage />}/>
-          </Route>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/collaborate" element={<Collaborate />} />
+          <Route path='profile' element={<ProfilePage />} />
+          <Route path='/notifications' element={<Notifications />} />
+          <Route path='/collaborate/:id' element={<ParticularCollaboratePage />} />
+          <Route path='/profile/edit' element={<EditProfilePage />} />
+          <Route path='/:username' element={<UserProfilePage />} />
+          <Route path='collaborate/interests' element={<MobileInterests />} />
+          <Route path='/messages' element={<MessagesPage />} />
+          <Route path='/messages/:id' element={<ParticularConversation />} />
+        </Route>
 
-          <Route element={<AuthWrapper />}>
-            <Route path='/collaborate/create-post' element={<CreatePostPage />}/>
-          </Route>
+        <Route element={<AuthWrapper />}>
+          <Route path='/collaborate/create-post' element={<CreatePostPage />} />
+        </Route>
 
-          <Route path='/setup-profile' element={<SetupProfile heading={'Set up your profile'}/>}/>
-          <Route path='/' element={<Login />}/>
-          <Route path='/create-account' element={<Register />}/>
+        <Route path='/setup-profile' element={<SetupProfile heading={'Set up your profile'} />} />
+        <Route path='/' element={<Login />} />
+        <Route path='/create-account' element={<Register />} />
 
-          <Route path='*' element={<NotFoundPage />}/>
-        </Routes>
+        <Route path='*' element={<NotFoundPage />} />
+      </Routes>
     </section>
   )
 }

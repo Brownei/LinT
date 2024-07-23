@@ -20,12 +20,12 @@ import { useSession } from '../../hooks/use-session';
 import { useCurrentUser } from '../../hooks/use-current-user';
 import { useSentRequests } from '../../hooks/use-requests-sent';
 import { useAllCollaborators } from '../../hooks/use-collaborators';
+import { useGlobalContext } from '../../context/GlobalContext';
 
 const ProfilePage = () => {
-  // const isMobile = useMediaQuery({maxWidth: 800})
+  const { user, currentUserError } = useGlobalContext()
   const navigate = useNavigate()
   const { signOut } = useSession()
-  const { data: user, isLoading: loading, error: isCurrentError } = useCurrentUser()
   const { data: posts, isLoading: isFetching, error } = useUserPosts(user?.profile?.username)
   const { data: sentInterests, isLoading: isFetchingSentRequests, error: sentRequestsError } = useSentRequests()
   const { data: collaborators, isLoading: isCollaboratorsLoading, error: collaboratorsError } = useAllCollaborators()
@@ -42,17 +42,7 @@ const ProfilePage = () => {
     },
   });
 
-  console.log(collaborators)
-
-  if (loading) {
-    return (
-      <div className="loader">
-        <ClipLoader color="#0006B1" size={30} />
-      </div>
-    )
-  }
-
-  if (isCurrentError) {
+  if (currentUserError) {
     navigate('/')
   }
 
