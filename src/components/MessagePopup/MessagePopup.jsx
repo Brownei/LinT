@@ -1,21 +1,29 @@
 import { useGlobalContext } from '../../context/GlobalContext'
+import moment from 'moment'
 import './MessagePopup.scss'
 
 const MessagePopup = ({ message }) => {
   const { user } = useGlobalContext()
-  const userInfo = message.conversation.creatorId === user.id ? message.conversation.creator : message.conversation.recipient
+  console.log(message)
+  const userInfo = message.creatorId === user.id ? message.conversation.creator : message.conversation.recipient
+  const me = message.creatorId === user.id ? 'mine' : 'message-popup'
+
+  function format(date) {
+    return moment(date).format('hh:mm A');
+  }
+
   return (
-    <div id='message-popup' key={message.id}>
+    <div id={`${me}`} key={message.id} >
       <img src={userInfo.profileImage} />
       <div className='message-popup-contents'>
         <div className='message-popup-deets'>
           <p>{userInfo.fullName}</p>
-          <span>11:30 AM</span>
+          <span>{format(userInfo.createdAt)}</span>
         </div>
 
         <p>{message.content}</p>
       </div>
-    </div>
+    </div >
   )
 }
 

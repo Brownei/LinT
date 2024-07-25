@@ -2,11 +2,9 @@
   display: none;
 }
 
-
 @media screen and (max-width: 800px) {
   #particular-conversation-page {
-    margin-top: 55px;
-    margin-bottom: 30px;
+    margin: 30px 15px;
     display: block;
 
     .particular-conversation-page {
@@ -67,11 +65,19 @@
       }
 
       .message-container {
-        border: 1px solid #fff;
+        margin-bottom: 100px;
 
         .message {
-          gap: 8px;
-          border: 1px solid #fff;
+          margin-bottom: 50px;
+          gap: 16px;
+
+          .date {
+            margin: 16px 0px;
+            padding: 0px;
+            color: #8F9191;
+            font-size: 12px;
+            font-weight: 300;
+          }
         }
       }
     }
