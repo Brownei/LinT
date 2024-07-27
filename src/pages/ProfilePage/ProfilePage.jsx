@@ -179,7 +179,21 @@ const ProfilePage = () => {
                     <ClipLoader color='#3338C1' />
                   </div>
                 ) : error ? (<p className='information'>Wanna refresh?..</p>) : (
-                  <p className='information'>Help brother</p>
+                  <div className='users-ideas'>
+                    {collaborators.length <= 0 ? (
+                      <p className='information'>
+                        No collaborations yet!
+                      </p>
+                    ) : (
+                      <div className='posts'>
+                        {collaborators.map((collaborator, index) => (
+                          <div key={index}>
+                            <Coll collaborations={collaborator.sender} currentUser={user.profile} />
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 )}
               </div>
             ) : location.search === '?query=interests' ? (
@@ -189,7 +203,7 @@ const ProfilePage = () => {
                     <ClipLoader color='#3338C1' />
                   </div>
                 ) : sentRequestsError ? (<p>Error</p>) : (
-                  <div>
+                  <div className='interest-section'>
                     {sentInterests.length === 0 ? (
                       <p className='information'>No ideas yet? Share and Collaborate!</p>
                     ) : (
@@ -209,7 +223,7 @@ const ProfilePage = () => {
                     <ClipLoader color='#3338C1' />
                   </div>
                 ) : error ? (<p>Error</p>) : (
-                  <div>
+                  <div className='post-section'>
                     {posts.length === 0 ? (
                       <p className='information'>No ideas yet? Share and Collaborate!</p>
                     ) : (
