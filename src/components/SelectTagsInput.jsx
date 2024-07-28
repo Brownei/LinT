@@ -56,11 +56,10 @@ export function SelectTagsInput({ style, value, setValue }) {
         <Combobox.DropdownTarget>
           <PillsInput
             variant='unstyled'
-            label='Select Tags'
+            className={style}
             size={'lg'}
-            description='Select tags associated with your project'
             onClick={() => combobox.openDropdown()}>
-            <Pill.Group>
+            <Group>
               {value.length > 0 && (
                 <>
                   {values}
@@ -75,7 +74,6 @@ export function SelectTagsInput({ style, value, setValue }) {
                 <PillsInput.Field
                   onFocus={() => combobox.openDropdown()}
                   onBlur={() => combobox.closeDropdown()}
-                  className={style}
                   value={search}
                   placeholder="Search tags"
                   onChange={(event) => {
@@ -90,7 +88,7 @@ export function SelectTagsInput({ style, value, setValue }) {
                   }}
                 />
               </Combobox.EventsTarget>
-            </Pill.Group>
+            </Group>
           </PillsInput>
         </Combobox.DropdownTarget>
 

@@ -429,23 +429,50 @@
             }
 
             .information {
+              font-size: 20px;
               width: 100%;
             }
 
+            .users-ideas {
+              .information {
+                font-size: 20px;
+                width: 100%;
+              }
+
+              .posts {
+                display: grid;
+                gap: 16px;
+              }
+            }
 
           }
 
           .posts-section {
-            .posts {
-              display: grid;
-              gap: 16px;
+            .post-section {
+              .information {
+                width: 100%;
+                font-size: 20px;
+              }
+
+              .posts {
+                display: grid;
+                gap: 16px;
+              }
+
             }
           }
 
           .interests-section {
-            .posts {
-              display: grid;
-              gap: 16px;
+            .interest-section {
+              .posts {
+                display: grid;
+                gap: 16px;
+              }
+
+              .information {
+                width: 100%;
+                font-size: 20px;
+              }
             }
           }
         }

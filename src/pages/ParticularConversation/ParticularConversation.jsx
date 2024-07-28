@@ -11,10 +11,15 @@ import { useForm } from 'react-hook-form'
 import MessagePopup from '../../components/MessagePopup/MessagePopup'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { api } from '../../utils/api'
+import SendingMessagePopup from '../../components/MessagePopup/SendingMessagePopup'
+import moment from 'moment'
+import { useEffect, useState } from 'react'
+import { pusherClient } from '../../utils/pusherClient'
 
 const ParticularConversation = () => {
   const { id } = useParams()
   const { user } = useGlobalContext()
+  const [allMessages, setAllMessages] = useState([])
   const queryClient = useQueryClient()
   const { data: conversation, isLoading, error } = useParticularConversation(id)
   const { data: messages, isLoading: isMessagesLoading } = useAllMessages(id)
@@ -37,10 +42,48 @@ const ParticularConversation = () => {
   })
 
   async function onSubmit(data) {
-    console.log(data)
-    await sendMessageMutation.mutateAsync(data)
     reset({ message: '' })
+    await sendMessageMutation.mutateAsync(data)
   }
+
+  const sendingMessageVariables = {
+    id: 1,
+    profileImage: user.profile.profileImage,
+    fullName: user.profile.fullName,
+  }
+
+  function groupMessagesByDay(messages) {
+    return messages?.reduce((groups, message) => {
+      const date = moment(message?.createdAt).format('YYYY-MM-DD');
+      if (!groups[date]) {
+        groups[date] = [];
+      }
+      groups[date].push(message);
+      return groups;
+    }, {});
+  };
+
+  useEffect(() => {
+    if (messages) {
+      setAllMessages(messages)
+    }
+  }, [messages]);
+
+  useEffect(() => {
+    pusherClient.subscribe(id)
+
+    function messageHandler(message) {
+      console.log(message)
+      setAllMessages((prev) => [...prev, message])
+    }
+
+    pusherClient.bind('new-message', messageHandler)
+
+    return () => {
+      pusherClient.unsubscribe(id)
+      pusherClient.unbind('new-message', messageHandler)
+    }
+  }, [])
 
   return (
     <main id='particular-conversation-page'>
@@ -73,14 +116,16 @@ const ParticularConversation = () => {
               </div>
             ) : (
               <div className='message'>
-                {messages.map((message) => (
-                  <MessagePopup message={message} />
+                {Object.keys(groupMessagesByDay(allMessages))?.map((date) => (
+                  <div key={date}>
+                    <p className='date'>{moment(date).format('MMMM Do YYYY')}</p>
+                    {groupMessagesByDay(allMessages)[date]?.map((message) => (
+                      <MessagePopup message={message} />
+                    ))}
+                  </div>
                 ))}
                 {sendMessageMutation.isPending && (
-                  // <MessagePopup message={sendMessageMutation.variables} />
-                  <div>
-                    {JSON.stringify(sendMessageMutation.variables)}
-                  </div>
+                  <SendingMessagePopup userInfo={sendingMessageVariables} content={sendMessageMutation.variables.message} />
                 )}
                 {sendMessageMutation.isError && (
                   <div style={{ color: 'red' }}>

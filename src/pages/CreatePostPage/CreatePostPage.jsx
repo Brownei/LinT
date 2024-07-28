@@ -8,8 +8,11 @@ import { api } from '../../utils/api';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useMediaQuery } from "react-responsive";
+
 
 const CreatePostPage = () => {
+  const isMobile = useMediaQuery({ maxWidth: 800 })
   const queryClient = useQueryClient()
   const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit' })
   const navigate = useNavigate()
@@ -85,16 +88,18 @@ const CreatePostPage = () => {
             <h1>Collaborate Today!</h1>
 
             <div className='input-title'>
-              <TextInput size={'lg'} radius={'md'} className='text-inputs' label='Project Title' withAsterisk error={!!errors.title} placeholder="Input your project Idea" {...register("title", { required: true })} />
+              <TextInput size={isMobile ? 'lg' : 'md'} radius={isMobile ? 'lg' : 'md'} className='text-inputs' label='Project Title' withAsterisk error={!!errors.title} placeholder="Input your project Idea" {...register("title", { required: true })} />
               {errors.title && (<p className='error'>*We need the topic of the project</p>)}
             </div>
 
             <div className='input-description'>
-              <Textarea size={'lg'} autosize label='Project Description' withAsterisk error={!!errors.description} className='text-inputs' radius={'md'} placeholder="Describe your amazing project idea here" {...register("description", { required: true })} />
+              <Textarea size={isMobile ? 'lg' : 'md'} autosize minRows={10} label='Project Description' withAsterisk error={!!errors.description} className='text-inputs' radius={isMobile ? 'lg' : 'md'} placeholder="Describe your amazing project idea here" {...register("description", { required: true })} />
               {errors.description && (<p className='error'>*Say something at least</p>)}
             </div>
 
             <div className='input-tags'>
+              <label>Select Tags</label>
+              <span>Select tags associated with your project</span>
               <SelectTagsInput style={'input'} setValue={setTags} value={tags} />
             </div>
 

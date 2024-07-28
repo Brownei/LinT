@@ -30,10 +30,10 @@ const Pages = () => {
           <Route path='/:username' element={<UserProfilePage />} />
           <Route path='collaborate/interests' element={<MobileInterests />} />
           <Route path='/messages' element={<MessagesPage />} />
-          <Route path='/messages/:id' element={<ParticularConversation />} />
         </Route>
 
         <Route element={<AuthWrapper />}>
+          <Route path='/messages/:id' element={<ParticularConversation />} />
           <Route path='/collaborate/create-post' element={<CreatePostPage />} />
         </Route>
 

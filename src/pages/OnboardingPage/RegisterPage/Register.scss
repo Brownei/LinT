@@ -20,13 +20,14 @@
     form {
       display: flex;
       flex-direction: column;
-      justify-content: start;
-      align-items: start;
+      justify-content: center;
+      align-items: center;
       gap: 16px;
 
       .input-field {
         display: grid;
         gap: 4px;
+        width: 100%;
 
         label {
           font-size: 16px;
@@ -34,54 +35,124 @@
           color: #808080;
         }
 
-        .input {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          width: 648px;
-          padding-right: 16px;
-          border: 1px solid #C1C2C2;
-          border-radius: 8px;
-          font-size: 16px;
-          font-weight: 400;
+        .input-register-field {
+          display: grid;
+          gap: 4px;
+          width: 100%;
+
+          .input-field {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            outline: none;
+            border: 1px solid #8F9191;
+            border-radius: 8px;
+            background-color: #FFFFFF;
+            color: #000;
+            font-weight: 400;
+            font-size: 16px;
+            padding-right: 16px;
+
+            input {
+              outline: none;
+              background-color: transparent;
+              border: none;
+              width: 100%;
+              padding: 20px 16px;
+            }
+
+          }
+
+        }
+
+        .input-register {
+          display: grid;
+          gap: 4px;
+          width: 100%;
 
           input {
             outline: none;
-            border: none;
-            padding: 14px 16px;
-            background-color: transparent;
+            border: 1px solid #8F9191;
+            width: 426px;
+            padding: 20px 16px;
+            border-radius: 8px;
+            background-color: #FFFFFF;
+            color: #000;
+            font-weight: 400;
+            font-size: 16px;
           }
+
+          span {
+            font-weight: 600;
+            font-size: 12px;
+            line-height: 18px;
+            color: red;
+          }
+
         }
+      }
+    }
 
-        input {
-          padding: 14px 16px;
-          border: 1px solid #C1C2C2;
-          border-radius: 8px;
-          width: 648px;
-          font-weight: 400;
-          font-size: 16px;
-        }
+    .register-button {
+      border-radius: 24px;
+      border: 1px solid transparent;
+      background-color: #0006B1;
+      padding: 10px 30px;
+      color: #FFF;
+      font-weight: 400;
+      font-size: 16px;
+      margin: 16px 0px 32px 0px;
+
+      .loading-google {
+        animation: spin 1s ease-in-out infinite;
 
 
-        span {
-          font-weight: 600;
-          font-size: 12px;
-          line-height: 18px;
-          color: red;
+        @keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+
+          100% {
+            transform: rotate(360deg);
+          }
         }
       }
 
-      button {
-        padding: 8px 20px;
-        border-radius: 24px;
-        background-color: #0006B1;
-        border: 0px solid transparent;
-        color: #FFFFFF;
-        font-size: 16px;
-        font-weight: 400;
-        margin-top: 10px;
-        cursor: pointer;
-        width: 165px;
+      &:disabled {
+        background-color: #B0B2E7;
+
+      }
+    }
+  }
+
+  .other-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin: 40px 0px;
+
+    .google-button {
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      background-color: #3338C1;
+      padding: 10px 16px;
+      border-radius: 44px;
+      outline: none;
+      border: none;
+      color: #FFFFFF;
+      font-size: 16px;
+      font-weight: 400;
+
+      .google-button-check {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
 
         .loading-google {
           animation: spin 1s ease-in-out infinite;
@@ -97,86 +168,22 @@
             }
           }
         }
+      }
 
-        &:disabled {
-          cursor: progress;
-          background-color: #B0B2E7;
-        }
+      &:disabled {
+        cursor: progress;
+        background-color: #B0B2E7;
       }
     }
 
-    .other-options {
+    .login-button {
+      text-decoration: none;
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      margin: 40px 0px;
-
-      .google-button {
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        background-color: #3338C1;
-        padding: 10px 16px;
-        border-radius: 44px;
-        outline: none;
-        border: none;
-        color: #FFFFFF;
-        font-size: 16px;
-        font-weight: 400;
-
-        .google-button-check {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          gap: 10px;
-
-          .loading-google {
-            animation: spin 1s ease-in-out infinite;
-
-
-            @keyframes spin {
-              0% {
-                transform: rotate(0deg);
-              }
-
-              100% {
-                transform: rotate(360deg);
-              }
-            }
-          }
-        }
-
-        &:disabled {
-          cursor: progress;
-          background-color: #B0B2E7;
-        }
-      }
-
-      .login-button {
-        text-decoration: none;
-        display: flex;
-        gap: 3px;
-        font-weight: 400;
-        text-align: center;
-        color: #00034A;
-        cursor: pointer;
-
-        span {
-          font-weight: 600;
-        }
-      }
-    }
-
-    p {
-      font-size: 16px;
-      width: 335.87px;
-      text-align: center;
+      gap: 3px;
       font-weight: 400;
-      font-style: italic;
+      text-align: center;
+      color: #00034A;
+      cursor: pointer;
 
       span {
         font-weight: 600;
@@ -184,7 +191,19 @@
     }
   }
 
+  p {
+    font-size: 16px;
+    width: 335.87px;
+    text-align: center;
+    font-weight: 400;
+    font-style: italic;
+
+    span {
+      font-weight: 600;
+    }
+  }
 }
+
 
 
 @media screen and (max-width: 800px) {
@@ -195,27 +214,23 @@
 
     .register {
       form {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
         .input-field {
-          label {
-            font-size: 12px;
+          .input-register-field {
+            .input-field {
+              input {
+                width: 345px;
+                padding: 18px 14px;
+              }
+            }
+
           }
 
-          input {
-            padding: 12px 14px;
-            width: 341px;
-            font-size: 12px;
-          }
+          .input-register {
+            input {
+              width: 390px;
+              padding: 18px 14px;
+            }
 
-          button {
-            padding: 8px 18px;
-            border-radius: 22px;
-            font-size: 16px;
-            margin-top: 8px;
           }
         }
       }
@@ -227,13 +242,6 @@
         justify-content: center;
         gap: 14px;
         margin: 40px 0px;
-
-        .google-button {
-          gap: 8px;
-          padding: 8px 14px;
-          border-radius: 42px;
-          font-size: 16px;
-        }
       }
 
       p {
@@ -269,8 +277,6 @@
           }
         }
       }
-
-
     }
   }
 }

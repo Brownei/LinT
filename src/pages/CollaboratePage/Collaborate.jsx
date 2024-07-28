@@ -48,7 +48,7 @@ const Collaborate = () => {
       pusherClient.unsubscribe('posts')
       pusherClient.unbind('all-posts', postsHandler)
     }
-  }, [posts, queryClient])
+  }, [posts])
 
   useEffect(() => {
     pusherClient.subscribe(String(user.profile.id))
@@ -65,7 +65,7 @@ const Collaborate = () => {
       pusherClient.unsubscribe(String(user?.profile?.id))
       pusherClient.unbind('incoming_collaborator_requests', friendRequestHandler)
     }
-  }, [user?.profile?.id])
+  }, [user?.profile?.id, interests])
 
   if (currentUserError) {
     window.location.assign('/')
@@ -100,7 +100,7 @@ const Collaborate = () => {
 
         {/* MOBILE VIEW BABY */}
         <div className="mobile-collaborate-page" >
-          <MobileHeader interests={interests} collaboratorPage={true} />
+          <MobileHeader interests={friendRequests} collaboratorPage={true} />
           <MobileIdeas error={postError} isFetching={isPostsLoading} posts={allPosts} />
         </div >
       </div >
