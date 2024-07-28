@@ -3,7 +3,6 @@ import { useCurrentUser } from '../hooks/use-current-user';
 import { useAllConversations } from '../hooks/use-conversations';
 import { useAllInterests } from '../hooks/use-all-interests';
 import { useAllPosts } from '../hooks/use-all-posts';
-import { ClipLoader } from 'react-spinners';
 
 export const GlobalContext = createContext();
 

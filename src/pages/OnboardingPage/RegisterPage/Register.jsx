@@ -166,20 +166,19 @@ const Register = () => {
               </div>
             </div>
 
-            <Button disabled={isLoading || googleRegisterMutation.isPending || emailAndPasswordRegisterMutation.isPending}>
+            <button type='submit' disabled={isLoading || googleRegisterMutation.isPending || emailAndPasswordRegisterMutation.isPending} className='register-button'>
               {isLoading ? (
                 <Icon className='loading-google' icon={'formkit:spinner'} fontSize={20} />
-              ) : (
-                'Create account'
-              )}
-            </Button>
+              ) : 'Create account'}
+            </button>
           </form>
 
           <div className='other-options'>
-            <Button onClick={handleGoogleRegister} type='button' className='google-button' disabled={isLoading || googleRegisterMutation.isPending || emailAndPasswordRegisterMutation.isPending}>
+            <button onClick={handleGoogleRegister} type='button' className='google-button' disabled={isLoading || googleRegisterMutation.isPending || emailAndPasswordRegisterMutation.isPending}>
               {googleRegisterMutation.isPending ? (
                 <span className='google-button-check'>
                   <Icon className='loading-google' icon={'formkit:spinner'} fontSize={22} />
+                  <span></span>
                 </span>
               ) : (
                 <span className='google-button-check'>
@@ -187,7 +186,7 @@ const Register = () => {
                   <span>Continue with Google</span>
                 </span>
               )}
-            </Button>
+            </button>
             <Link to={'/'} className='login-button'>
               Have an account?
               <span>Sign In</span>

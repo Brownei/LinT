@@ -20,13 +20,14 @@
     form {
       display: flex;
       flex-direction: column;
-      justify-content: start;
-      align-items: start;
+      justify-content: center;
+      align-items: center;
       gap: 16px;
 
       .input-field {
         display: grid;
         gap: 4px;
+        width: 100%;
 
         label {
           font-size: 16px;
@@ -90,26 +91,17 @@
 
         }
       }
-
-      span {
-        font-weight: 600;
-        font-size: 12px;
-        line-height: 18px;
-        color: red;
-      }
     }
 
-    button {
-      padding: 8px 20px;
+    .register-button {
       border-radius: 24px;
+      border: 1px solid transparent;
       background-color: #0006B1;
-      border: 0px solid transparent;
-      color: #FFFFFF;
-      font-size: 16px;
+      padding: 10px 30px;
+      color: #FFF;
       font-weight: 400;
-      margin-top: 10px;
-      cursor: pointer;
-      width: 165px;
+      font-size: 16px;
+      margin: 16px 0px 32px 0px;
 
       .loading-google {
         animation: spin 1s ease-in-out infinite;
@@ -127,8 +119,8 @@
       }
 
       &:disabled {
-        cursor: progress;
         background-color: #B0B2E7;
+
       }
     }
   }
@@ -222,16 +214,7 @@
 
     .register {
       form {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
         .input-field {
-          label {
-            font-size: 12px;
-          }
-
           .input-register-field {
             .input-field {
               input {
@@ -249,13 +232,6 @@
             }
 
           }
-
-          button {
-            padding: 8px 18px;
-            border-radius: 22px;
-            font-size: 16px;
-            margin-top: 8px;
-          }
         }
       }
 
@@ -266,13 +242,6 @@
         justify-content: center;
         gap: 14px;
         margin: 40px 0px;
-
-        .google-button {
-          gap: 8px;
-          padding: 8px 14px;
-          border-radius: 42px;
-          font-size: 16px;
-        }
       }
 
       p {
@@ -308,8 +277,6 @@
           }
         }
       }
-
-
     }
   }
 }

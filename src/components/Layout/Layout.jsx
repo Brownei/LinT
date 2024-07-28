@@ -15,8 +15,8 @@ export default function Layout() {
   return (
     <main id="body">
       {currentUserLoading ? (
-        <div>
-          <ClipLoader />
+        <div className='loader'>
+          <ClipLoader color='#0006B1' />
         </div>
       ) : (
         <div>

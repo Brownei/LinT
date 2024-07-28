@@ -145,14 +145,19 @@ const Login = () => {
                   {errors.password && <span>*Your password is required</span>}
                 </div>
               </div>
-              <Button disabled={isLoading || googleLoginMutation.isPending} type='submit' className='login-button'>
+              <button
+                disabled={isLoading || googleLoginMutation.isPending}
+                type='submit'
+                className='login-button'
+              >
+
                 {isLoading ? (
                   <Icon className='loading-google' icon={'formkit:spinner'} fontSize={22} />
                 ) : 'Login'}
-              </Button>
+              </button>
             </form>
 
-            <Button disabled={isLoading || googleLoginMutation.isPending || emailAndPasswordLoginMutation.isPending} onClick={() => handleGoogleSignIn()} type='button' className='google-button'>
+            <button disabled={isLoading || googleLoginMutation.isPending || emailAndPasswordLoginMutation.isPending} onClick={() => handleGoogleSignIn()} type='button' className='google-button'>
               {googleLoginMutation.isPending ? (
                 <span className='google-button-check'>
                   <Icon className='loading-google' icon={'formkit:spinner'} fontSize={22} />
@@ -164,12 +169,12 @@ const Login = () => {
                   <span>Continue with Google</span>
                 </span>
               )}
-            </Button>
+            </button>
 
             <div className='few-details'>
               <p>Do not have an account?</p>
               <Link to={'/create-account'}>
-                <Button className='button' type='button'>Create Account</Button>
+                <button className='button' type='button'>Create Account</button>
               </Link>
 
               <p className='terms'>By logging in or Signing up Using the process above you agree to Lint privacy <span>Terms and Conditions</span></p>
