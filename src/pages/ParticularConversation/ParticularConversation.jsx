@@ -1,7 +1,6 @@
 import './ParticularConversation.scss'
 import { useParams } from 'react-router-dom'
 import { ClipLoader } from 'react-spinners'
-import { useGlobalContext } from '../../context/GlobalContext'
 import { useParticularConversation } from '../../hooks/use-particular-conversation'
 import { Icon } from '@iconify/react'
 import { Divider } from '@mantine/core'
@@ -15,10 +14,11 @@ import SendingMessagePopup from '../../components/MessagePopup/SendingMessagePop
 import moment from 'moment'
 import { useEffect, useState } from 'react'
 import { pusherClient } from '../../utils/pusherClient'
+import { useAuthStore } from '../../hooks/use-auth-store'
 
 const ParticularConversation = () => {
   const { id } = useParams()
-  const { user } = useGlobalContext()
+  const user = useAuthStore((state) => state?.user)
   const [allMessages, setAllMessages] = useState([])
   const queryClient = useQueryClient()
   const { data: conversation, isLoading, error } = useParticularConversation(id)
@@ -26,9 +26,9 @@ const ParticularConversation = () => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     mode: 'onSubmit'
   })
-  const image = conversation?.creatorId === user.profile.id ? conversation?.recipient.profileImage : conversation?.creator.profileImage
-  const occupation = conversation?.creatorId === user.profile.id ? conversation?.recipient.occupation : conversation?.creator.occupation
-  const fullName = conversation?.creatorId === user.profile.id ? conversation?.recipient.fullName : conversation?.creator.fullName
+  const image = conversation?.creatorId === user.id ? conversation?.recipient.profileImage : conversation?.creator.profileImage
+  const occupation = conversation?.creatorId === user.id ? conversation?.recipient.occupation : conversation?.creator.occupation
+  const fullName = conversation?.creatorId === user.id ? conversation?.recipient.fullName : conversation?.creator.fullName
 
   const sendMessageMutation = useMutation({
     mutationFn: async (inputData) => {
@@ -48,8 +48,8 @@ const ParticularConversation = () => {
 
   const sendingMessageVariables = {
     id: 1,
-    profileImage: user.profile.profileImage,
-    fullName: user.profile.fullName,
+    profileImage: user.profileImage,
+    fullName: user.fullName,
   }
 
   function groupMessagesByDay(messages) {

@@ -5,7 +5,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { signInWithGoogle, signInWthCredentials } from '../../../utils/firebase';
 import axios from 'axios';
-import { Button } from '@mantine/core';
 import { useAuthStore, useSettingProfileStore } from '../../../hooks/use-auth-store';
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
@@ -14,7 +13,7 @@ import { useForm } from 'react-hook-form';
 const Login = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient()
-  const { register, handleSubmit, control, formState: { errors } } = useForm({
+  const { register, handleSubmit, formState: { errors } } = useForm({
     mode: 'onSubmit'
   })
   const [showPassword, setShowPassword] = useState(false)
@@ -33,7 +32,7 @@ const Login = () => {
       })
     },
     onSuccess({ data }) {
-      sessionStorage.setItem('session', data.sessionCookie)
+      sessionStorage.setItem('lint_session', data.sessionCookie)
       queryClient.invalidateQueries('current-user')
 
       if (data.userInfo.profile === null) {
@@ -72,7 +71,7 @@ const Login = () => {
       })
     },
     onSuccess({ data }) {
-      sessionStorage.setItem('session', data.sessionCookie)
+      sessionStorage.setItem('lint_session', data.sessionCookie)
 
       if (data.userInfo.profile === null) {
         setProfile(data.userInfo)

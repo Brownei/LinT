@@ -1,9 +1,9 @@
-import { useGlobalContext } from '../../context/GlobalContext'
+import { useAuthStore } from '../../hooks/use-auth-store'
 import moment from 'moment'
 import './MessagePopup.scss'
 
 const MessagePopup = ({ message }) => {
-  const { user } = useGlobalContext()
+  const user = useAuthStore((state) => state?.user)
   console.log(message)
   const userInfo = message.creatorId === user.id ? message.conversation.creator : message.conversation.recipient
   const me = message.creatorId === user.id ? 'mine' : 'message-popup'

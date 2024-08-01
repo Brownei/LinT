@@ -9,15 +9,16 @@ import MobileHeader from "../../components/Mobile/MobileHeader/MobileHeader";
 import MobileIdeas from "../../components/Mobile/MobileIdeas/MobileIdeas";
 import { pusherClient } from "../../utils/pusherClient";
 import { useQueryClient } from "@tanstack/react-query";
-import { useCurrentUser } from "../../hooks/use-current-user";
-import { ClipLoader } from "react-spinners";
 import ModalContainer from "../../components/Modal/ModalContainer";
 import ChatsViewSection from "../../components/Chats/ChatsViewSection/ChatsViewSection";
-import { useLocation } from "react-router-dom";
-import { useGlobalContext } from "../../context/GlobalContext";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../hooks/use-auth-store";
 
 const Collaborate = () => {
-  const { user, currentUserError, interestsLoading, interests, error, conversations, isConversationsLoading, conversationsError, posts, isPostsLoading, postError } = useGlobalContext()
+  const { data: interests, isLoading: interestsLoading, error } = useAllInterests()
+  const { data: conversations, isLoading: isConversationsLoading, error: conversationsError } = useAllConversations()
+  const { data: posts, isLoading: isPostsLoading, error: postError } = useAllPosts()
+  const user = useAuthStore((state) => state?.user)
   const location = useLocation()
   const [onOpen, setOnOpen] = useState()
   const queryClient = useQueryClient()
@@ -51,8 +52,8 @@ const Collaborate = () => {
   }, [posts])
 
   useEffect(() => {
-    pusherClient.subscribe(String(user.profile.id))
-    console.log("listening to ", `user:${user.profile.id}:incoming_collaborator_requests`)
+    pusherClient.subscribe(String(user.id))
+    console.log("listening to ", `user:${user.id}:incoming_collaborator_requests`)
 
     function friendRequestHandler(requests) {
       console.log(requests)
@@ -62,14 +63,11 @@ const Collaborate = () => {
     pusherClient.bind('incoming_collaborator_requests', friendRequestHandler)
 
     return () => {
-      pusherClient.unsubscribe(String(user?.profile?.id))
+      pusherClient.unsubscribe(String(user?.id))
       pusherClient.unbind('incoming_collaborator_requests', friendRequestHandler)
     }
-  }, [user?.profile?.id, interests])
+  }, [user?.id, interests])
 
-  if (currentUserError) {
-    window.location.assign('/')
-  }
 
   return (
     <main id="collaborate-page">
@@ -100,7 +98,7 @@ const Collaborate = () => {
 
         {/* MOBILE VIEW BABY */}
         <div className="mobile-collaborate-page" >
-          <MobileHeader interests={friendRequests} collaboratorPage={true} />
+          <MobileHeader isInterestLoading={interestsLoading} isLoading={isConversationsLoading} conversations={conversations} interests={friendRequests} collaboratorPage={true} />
           <MobileIdeas error={postError} isFetching={isPostsLoading} posts={allPosts} />
         </div >
       </div >

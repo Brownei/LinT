@@ -4,7 +4,7 @@ import { Combobox, Pill, PillsInput, useCombobox, Group, CheckIcon, PillGroup } 
 import { programmingAndDesignTools } from '../utils/data';
 import LanguageIcons from './LanguageIcons/LanguageIcons';
 
-export function SelectTagsInput({ style, value, setValue }) {
+export function SelectTagsInput({ style, value, setValue, isPending }) {
   const MAX_DISPLAYED_VALUES = 4;
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
@@ -74,6 +74,7 @@ export function SelectTagsInput({ style, value, setValue }) {
                 <PillsInput.Field
                   onFocus={() => combobox.openDropdown()}
                   onBlur={() => combobox.closeDropdown()}
+                  disabled={isPending}
                   value={search}
                   placeholder="Search tags"
                   onChange={(event) => {

@@ -9,11 +9,6 @@ export const AuthWrapper = () => {
   const { currentUserLoading, currentUserError } = useGlobalContext()
   const clear = useAuthStore((state => state.clear))
 
-  if (currentUserError) {
-    clear()
-    window.location.assign('/')
-  }
-
   if (currentUserLoading) {
     return (
       <div className="loader">

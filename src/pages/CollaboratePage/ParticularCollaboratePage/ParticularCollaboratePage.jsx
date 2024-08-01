@@ -15,6 +15,7 @@ const ParticularCollaboratePage = () => {
   const { data: particularpost, error, isLoading } = useIdeaData(id)
   const { data: currentUser } = useCurrentUser()
 
+  console.log(particularpost)
   return (
     <main id='particular-page'>
       {isLoading ? (
@@ -42,7 +43,7 @@ const ParticularCollaboratePage = () => {
               </p>
             </div>
             {currentUser?.profile.id !== particularpost.profile.id && (
-              <button disabled={particularpost.requests.some((request) => request.senderId === currentUser?.id)} onClick={() => setOnOpen(true)} >{particularpost.requests.some((request) => request.senderId === currentUser?.id) ? 'Already Interested' : 'Interested'}</button>
+              <button disabled={particularpost.requests.some((request) => request.senderId === currentUser?.profile.id)} onClick={() => setOnOpen(true)} >{particularpost.requests.some((request) => request.senderId === currentUser?.profile.id) ? 'Already Interested' : 'Interested'}</button>
             )}
           </div>
 

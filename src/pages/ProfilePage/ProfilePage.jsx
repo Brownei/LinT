@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './ProfilePage.scss';
 import Ideas from '../../components/Card/Ideas';
 import ProfileInterests from '../../components/Card/ProfileInterests'
@@ -10,29 +10,24 @@ import { Icon } from '@iconify/react';
 import { useUserPosts } from '../../hooks/use-user-posts';
 import { ClipLoader } from 'react-spinners';
 import LinkIcons from '../../components/LinkIcons';
-import { formatDate, getDay } from 'date-fns';
+import { formatDate } from 'date-fns';
 import { formatDate as dateFormater } from '../../utils/formatDate';
 import { useMutation } from "@tanstack/react-query";
 import { api } from '../../utils/api';
-// import MobileIdeas from '../../components/Mobile/MobileIdeas/MobileIdeas';
-// import { useMediaQuery } from 'react-responsive';
 import { useSession } from '../../hooks/use-session';
-import { useCurrentUser } from '../../hooks/use-current-user';
 import { useSentRequests } from '../../hooks/use-requests-sent';
 import { useAllCollaborators } from '../../hooks/use-collaborators';
-import { useGlobalContext } from '../../context/GlobalContext';
+import { useAuthStore } from '../../hooks/use-auth-store';
 
 const ProfilePage = () => {
-  const { user, currentUserError } = useGlobalContext()
-  const navigate = useNavigate()
+  const user = useAuthStore((state) => state?.user)
   const { signOut } = useSession()
-  const { data: posts, isLoading: isFetching, error } = useUserPosts(user?.profile?.username)
+  const { data: posts, isLoading: isFetching, error } = useUserPosts(user?.username)
   const { data: sentInterests, isLoading: isFetchingSentRequests, error: sentRequestsError } = useSentRequests()
   const { data: collaborators, isLoading: isCollaboratorsLoading, error: collaboratorsError } = useAllCollaborators()
-  const userLocation = user?.profile?.location.split(',');
+  const userLocation = user?.location.split(',');
   const location = useLocation()
-  const searchParams = new URLSearchParams(location.search);
-  const formattedDate = formatDate(user?.profile?.createdAt, "yyyy-MM-dd")
+  const formattedDate = formatDate(user?.createdAt, "yyyy-MM-dd")
   const signOutMutation = useMutation({
     mutationFn: () => {
       return api.post(`/auth/logout`)
@@ -42,9 +37,6 @@ const ProfilePage = () => {
     },
   });
 
-  if (currentUserError) {
-    navigate('/')
-  }
 
   function getTheLastElement() {
     const index = userLocation.length
@@ -85,15 +77,15 @@ const ProfilePage = () => {
       <div className='profile-page'>
         <div className='profile'>
           <div className='profile-details'>
-            <img src={user.profile.profileImage} alt={'Profile Image'} />
+            <img src={user.profileImage} alt={'Profile Image'} />
             <div className='write-ups'>
               <div className='flex'>
                 <div className='writings'>
-                  <h2>{user.profile.fullName}</h2>
-                  <span>@{user.profile.username}</span>
+                  <h2>{user.fullName}</h2>
+                  <span>@{user.username}</span>
                 </div>
                 <div className="sidebar">
-                  {location.pathname.includes(user.profile.username) || location.pathname === '/profile' ? (
+                  {location.pathname.includes(user.username) || location.pathname === '/profile' ? (
                     <div className='buttons'>
                       <Link to={'/profile/edit'} className='edit-profile'>Edit Profile</Link>
                       <button className='logout' disabled={signOutMutation.isPending} onClick={async () => await signOutMutation.mutateAsync()}>{signOutMutation.isPending ? (
@@ -111,7 +103,7 @@ const ProfilePage = () => {
                   )}
 
                   <div className='icons'>
-                    {user.profile.links.map((link) => (
+                    {user.links.map((link) => (
                       <div key={link.id}>
                         <LinkIcons link={link} styles={'particular-icon'} />
                       </div>
@@ -133,20 +125,20 @@ const ProfilePage = () => {
             </div>
           </div>
           <div className='div'>
-            <p className='occupation'>{user.profile?.occupation}</p>
-            <p>{user.profile?.bio}</p>
+            <p className='occupation'>{user.occupation}</p>
+            <p>{user.bio}</p>
           </div>
 
         </div>
 
         <div className='mobile-unnecessary'>
           <div className='mobile-profile-info'>
-            <p className='occupation'>{user.profile?.occupation}</p>
-            <p>{user.profile?.bio}</p>
+            <p className='occupation'>{user.occupation}</p>
+            <p>{user.bio}</p>
           </div>
 
           <div className='mobile-icons'>
-            {user.profile.links.map((link) => (
+            {user.links.map((link) => (
               <div key={link.id}>
                 <LinkIcons link={link} styles={'particular-icon'} />
               </div>
@@ -188,7 +180,7 @@ const ProfilePage = () => {
                       <div className='posts'>
                         {collaborators.map((collaborator, index) => (
                           <div key={index}>
-                            <Coll collaborations={collaborator.sender} currentUser={user.profile} />
+                            <Coll collaborations={collaborator.sender} currentUser={user} />
                           </div>
                         ))}
                       </div>
@@ -254,7 +246,7 @@ const ProfilePage = () => {
                 <div className='user-collabs'>
                   {collaborators.map((collaborator, index) => (
                     <div key={index}>
-                      <Coll collaborations={collaborator.sender} currentUser={user.profile} />
+                      <Coll collaborations={collaborator.sender} currentUser={user} />
                     </div>
                   ))}
                 </div>
