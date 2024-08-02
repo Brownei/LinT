@@ -1,12 +1,10 @@
 /* eslint-disable react/prop-types */
 import './MobileHeader.scss';
-import { Badge, Button } from "@mantine/core";
+import { Badge, Button, Loader } from "@mantine/core";
 import { NavLink, useLocation } from "react-router-dom";
-import { useGlobalContext } from '../../../context/GlobalContext';
 
-const MobileHeader = ({ collaboratorPage, interests }) => {
+const MobileHeader = ({ collaboratorPage, interests, conversations, isLoading, isInterestLoading }) => {
   const location = useLocation()
-  const { conversations } = useGlobalContext()
 
   return (
     <div id='mobile-header'>
@@ -14,12 +12,24 @@ const MobileHeader = ({ collaboratorPage, interests }) => {
       <div className='buttons'>
         <div className="mobile-chats">
           <NavLink to={'/collaborate/interests'} className={location.pathname === '/collaborate/interests' ? 'active-link' : 'link'}>
-            <Badge color="#00034A" size="xs" circle>{interests?.length}</Badge>
+            {isInterestLoading ? (
+              <Badge color="#00034A" size="xs">
+                <Loader size="xs" />
+              </Badge>
+            ) : (
+              <Badge color="#00034A" size="xs" circle>{interests?.length}</Badge>
+            )}
             Interest
           </NavLink>
 
           <NavLink to={'/messages'} className={location.pathname === '/messages' ? 'active-link' : 'link'}>
-            <Badge color="#00034A" size="xs" circle>{conversations?.length}</Badge>
+            {isLoading ? (
+              <Badge color="#00034A" size="xs">
+                <Loader size="xs" />
+              </Badge>
+            ) : (
+              <Badge color="#00034A" size="xs" circle>{conversations?.length}</Badge>
+            )}
             Chats
           </NavLink>
         </div>

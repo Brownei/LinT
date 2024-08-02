@@ -4,15 +4,13 @@ import './EditProfilePage.scss'
 import { Link } from 'react-router-dom'
 import { ClipLoader } from 'react-spinners'
 import Upload from '../../components/Upload/Upload'
-// import {useSession} from '../../hooks/use-session'
-import { useCurrentUser } from '../../hooks/use-current-user'
+import { useAuthStore } from '../../hooks/use-auth-store'
 
 const EditProfilePage = () => {
   const textareaRef = useRef(null)
-  // const {user, loading: isLoading} = useSession()
-  const { data: user, isLoading } = useCurrentUser()
-  const [bio, setBio] = useState(user.profile.bio ? user.profile.bio : '')
-  const [uploadedImage, setUploadedImage] = useState(user.profile.profileImage ? user.profileImage : '');
+  const user = useAuthStore((state) => state?.user)
+  const [bio, setBio] = useState(user.bio ? user.bio : '')
+  const [uploadedImage, setUploadedImage] = useState(user.profileImage ? user.profileImage : '');
 
   const autoResize = () => {
     const textarea = textareaRef.current;
@@ -54,13 +52,13 @@ const EditProfilePage = () => {
             {/* NAME */}
             <div className='input'>
               <label>Name</label>
-              <input type="text" placeholder={user.profile.fullName} />
+              <input type="text" placeholder={user.fullName} />
             </div>
 
             {/* OCCUPATION */}
             <div className='input'>
               <label>TagLine</label>
-              <input type="text" placeholder={user.profile.occupation} />
+              <input type="text" placeholder={user.occupation} />
             </div>
 
             {/* BIO */}
@@ -72,17 +70,17 @@ const EditProfilePage = () => {
             {/* LOCATION */}
             <div className='input'>
               <label>Location</label>
-              <input type="text" placeholder={user.profile.location} />
+              <input type="text" placeholder={user.location} />
             </div>
 
             {/* WEBSITE */}
             <div className='input'>
               <label>Website</label>
-              <input type="text" placeholder={user.profile.fullName} />
+              <input type="text" placeholder={user.fullName} />
             </div>
 
             <div>
-              {user.profile.links.map((link, index) => (
+              {user.links.map((link, index) => (
                 <div key={index}>
                   <label>Link</label>
                   <input type="text" placeholder={link} />

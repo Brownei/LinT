@@ -5,13 +5,17 @@ import InterestsSection from "../../Chats/InterestsSection/InterestsSection"
 import { pusherClient } from "../../../utils/pusherClient"
 import MessagesPage from "../../../pages/MessagesPage/MessagesPage"
 import { useQueryClient } from "@tanstack/react-query"
-import { useGlobalContext } from "../../../context/GlobalContext"
+import { useAuthStore } from "../../../hooks/use-auth-store"
 import { Icon } from "@iconify/react"
 import MobileHeader from "../MobileHeader/MobileHeader"
 import { useNavigate } from "react-router-dom"
+import { useAllInterests } from "../../../hooks/use-all-interests"
+import { useAllConversations } from "../../../hooks/use-conversations"
 
 const MobileInterests = () => {
-  const { user, interests, interestsLoading, error } = useGlobalContext()
+  const { data: conversations, isLoading: isConversationsLoading, error: conversationsError } = useAllConversations()
+  const { data: interests, isLoading: interestsLoading, error } = useAllInterests()
+  const user = useAuthStore((state) => state?.user)
   const [friendRequests, setFriendRequests] = useState([])
   const queryClient = useQueryClient()
   const navigate = useNavigate()
@@ -23,8 +27,8 @@ const MobileInterests = () => {
   }, [interests]);
 
   useEffect(() => {
-    pusherClient.subscribe(String(user.profile.id))
-    console.log("listening to ", `user:${user.profile.id}:incoming_collaborator_requests`)
+    pusherClient.subscribe(String(user.id))
+    console.log("listening to ", `user:${user.id}:incoming_collaborator_requests`)
 
     function friendRequestHandler(requests) {
       console.log(requests)
@@ -34,10 +38,10 @@ const MobileInterests = () => {
     pusherClient.bind('incoming_collaborator_requests', friendRequestHandler)
 
     return () => {
-      pusherClient.unsubscribe(String(user.profile.id))
+      pusherClient.unsubscribe(String(user.id))
       pusherClient.unbind('incoming_collaborator_requests', friendRequestHandler)
     }
-  }, [user.profile.id])
+  }, [user.id])
 
   useEffect(() => {
     queryClient.invalidateQueries('all-interests')
@@ -51,7 +55,7 @@ const MobileInterests = () => {
           Ideas
         </span>
       </button>
-      <MobileHeader interests={interests} collaboratorPage={false} />
+      <MobileHeader conversations={conversations} isLoading={isConversationsLoading} isInterestLoading={interestsLoading} interests={interests} collaboratorPage={false} />
 
       {interestsLoading ? (
         <div className='loading'>
@@ -62,7 +66,7 @@ const MobileInterests = () => {
       ) : (
         <div className="mobile-interests">
           {friendRequests?.length > 0 ? (
-            <div className='all-interests'>
+            <div className='all-mobile-interests'>
               {friendRequests?.map((interest) => (
                 <div key={interest.id}>
                   <InterestsSection interest={interest} />

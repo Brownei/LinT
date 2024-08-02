@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom'
-import { useGlobalContext } from '../../../context/GlobalContext'
+import { useAuthStore } from '../../../hooks/use-auth-store'
 
 const MobileChatsSection = ({ conversation }) => {
-  const { user } = useGlobalContext()
+  const user = useAuthStore((state) => state?.user)
   const navigate = useNavigate()
-  const image = conversation.creatorId === user.profile.id ? conversation.recipient.profileImage : conversation.creator.profileImage
-  const fullName = conversation.creatorId === user.profile.id ? conversation.recipient.fullName : conversation.creator.fullName
+  const image = conversation.creatorId === user.id ? conversation.recipient.profileImage : conversation.creator.profileImage
+  const fullName = conversation.creatorId === user.id ? conversation.recipient.fullName : conversation.creator.fullName
   console.log(conversation)
 
   return (

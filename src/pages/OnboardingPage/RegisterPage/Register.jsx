@@ -33,7 +33,7 @@ const Register = () => {
       })
     },
     onSuccess({ data }) {
-      sessionStorage.setItem('session', data.sessionCookie)
+      sessionStorage.setItem('lint_session', data.sessionCookie)
       setProfile(data.userInfo)
 
       if (data.userInfo.profile === null) {
@@ -60,7 +60,7 @@ const Register = () => {
       })
     },
     onSuccess({ data }) {
-      sessionStorage.setItem('session', data.sessionCookie)
+      sessionStorage.setItem('lint_session', data.sessionCookie)
       setProfile(data.userInfo)
 
       if (data.userInfo.profile === null) {

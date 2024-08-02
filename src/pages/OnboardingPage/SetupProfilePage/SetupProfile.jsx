@@ -18,8 +18,9 @@ import { useGlobalContext } from '../../../context/GlobalContext.jsx'
 
 const SetupProfile = ({ heading }) => {
   const queryClient = useQueryClient()
+  const profile = useSettingProfileStore((state => state?.profile))
   const clearProfile = useSettingProfileStore((state => state.clearProfile))
-  const { user: profile, currentUserLoading: loading, currentUserError: error } = useGlobalContext()
+  const { currentUserLoading: loading, currentUserError: error } = useGlobalContext()
   const [locationValue, setLocationValue] = useState(null);
   const [uploadedImage, setUploadedImage] = useState(profile?.profileImage !== "" ? profile?.profileImage : 'https://i.pinimg.com/564x/dd/ea/bd/ddeabd5e1886bcfe932a331839ee1cf7.jpg');
   const navigate = useNavigate()
@@ -48,7 +49,7 @@ const SetupProfile = ({ heading }) => {
       queryClient.invalidateQueries("current-user")
       console.log(data)
       toast.success('Profile set!')
-      window.location.assign('/collaborate')
+      navigate('/collaborate')
     },
     onError() {
       toast.error('Something wrong happened!')
@@ -71,7 +72,7 @@ const SetupProfile = ({ heading }) => {
     const timeOut = setTimeout(() => {
       if (error) {
         clearProfile()
-        window.location.assign('/')
+        navigate('/auth/login')
       }
     }, 4000)
 
@@ -79,7 +80,7 @@ const SetupProfile = ({ heading }) => {
   }, [error])
 
   if (error) {
-    window.location.assign('/')
+    navigate('/auth/login')
   }
 
   { loading && <ClipLoader /> }

@@ -9,17 +9,17 @@ const ChatsViewSection = () => {
   console.log(typeof selectedConversationId)
   const { data: conversation, isLoading, error } = useParticularConversation(selectedConversationId)
   const { data: messages, isLoading: isMessagesLoading } = useAllMessages(selectedConversationId)
-  console.log({ conversation, messages })
+
   return (
     <main id='chats-view-section'>
       {
         isLoading || isMessagesLoading ? (
-          <div className='chats-view-details'>
-            <ClipLoader />
+          <div className='loader-messages'>
+            <ClipLoader size={30} color={'#0006B1'} />
           </div >
         ) : (
           <div className='chats-view-details'>
-            {selectedConversationId ? selectedConversationId : 'Select Messages and start collabing'}
+            {selectedConversationId !== '' ? selectedConversationId : 'Select Messages and start collabing'}
           </div>
         )
       }

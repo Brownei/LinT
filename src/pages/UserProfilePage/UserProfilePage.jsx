@@ -8,7 +8,7 @@ import { Icon } from '@iconify/react';
 import LinkIcons from '../../components/LinkIcons';
 import brownson from '../../assets/images/brownson.svg';
 import gift from '../../assets/images/gift.svg';
-import { useCurrentUser } from '../../hooks/use-current-user';
+import { useAuthStore } from "../../hooks/use-auth-store";
 import Coll from '../../components/Card/Coll';
 import { useSentRequests } from '../../hooks/use-requests-sent';
 import Ideas from '../../components/Card/Ideas';
@@ -22,7 +22,7 @@ const UserProfilePage = () => {
   const { data: collaborators, isLoading: isCollaboratorsLoading, error: collaboratorsError } = useAllCollaboratorsConcerningAUser(username)
   const { data: profile, isLoading: isFetchingProfile, error: profileError } = useProfile(username)
   const userLocation = profile?.location.split(',')
-  const { data: user } = useCurrentUser()
+  const user = useAuthStore((state) => state?.user)
   const location = useLocation()
   const { data: posts, isLoading: isFetching, error } = useUserPosts(username)
   const navigate = useNavigate()
@@ -99,7 +99,7 @@ const UserProfilePage = () => {
                   <span>@{profile.username}</span>
                 </div>
                 <div className="sidebar">
-                  {location.pathname.includes(user.profile.username) || location.pathname === '/profile' ? (
+                  {location.pathname.includes(user.username) || location.pathname === '/profile' ? (
                     <div className='buttons'>
                       <Link to={'/profile/edit'} className='edit-profile'>Edit Profile</Link>
                       <button className='logout' disabled={signOutMutation.isPending} onClick={async () => await signOutMutation.mutateAsync()}>{signOutMutation.isPending ? (
@@ -188,7 +188,7 @@ const UserProfilePage = () => {
                   <p className='information'>Help brother</p>
                 )}
               </div>
-            ) : location.search === '?query=interests' && location.pathname === user.profile.username ? (
+            ) : location.search === '?query=interests' && location.pathname === user.username ? (
               <div className='interests-section'>
                 {isFetchingSentRequests ? (
                   <div className='loading'>

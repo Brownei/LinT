@@ -9,7 +9,7 @@ import ChatsSection from './ChatsSection/ChatsSection';
 const Chats = ({ interests, isLoading, error, onOpen, setOnOpen, conversations, isConversationsLoading, conversationsError }) => {
   const location = useLocation()
   let numberOfInterest = interests?.length
-  let numberOfChats = 5
+  let numberOfChats = conversations?.length
   const chatsSection = location.search === '?=chats' && 'chat-chats'
 
   return (

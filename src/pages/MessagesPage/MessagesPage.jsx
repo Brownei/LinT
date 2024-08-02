@@ -3,11 +3,13 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import './MessagesPage.scss'
 import { useNavigate } from 'react-router-dom'
 import { ClipLoader } from 'react-spinners'
-import { useGlobalContext } from '../../context/GlobalContext'
+import { useAllInterests } from '../../hooks/use-all-interests';
+import { useAllConversations } from "../../hooks/use-conversations";
 import ChatsSection from '../../components/Chats/ChatsSection/ChatsSection'
 
 const MessagesPage = () => {
-  const { conversations, interests, interestsLoading, error, conversationsError, isConversationsLoading } = useGlobalContext()
+  const { data: interests, isLoading: interestsLoading, error } = useAllInterests()
+  const { data: conversations, isLoading: isConversationsLoading, error: conversationsError } = useAllConversations()
   const navigate = useNavigate()
 
   if (interestsLoading) {
@@ -29,7 +31,7 @@ const MessagesPage = () => {
             Ideas
           </span>
         </button>
-        <MobileHeader interests={interests} collaboratorPage={false} />
+        <MobileHeader isInterestLoading={interestsLoading} conversations={conversations} isLoading={isConversationsLoading} interests={interests} collaboratorPage={false} />
 
         <div className='message-content'>
           {isConversationsLoading ? (

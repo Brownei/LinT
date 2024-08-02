@@ -62,7 +62,7 @@ export function useSession() {
     signOut() {
       clear()
       clearProfile()
-      sessionStorage.removeItem('session')
+      sessionStorage.removeItem('lint_session')
       navigate("/")
     },
   };

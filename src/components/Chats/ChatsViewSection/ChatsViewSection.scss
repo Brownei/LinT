@@ -7,6 +7,13 @@
   align-items: stretch;
   z-index: 0;
 
+  .loader-messages {
+    position: fixed;
+    top: 50%;
+    left: 63%;
+    transform: translate(-50%, -50%);
+  }
+
   .chats-view-details {
     position: absolute;
     top: 120px;
