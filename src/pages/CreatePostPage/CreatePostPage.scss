@@ -1,318 +1,326 @@
 .logo {
-    position: relative;
-    top: 0;
-    padding: 30px 90px 30px;
+  position: relative;
+  top: 0;
+  padding: 30px 90px 30px;
 }
 
 #modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    gap: 10px;
 
-    .container {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+      h1 {
+        font-size: 24px;
+        line-height: 30px;
+        font-weight: 600;
+        color: #8F9191;
+      }
 
-            h1 {
-                font-size: 24px;
-                line-height: 30px;
-                font-weight: 600;
-                color: #8F9191;
-            }
+      .back-button {
+        outline: none;
+        border: 0px solid transparent;
+        background-color: transparent;
+        border-radius: 19px;
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 600;
+        cursor: pointer;
 
-            .back-button {
-                outline: none;
-                border: 0px solid transparent;
-                background-color: transparent;
-                padding: 10px 20px;
-                border-radius: 19px;
-                font-size: 0.9rem;
-                line-height: 22px;
-                font-weight: 600;
-                cursor: pointer;
-
-                &:hover {
-                    background-color: #F5F5F5;
-                }
-                
-                span {
-                    display: flex;
-                    gap: 8px;
-                    align-items: center;
-
-                }
-            }
-
-            .post-button {
-                display: block;
-                border-radius: 24px;
-                padding: 10px 40px;
-                font-size: 0.9rem;
-                line-height: 22px;
-                font-weight: 600;
-                background-color: #0006B1;
-                color: #ffff;
-                cursor: pointer;
-                outline: none;
-                border: 0px;
-
-                span {
-                    margin: 0px;
-                    padding: 0px;
-                    display: flex;
-                    gap: 10px;
-                    align-items: center;
-                    justify-content: center;
-
-                    .loading-post-create {
-                        animation: spin 1s ease-in-out infinite;
-
-                        
-                        @keyframes spin {
-                            0% {
-                            transform: rotate(0deg);
-                            }
-                            100% {
-                            transform: rotate(360deg);
-                            }
-                        }
-                    }
-                }
-
-                &:disabled {
-                    background-color: #8A8CDB;
-                    cursor: progress;
-                }
-
-                &:hover {
-                    background-color: #3a40e4;
-                    transition-duration: 300ms;
-                }
-            }
+        &:hover {
+          background-color: #F5F5F5;
         }
 
-        .content {
-            width: 648px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 16px;
+        span {
+          display: flex;
+          gap: 8px;
+          align-items: center;
 
-            .input {
-                width: 100%;
-                padding: 10px 16px;
-                outline: none;
-                border: 1px solid #8F9191;
-                border-radius: 8px;
-                color: #8F9191;
-                font-weight: 400;
-                line-height: 18px;
-                font-size: 0.8rem;
+        }
+      }
+
+      .post-button {
+        display: block;
+        border-radius: 24px;
+        padding: 10px 40px;
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 600;
+        background-color: #0006B1;
+        color: #ffff;
+        cursor: pointer;
+        outline: none;
+        border: 0px;
+
+        span {
+          margin: 0px;
+          padding: 0px;
+          display: flex;
+          gap: 10px;
+          align-items: center;
+          justify-content: center;
+
+          .loading-post-create {
+            animation: spin 1s ease-in-out infinite;
+
+
+            @keyframes spin {
+              0% {
+                transform: rotate(0deg);
+              }
+
+              100% {
+                transform: rotate(360deg);
+              }
             }
-
-            label {
-                font-weight: 600;
-                font-size: 1.4rem;
-                line-height: 30px;
-            }
-
-            .input-title,
-            .input-description,
-            .input-tags {
-                display: grid;
-                gap: 4px;
-
-                .error {
-                    margin: 0px;
-                    font-weight: 600;
-                    font-size: 12px;
-                    line-height: 18px;
-                    color: red;
-                }
-                
-                .text-inputs {
-                    display: grid;
-                    gap: 16px;
-                }
-            }
-
-            .input-tags {
-                display: grid;
-                gap: 8px;
-                
-                .input {
-                    border-radius: 32px;
-                    padding: 20px;
-                    // border: 1px solid black;
-                    background-color: transparent;
-                }
-
-                .pills-group {
-
-                    .pill {
-                        background-color: transparent;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        border: 1px solid #B0B2E7;
-                        border-radius: 24px;
-                        padding: 3px 16px;
-                        cursor: pointer;
-                    }
-
-                    .pill-selected {
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        border-radius: 24px;
-                        padding: 3px 16px;
-                        cursor: pointer;
-                        background-color: #00FF00;
-                        border: 1px solid #00FF00;
-                    }
-                }
-
-            }
-
-            .mobile-post-button {
-                display: none;
-            }
+          }
         }
 
+        &:disabled {
+          background-color: #8A8CDB;
+          cursor: progress;
+        }
+
+        &:hover {
+          background-color: #3a40e4;
+          transition-duration: 300ms;
+        }
+      }
     }
+
+    .content {
+      width: 648px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+
+      h1 {
+        color: #8F9191;
+        font-size: 24px;
+      }
+
+      .input {
+        width: 100%;
+        outline: none;
+        border: 1px solid #8F9191;
+        border-radius: 8px;
+        color: #8F9191;
+        font-weight: 400;
+        font-size: 12px;
+      }
+
+      label {
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 30px;
+      }
+
+      .input-title,
+      .input-description,
+      .input-tags {
+        display: grid;
+        gap: 4px;
+
+        .error {
+          margin: 0px;
+          font-weight: 600;
+          font-size: 12px;
+          line-height: 18px;
+          color: red;
+        }
+
+        .text-inputs {
+          display: grid;
+          gap: 16px;
+        }
+      }
+
+      .input-tags {
+        display: grid;
+        gap: 8px;
+
+        .input {
+          border-radius: 32px;
+          padding: 0px 24px;
+          background-color: transparent;
+        }
+
+        .pills-group {
+
+          .pill {
+            background-color: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #B0B2E7;
+            border-radius: 24px;
+            padding: 3px 16px;
+            cursor: pointer;
+          }
+
+          .pill-selected {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 24px;
+            padding: 3px 16px;
+            cursor: pointer;
+            background-color: #00FF00;
+            border: 1px solid #00FF00;
+          }
+        }
+
+      }
+
+      .mobile-post-button {
+        display: none;
+      }
+    }
+
+  }
 }
 
 @media screen and (max-width: 800px) {
-    .logo {
-        display: none;
-    }
+  .logo {
+    display: none;
+  }
 
-    #modal {
-        margin: 30px 15px 0px 15px;
-        
-        .container {
-            .header {
-                h1 {
-                    font-size: 0.9rem;
-                }
+  #modal {
+    margin: 30px 15px 100px 15px;
 
-                .back-button {
-                    font-size: 0.8rem;
-                    padding: 8px 18px;
-
-                    span {
-                        gap: 4px;
-                    }
-                }
-
-                .post-button {
-                    display: none;
-                }
-            }
-            .content {
-                justify-content: end;
-                width: 100%;
-                gap: 8px;
-
-                .input {
-                    padding: 8px 14px;
-                    border-radius: 6px;
-                }
-
-                label {
-                    font-size: 0.9rem;
-                }
-
-                .input-title,
-                .input-description,
-                .input-tags {
-                    .text-inputs {
-                        gap: 8px;
-                    }
-                }
-
-                .input-tags {
-                    gap: 4px;
-                    
-                    .input {
-                        border-radius: 30px;
-                        padding: 18px;
-                        background-color: transparent;
-                    }
-    
-                    .pills-group {
-                        .pill {
-                            border-radius: 22px;
-                            padding: 2px 14px;
-                        }
-    
-                        .pill-selected {
-                            border-radius: 22px;
-                            padding: 2px 14px;
-                            background-color: #00FF00;
-                            border: 1px solid #00FF00;
-                        }
-                    }
-    
-                }
-
-                .mobile-post-button {
-                    display: flex;
-                    align-self: end;
-                    width: fit-content;
-                    display: block;
-                    margin-top: 16px;
-                    border-radius: 22px;
-                    padding: 8px 38px;
-                    font-size: 0.8rem;
-                    font-weight: 600;
-                    background-color: #0006B1;
-                    color: #ffff;
-                    cursor: pointer;
-                    outline: none;
-                    border: 0px;
-
-                    span {
-                        margin: 0px;
-                        padding: 0px;
-                        display: flex;
-                        gap: 8px;
-                        align-items: center;
-                        justify-content: center;
-
-                        .loading-post-create {
-                            animation: spin 1s ease-in-out infinite;
-
-                            
-                            @keyframes spin {
-                                0% {
-                                transform: rotate(0deg);
-                                }
-                                100% {
-                                transform: rotate(360deg);
-                                }
-                            }
-                        }
-                    }
-
-                    &:disabled {
-                        background-color: #8A8CDB;
-                        cursor: progress;
-                    }
-
-                    &:hover {
-                        background-color: #3a40e4;
-                        transition-duration: 300ms;
-                    }
-                }
-            }
+    .container {
+      .header {
+        h1 {
+          font-size: 16px;
         }
+
+        .back-button {
+          font-size: 16px;
+
+          span {
+            gap: 4px;
+          }
+        }
+
+        .post-button {
+          display: none;
+        }
+      }
+
+      .content {
+        justify-content: end;
+        width: 100%;
+        gap: 8px;
+
+        h1 {
+          text-align: center;
+          font-size: 16px;
+        }
+
+        .input {
+          padding: 8px 14px;
+          border-radius: 6px;
+        }
+
+        label {
+          font-size: 16px;
+        }
+
+        .input-title,
+        .input-description,
+        .input-tags {
+          .text-inputs {
+            gap: 8px;
+          }
+        }
+
+        .input-tags {
+          gap: 4px;
+
+          .input {
+            border-radius: 30px;
+            padding: 0px 20px;
+            background-color: transparent;
+          }
+
+          .pills-group {
+            .pill {
+              border-radius: 22px;
+              padding: 2px 14px;
+            }
+
+            .pill-selected {
+              border-radius: 22px;
+              padding: 2px 14px;
+              background-color: #00FF00;
+              border: 1px solid #00FF00;
+            }
+          }
+
+        }
+
+        .mobile-post-button {
+          display: flex;
+          align-self: end;
+          width: fit-content;
+          display: block;
+          margin-top: 16px;
+          border-radius: 22px;
+          padding: 8px 38px;
+          font-size: 14px;
+          font-weight: 600;
+          background-color: #0006B1;
+          color: #ffff;
+          cursor: pointer;
+          outline: none;
+          border: 0px;
+
+          span {
+            margin: 0px;
+            padding: 0px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+
+            .loading-post-create {
+              animation: spin 1s ease-in-out infinite;
+
+
+              @keyframes spin {
+                0% {
+                  transform: rotate(0deg);
+                }
+
+                100% {
+                  transform: rotate(360deg);
+                }
+              }
+            }
+          }
+
+          &:disabled {
+            background-color: #8A8CDB;
+            cursor: progress;
+          }
+
+          &:hover {
+            background-color: #3a40e4;
+            transition-duration: 300ms;
+          }
+        }
+      }
     }
+  }
 }

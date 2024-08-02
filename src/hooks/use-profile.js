@@ -3,7 +3,7 @@ import { api } from "../utils/api"
 
 async function getProfile(username) {
   const { data } = await api.get(`/profile/${username}`)
-  return data
+  return data.profile
 }
 
 export const useProfile = (username) => useQuery({

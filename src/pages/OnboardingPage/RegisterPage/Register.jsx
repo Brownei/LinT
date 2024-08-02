@@ -9,6 +9,7 @@ import { createAccountWithCredentials, signInWithGoogle } from '../../../utils/f
 import { useSettingProfileStore } from '../../../hooks/use-auth-store'
 import { toast } from 'sonner'
 import { useForm } from 'react-hook-form'
+import { Button } from '@mantine/core'
 
 const Register = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -32,7 +33,7 @@ const Register = () => {
       })
     },
     onSuccess({ data }) {
-      sessionStorage.setItem('session', data.sessionCookie)
+      sessionStorage.setItem('lint_session', data.sessionCookie)
       setProfile(data.userInfo)
 
       if (data.userInfo.profile === null) {
@@ -59,7 +60,7 @@ const Register = () => {
       })
     },
     onSuccess({ data }) {
-      sessionStorage.setItem('session', data.sessionCookie)
+      sessionStorage.setItem('lint_session', data.sessionCookie)
       setProfile(data.userInfo)
 
       if (data.userInfo.profile === null) {
@@ -130,40 +131,45 @@ const Register = () => {
           <form onSubmit={handleSubmit(handleCredentialsRegister)}>
             <div className='input-field'>
               <label htmlFor="full-name">Input Full Name</label>
-              <div className='input-register-field'>
+              <div className='input-register'>
                 <input type="text" name="full-name" id="full-name" placeholder='Full Name' {...register('fullName', { required: true })} />
                 {errors.fullName && <span>*Your name is required</span>}
               </div>
             </div>
             <div className='input-field'>
               <label htmlFor="email">Input Email</label>
-              <input type="text" name="email" id="email" placeholder='Email' {...register('email', { required: true })} />
-              {errors.email && <span>*Your email is required</span>}
+              <div className='input-register'>
+                <input type="text" name="email" id="email" placeholder='Email' {...register('email', { required: true })} />
+                {errors.email && <span>*Your email is required</span>}
+              </div>
             </div>
             <div className='input-field'>
               <label htmlFor="password">Password</label>
-              <div className='input'>
-                <input type={showPassword ? 'text' : 'password'} name="password" id="password" placeholder='Password' {...register('password', { required: true })} />
-                <Icon fontSize={22} onClick={() => setShowPassword(prev => !prev)} icon={showPassword ? 'ph:eye-slash-light' : 'ph:eye-light'} />
+              <div className='input-register-field'>
+                <div className='input-field'>
+                  <input type={showPassword ? 'text' : 'password'} name="password" id="password" placeholder='Password' {...register('password', { required: true })} />
+                  <Icon fontSize={22} onClick={() => setShowPassword(prev => !prev)} icon={showPassword ? 'ph:eye-slash-light' : 'ph:eye-light'} />
+                </div>
+                {errors.password && <span>*Your password is required</span>}
               </div>
-              {errors.password && <span>*Your password is required</span>}
             </div>
             <div className='input-field'>
               <label htmlFor="confirm-password">Confirm Password</label>
-              <div className='input'>
-                <input type={showConfirmPassword ? 'text' : 'password'} name="confirm-password" id="confirm-password" placeholder='Confirm Password' {...register('confirmPassword', { required: '*You need to confirm your password', validate: (value) => value === password || '*Passwords do not match' })} />
-                <Icon fontSize={22} onClick={() => setShowConfirmPassword(prev => !prev)} icon={showConfirmPassword ? 'ph:eye-slash-light' : 'ph:eye-light'} />
+              <div className='input-register-field'>
+                <div className='input-field'>
+                  <input type={showConfirmPassword ? 'text' : 'password'} name="confirm-password" id="confirm-password" placeholder='Confirm Password' {...register('confirmPassword', { required: '*You need to confirm your password', validate: (value) => value === password || '*Passwords do not match' })} />
+                  <Icon fontSize={22} onClick={() => setShowConfirmPassword(prev => !prev)} icon={showConfirmPassword ? 'ph:eye-slash-light' : 'ph:eye-light'} />
+
+                </div>
+                {errors.confirmPassword && <span>{errors.confirmPassword.message}</span>}
 
               </div>
-              {errors.confirmPassword && <span>{errors.confirmPassword.message}</span>}
             </div>
 
-            <button disabled={isLoading || googleRegisterMutation.isPending || emailAndPasswordRegisterMutation.isPending}>
+            <button type='submit' disabled={isLoading || googleRegisterMutation.isPending || emailAndPasswordRegisterMutation.isPending} className='register-button'>
               {isLoading ? (
                 <Icon className='loading-google' icon={'formkit:spinner'} fontSize={20} />
-              ) : (
-                'Create account'
-              )}
+              ) : 'Create account'}
             </button>
           </form>
 
@@ -172,6 +178,7 @@ const Register = () => {
               {googleRegisterMutation.isPending ? (
                 <span className='google-button-check'>
                   <Icon className='loading-google' icon={'formkit:spinner'} fontSize={22} />
+                  <span></span>
                 </span>
               ) : (
                 <span className='google-button-check'>

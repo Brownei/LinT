@@ -4,6 +4,7 @@
   align-items: center;
   padding-top: 30px;
   padding-bottom: 90px;
+  margin-left: -100px;
 
   .profile-page {
     padding: 0px;
@@ -19,35 +20,19 @@
         outline: none;
         border: 0px solid transparent;
         background-color: transparent;
-        padding: 10px 20px;
+        padding: 0px;
         border-radius: 19px;
-        font-size: 0.9rem;
+        font-size: 22px;
         line-height: 22px;
         font-weight: 600;
         cursor: pointer;
         margin-bottom: 16px;
 
-      }
-
-      .div {
-        width: 502px;
-        gap: 0px;
-
-        p {
-          font-weight: 400;
-          font-size: 1rem;
-          line-height: 22px;
-          margin: 2px;
-        }
-
-        .occupation {
-          font-weight: 600;
-          font-size: 1rem;
-          line-height: 22px;
-          margin: 2px;
-          text-transform: capitalize;
+        &:hover {
+          color: #0006B1;
         }
       }
+
 
 
       .profile-details {
@@ -120,7 +105,7 @@
                   background-color: #E6E6F7;
                   color: #00034A;
                   font-weight: 600;
-                  font-size: 1rem;
+                  font-size: 16px;
                 }
 
                 button {
@@ -131,7 +116,7 @@
                   background-color: #F44336;
                   color: #ffffff;
                   font-weight: 600;
-                  font-size: 1rem;
+                  font-size: 16px;
                   line-height: 22px;
                   cursor: pointer;
 
@@ -145,14 +130,15 @@
 
 
               .collabs {
-                padding: 8px 16px;
+                padding: 8px 22px;
                 border-radius: 6px;
                 background-color: #E6E6F7;
+                border: 1px solid #B0B2E7;
                 color: #00034A;
                 font-weight: 700;
-                font-size: 1.5rem;
-                line-height: 29.05px;
+                font-size: 24px;
                 cursor: pointer;
+                box-shadow: none;
               }
 
               .icons {
@@ -166,23 +152,6 @@
                   color: black;
                 }
               }
-
-              .loc-cal {
-                display: flex;
-                align-items: center;
-                gap: 16px;
-
-                .location,
-                .calendar {
-                  display: flex;
-                  align-items: center;
-                  gap: 5px;
-
-                  p {
-                    margin: 0px;
-                  }
-                }
-              }
             }
           }
 
@@ -191,16 +160,62 @@
           h2 {
             margin: 0px;
             font-weight: 600;
-            font-size: 3rem;
-            line-height: 58.09px;
+            font-size: 48px;
           }
 
           span {
+            color: #8F9191;
             font-weight: 600;
             font-size: 14px;
             line-height: 20px;
           }
         }
+      }
+
+      .another-div {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-direction: row-reverse;
+        padding: 0px;
+
+        .div {
+          width: 502px;
+          gap: 0px;
+
+          p {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 22px;
+            margin: 2px;
+          }
+
+          .occupation {
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 22px;
+            margin: 2px;
+            text-transform: capitalize;
+          }
+        }
+
+        .loc-cal {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+
+          .location,
+          .calendar {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+
+            p {
+              margin: 0px;
+            }
+          }
+        }
+
       }
 
 
@@ -220,7 +235,7 @@
       h3,
       .h3 {
         font-weight: 600;
-        font-size: 1.5rem;
+        font-size: 24px;
         text-decoration: none;
       }
 
@@ -234,7 +249,7 @@
           gap: 14px;
 
           .h3 {
-            font-size: 0.9rem;
+            font-size: 16px;
             margin-top: 20px;
             font-weight: 600;
             color: #8F9191;
@@ -242,7 +257,7 @@
           }
 
           .active {
-            font-size: 0.9rem;
+            font-size: 16px;
             margin-top: 20px;
             font-weight: 600;
             color: #00034A;
@@ -262,7 +277,7 @@
           }
 
           .information {
-            font-size: 1.5rem;
+            font-size: 24px;
             line-height: 30px;
             font-weight: 600;
             color: #8F9191;
@@ -304,6 +319,8 @@
 @media screen and (max-width: 800px) {
   #profile-page {
     display: block;
+    padding-top: 20px;
+    margin-left: 0px;
 
     .profile-page {
 
@@ -315,7 +332,7 @@
         }
 
         .profile-details {
-
+          gap: 0px;
 
           img {
             width: 48px;
@@ -325,43 +342,55 @@
           .write-ups {
             width: 100%;
 
-            div {
-              display: none;
-            }
+            .flex {
+              .writings {
+                h2 {
+                  font-size: 24px;
+                  line-height: 22px;
+                }
 
-            h2 {
-              font-size: 1.2rem;
-              line-height: 22px;
-            }
+                span {
+                  font-size: 12px;
+                  line-height: 15px;
+                }
 
-            span {
-              font-size: 13px;
-              line-height: 15px;
+              }
+
+              .sidebar {
+                .buttons {
+                  .logout {
+                    display: none;
+                  }
+
+                  .edit-profile {
+                    padding: 10px 20px;
+                    border-radius: 22px;
+                    font-size: 16px;
+                  }
+                }
+
+                .collabs {
+                  font-weight: 600;
+                  padding: 4px 19px;
+                  font-size: 16px;
+                }
+
+                .icons {
+                  display: none;
+                }
+
+                .loc-cal {
+                  display: none;
+                }
+              }
             }
           }
         }
 
-        .sidebar {
-          .buttons {
-            .logout {
-              display: none;
-            }
-
-            .edit-profile {
-              padding: 10px 20px;
-              border-radius: 22px;
-              font-size: 0.85rem;
-            }
-          }
-
-          .icons {
-            display: none;
-          }
-
-          .loc-cal {
-            display: none;
-          }
+        .another-div {
+          display: none;
         }
+
       }
 
       .mobile-unnecessary {
@@ -378,14 +407,14 @@
             margin: 0px;
             color: #4B4B4B;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 16px;
             line-height: 20px;
           }
 
           p {
             padding: 0px;
             margin: 0px;
-            font-size: 0.85rem;
+            font-size: 16px;
             line-height: 22px;
             font-weight: 400;
           }
@@ -404,7 +433,7 @@
 
             p {
               margin: 0px;
-              font-size: 0.7rem;
+              font-size: 16px;
             }
           }
         }

@@ -4,11 +4,12 @@ import { useLocation } from 'react-router-dom'
 import InterestsSection from './InterestsSection/InterestsSection'
 import { Link } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
+import ChatsSection from './ChatsSection/ChatsSection';
 
-const Chats = ({ interests, isLoading, error, onOpen, setOnOpen }) => {
+const Chats = ({ interests, isLoading, error, onOpen, setOnOpen, conversations, isConversationsLoading, conversationsError }) => {
   const location = useLocation()
   let numberOfInterest = interests?.length
-  let numberOfChats = 5
+  let numberOfChats = conversations?.length
   const chatsSection = location.search === '?=chats' && 'chat-chats'
 
   return (
@@ -46,7 +47,25 @@ const Chats = ({ interests, isLoading, error, onOpen, setOnOpen }) => {
             {location.search === '?=chats' ? (
               <div className='chat-section'>
                 <input type="text" placeholder='Search' />
-                <h1>Chats</h1>
+                {isConversationsLoading ? (
+                  <div>
+                    <ClipLoader size={30} />
+                  </div>
+                ) : conversationsError ? (
+                  <div>
+                    You gotta refresh big boy
+                  </div>
+                ) :
+                  <div>
+                    {
+                      conversations.map((conversation) => (
+                        <div key={conversation.id}>
+                          <ChatsSection conversation={conversation} />
+                        </div>
+                      ))
+                    }
+                  </div>
+                }
               </div>
             ) : (
               <div className='interest-section'>

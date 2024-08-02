@@ -2,33 +2,46 @@ import "./UserProfilePage.scss"
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import { useProfile } from '../../hooks/use-profile'
 import { ClipLoader } from 'react-spinners'
-import { formatDate } from 'date-fns';
-import { formatDate as dateFormater } from '../../utils/formatDate';
 import { useUserPosts } from '../../hooks/use-user-posts';
 import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import LinkIcons from '../../components/LinkIcons';
 import brownson from '../../assets/images/brownson.svg';
 import gift from '../../assets/images/gift.svg';
-import { useCurrentUser } from '../../hooks/use-current-user';
+import { useAuthStore } from "../../hooks/use-auth-store";
 import Coll from '../../components/Card/Coll';
 import { useSentRequests } from '../../hooks/use-requests-sent';
 import Ideas from '../../components/Card/Ideas';
-import { Button } from '@mantine/core';
-import { useAllCollaborators } from '../../hooks/use-collaborators';
+import { useAllCollaborators, useAllCollaboratorsConcerningAUser } from '../../hooks/use-collaborators';
+import { api } from "../../utils/api";
+import { useMutation } from "@tanstack/react-query";
 
 const UserProfilePage = () => {
   const { username } = useParams()
   const { data: sentInterests, isLoading: isFetchingSentRequests, error: sentRequestsError } = useSentRequests()
-  const { data: collaborators, isLoading: isCollaboratorsLoading, error: collaboratorsError } = useAllCollaborators()
+  const { data: collaborators, isLoading: isCollaboratorsLoading, error: collaboratorsError } = useAllCollaboratorsConcerningAUser(username)
   const { data: profile, isLoading: isFetchingProfile, error: profileError } = useProfile(username)
-  const { data: user } = useCurrentUser()
+  const userLocation = profile?.location.split(',')
+  const user = useAuthStore((state) => state?.user)
   const location = useLocation()
-  const searchParams = new URLSearchParams(location.search);
-
   const { data: posts, isLoading: isFetching, error } = useUserPosts(username)
   const navigate = useNavigate()
+  function getTheLastElement() {
+    const index = userLocation.length
 
+    return userLocation[index - 1]
+  }
+  const signOutMutation = useMutation({
+    mutationFn: () => {
+      return api.post(`/auth/logout`)
+    },
+    onSuccess() {
+      signOut()
+    },
+  });
+
+
+  console.log(collaborators)
   const collaborations = [
     {
       id: 1,
@@ -73,8 +86,8 @@ const UserProfilePage = () => {
       <div className='profile-page'>
         <div className='profile'>
           <button className='button' onClick={() => window.history.back()}>
-            <Icon icon={'tabler:arrow-left'} fontSize={23} color='#0006B1' />
-            Leave
+            <Icon icon={'tabler:arrow-left'} fontSize={30} color='#0006B1' />
+            Back
           </button>
 
           <div className='profile-details'>
@@ -86,9 +99,18 @@ const UserProfilePage = () => {
                   <span>@{profile.username}</span>
                 </div>
                 <div className="sidebar">
-                  {location.pathname.includes(user.profile.username) || location.pathname === '/profile' ? (
+                  {location.pathname.includes(user.username) || location.pathname === '/profile' ? (
                     <div className='buttons'>
                       <Link to={'/profile/edit'} className='edit-profile'>Edit Profile</Link>
+                      <button className='logout' disabled={signOutMutation.isPending} onClick={async () => await signOutMutation.mutateAsync()}>{signOutMutation.isPending ? (
+                        <span>
+                          <Icon className='logout-button' icon={'formkit:spinner'} color={'#E30000'} fontSize={20} />
+                        </span>
+                      ) : (
+                        <span>
+                          <Icon color='#E30000' icon={'mingcute:exit-line'} fontSize={20} />
+                        </span>
+                      )}</button>
                     </div>
                   ) : (
                     <button className='collabs'>{collaborations.length} Collabs</button>
@@ -101,23 +123,27 @@ const UserProfilePage = () => {
                       </div>
                     ))}
                   </div>
-                  <div className='loc-cal'>
-                    <div className='location'>
-                      <Icon icon={'mdi:location'} fontSize={24} />
-                      <p>{profile.location}</p>
-                    </div>
-                    <div className='calendar'>
-                      <Icon icon={'bx:calendar'} fontSize={24} />
-                    </div>
-                  </div>
                 </div>
 
               </div>
             </div>
           </div>
-          <div className='div'>
-            <p className='occupation'>{profile?.occupation}</p>
-            <p>{profile.bio}</p>
+          <div className="another-div">
+            <div className='loc-cal'>
+              <div className='location'>
+                <Icon icon={'mdi:location'} fontSize={24} />
+                <p>{getTheLastElement()}</p>
+              </div>
+              <div className='calendar'>
+                <Icon icon={'bx:calendar'} fontSize={24} />
+              </div>
+            </div>
+
+            <div className='div'>
+              <p className='occupation'>{profile?.occupation}</p>
+              <p>{profile.bio}</p>
+            </div>
+
           </div>
 
         </div>
@@ -139,7 +165,7 @@ const UserProfilePage = () => {
           <div className='mobile-loc-cal'>
             <div className='mobile-location'>
               <Icon icon={'mdi:location'} fontSize={18} />
-              <p>{profile.location}</p>
+              <p>{getTheLastElement()}</p>
             </div>
             <div className='mobile-calendar'>
               <Icon icon={'bx:calendar'} fontSize={18} />
@@ -162,7 +188,7 @@ const UserProfilePage = () => {
                   <p className='information'>Help brother</p>
                 )}
               </div>
-            ) : location.search === '?query=interests' && location.pathname === user.profile.username ? (
+            ) : location.search === '?query=interests' && location.pathname === user.username ? (
               <div className='interests-section'>
                 {isFetchingSentRequests ? (
                   <div className='loading'>

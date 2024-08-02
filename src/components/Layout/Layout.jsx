@@ -1,44 +1,39 @@
 /* eslint-disable react/prop-types */
 import './Layout.scss'
 import Nav from "../Nav/Nav";
-import { Outlet } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
-import { ClipLoader } from 'react-spinners';
-import { useCurrentUser } from '../../hooks/use-current-user';
+import { Outlet, useLocation, useParams } from "react-router-dom";
 import MobileNav from '../Mobile/MobileNav/MobileNav';
 import MobileSettings from '../Mobile/MobileSettings/MobileSettings';
+import { useGlobalContext } from '../../context/GlobalContext';
+import { ClipLoader } from 'react-spinners';
 
 export default function Layout() {
-  const { data: user, error, isLoading } = useCurrentUser();
-  const navigate = useNavigate();
-
-  if (error) {
-    window.location.assign('/')
-  } else if (user && user?.profile === null) {
-    window.location.assign('/setup-profile')
-  }
-
-  if (isLoading) {
-    return (
-      <div className="loader">
-        <ClipLoader color="#0006B1" size={30} />
-      </div>
-    )
-  }
-
+  const { currentUserLoading } = useGlobalContext()
+  const { id } = useParams()
+  const location = useLocation()
 
   return (
     <main id="body">
-      <div className='mobile-settings'>
-        <MobileSettings />
-      </div>
+      {currentUserLoading ? (
+        <div className='loader'>
+          <ClipLoader color='#0006B1' />
+        </div>
+      ) : (
+        <div>
+          <div className='mobile-settings'>
+            <MobileSettings />
+          </div>
 
-      <Nav />
-      <Outlet />
+          <Nav />
+          <Outlet />
 
-      <div className="collaborate-mobile-page">
-        <MobileNav user={user} />
-      </div>
-    </main>
+          <div className="collaborate-mobile-page">
+            {location.pathname !== `/messages/${id}` && <MobileNav />}
+          </div>
+
+        </div >
+
+      )}
+    </main >
   )
 }

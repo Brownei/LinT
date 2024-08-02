@@ -2,10 +2,9 @@ import './Login.scss'
 import { useState } from 'react';
 import { Icon } from '@iconify/react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { signInWithGoogle, signInWthCredentials } from '../../../utils/firebase';
 import axios from 'axios';
-import { Button } from '@mantine/core';
 import { useAuthStore, useSettingProfileStore } from '../../../hooks/use-auth-store';
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
@@ -13,7 +12,8 @@ import { useForm } from 'react-hook-form';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit, control, formState: { errors } } = useForm({
+  const queryClient = useQueryClient()
+  const { register, handleSubmit, formState: { errors } } = useForm({
     mode: 'onSubmit'
   })
   const [showPassword, setShowPassword] = useState(false)
@@ -32,7 +32,8 @@ const Login = () => {
       })
     },
     onSuccess({ data }) {
-      sessionStorage.setItem('session', data.sessionCookie)
+      sessionStorage.setItem('lint_session', data.sessionCookie)
+      queryClient.invalidateQueries('current-user')
 
       if (data.userInfo.profile === null) {
         setProfile(data.userInfo)
@@ -70,7 +71,7 @@ const Login = () => {
       })
     },
     onSuccess({ data }) {
-      sessionStorage.setItem('session', data.sessionCookie)
+      sessionStorage.setItem('lint_session', data.sessionCookie)
 
       if (data.userInfo.profile === null) {
         setProfile(data.userInfo)
@@ -143,14 +144,19 @@ const Login = () => {
                   {errors.password && <span>*Your password is required</span>}
                 </div>
               </div>
-              <Button disabled={isLoading || googleLoginMutation.isPending} type='submit' className='login-button'>
+              <button
+                disabled={isLoading || googleLoginMutation.isPending}
+                type='submit'
+                className='login-button'
+              >
+
                 {isLoading ? (
                   <Icon className='loading-google' icon={'formkit:spinner'} fontSize={22} />
                 ) : 'Login'}
-              </Button>
+              </button>
             </form>
 
-            <Button disabled={isLoading || googleLoginMutation.isPending || emailAndPasswordLoginMutation.isPending} onClick={() => handleGoogleSignIn()} type='button' className='google-button'>
+            <button disabled={isLoading || googleLoginMutation.isPending || emailAndPasswordLoginMutation.isPending} onClick={() => handleGoogleSignIn()} type='button' className='google-button'>
               {googleLoginMutation.isPending ? (
                 <span className='google-button-check'>
                   <Icon className='loading-google' icon={'formkit:spinner'} fontSize={22} />
@@ -162,12 +168,12 @@ const Login = () => {
                   <span>Continue with Google</span>
                 </span>
               )}
-            </Button>
+            </button>
 
             <div className='few-details'>
               <p>Do not have an account?</p>
               <Link to={'/create-account'}>
-                <Button className='button' type='button'>Create Account</Button>
+                <button className='button' type='button'>Create Account</button>
               </Link>
 
               <p className='terms'>By logging in or Signing up Using the process above you agree to Lint privacy <span>Terms and Conditions</span></p>

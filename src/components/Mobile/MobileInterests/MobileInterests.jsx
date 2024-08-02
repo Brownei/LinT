@@ -1,16 +1,24 @@
 import "./MobileInterests.scss"
 import { useEffect, useState } from "react"
-import { useAllInterests } from "../../../hooks/use-all-interests"
 import { ClipLoader } from "react-spinners"
 import InterestsSection from "../../Chats/InterestsSection/InterestsSection"
-import { useCurrentUser } from "../../../hooks/use-current-user"
 import { pusherClient } from "../../../utils/pusherClient"
 import MessagesPage from "../../../pages/MessagesPage/MessagesPage"
+import { useQueryClient } from "@tanstack/react-query"
+import { useAuthStore } from "../../../hooks/use-auth-store"
+import { Icon } from "@iconify/react"
+import MobileHeader from "../MobileHeader/MobileHeader"
+import { useNavigate } from "react-router-dom"
+import { useAllInterests } from "../../../hooks/use-all-interests"
+import { useAllConversations } from "../../../hooks/use-conversations"
 
 const MobileInterests = () => {
-  const { data: user } = useCurrentUser()
-  const { data: interests, isLoading, error } = useAllInterests()
+  const { data: conversations, isLoading: isConversationsLoading, error: conversationsError } = useAllConversations()
+  const { data: interests, isLoading: interestsLoading, error } = useAllInterests()
+  const user = useAuthStore((state) => state?.user)
   const [friendRequests, setFriendRequests] = useState([])
+  const queryClient = useQueryClient()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (interests) {
@@ -19,8 +27,8 @@ const MobileInterests = () => {
   }, [interests]);
 
   useEffect(() => {
-    pusherClient.subscribe(String(user.profile.id))
-    console.log("listening to ", `user:${user.profile.id}:incoming_collaborator_requests`)
+    pusherClient.subscribe(String(user.id))
+    console.log("listening to ", `user:${user.id}:incoming_collaborator_requests`)
 
     function friendRequestHandler(requests) {
       console.log(requests)
@@ -30,15 +38,26 @@ const MobileInterests = () => {
     pusherClient.bind('incoming_collaborator_requests', friendRequestHandler)
 
     return () => {
-      pusherClient.unsubscribe(String(user.profile.id))
+      pusherClient.unsubscribe(String(user.id))
       pusherClient.unbind('incoming_collaborator_requests', friendRequestHandler)
     }
-  }, [user.profile.id])
+  }, [user.id])
+
+  useEffect(() => {
+    queryClient.invalidateQueries('all-interests')
+  }, [friendRequests])
 
   return (
     <main id="mobile-interests">
-      <MessagesPage />
-      {isLoading ? (
+      <button onClick={() => navigate('/collaborate')} className='back-button'>
+        <span>
+          <Icon icon={'tabler:arrow-left'} fontSize={23} color='#0006B1' />
+          Ideas
+        </span>
+      </button>
+      <MobileHeader conversations={conversations} isLoading={isConversationsLoading} isInterestLoading={interestsLoading} interests={interests} collaboratorPage={false} />
+
+      {interestsLoading ? (
         <div className='loading'>
           <ClipLoader fontSize={30} />
         </div>
@@ -47,7 +66,7 @@ const MobileInterests = () => {
       ) : (
         <div className="mobile-interests">
           {friendRequests?.length > 0 ? (
-            <div className='all-interests'>
+            <div className='all-mobile-interests'>
               {friendRequests?.map((interest) => (
                 <div key={interest.id}>
                   <InterestsSection interest={interest} />

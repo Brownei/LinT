@@ -5,14 +5,14 @@ import MobileNotification from '../../Nav/NavComponents/MobileNavComponents/Mobi
 import MobileProfile from '../../Nav/NavComponents/MobileNavComponents/MobileProfile'
 import Message from '../../Nav/NavComponents/Message';
 
-const MobileNav = ({user}) => {
+const MobileNav = () => {
   return (
     <div id='mobile-nav'>
       <div className='navs'>
         <MobileCollaborate />
         <Message />
         <MobileNotification />
-        <MobileProfile user={user}/>
+        <MobileProfile />
       </div>
     </div>
   )

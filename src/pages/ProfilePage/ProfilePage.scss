@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 30px;
+  padding-top: 50px;
   padding-bottom: 90px;
 
 
@@ -18,14 +18,14 @@
 
         p {
           font-weight: 400;
-          font-size: 1rem;
+          font-size: 16px;
           line-height: 22px;
           margin: 2px;
         }
 
         .occupation {
           font-weight: 600;
-          font-size: 1rem;
+          font-size: 16px;
           line-height: 22px;
           margin: 2px;
           text-transform: capitalize;
@@ -79,7 +79,7 @@
                   padding: 4px 8px;
                   border: 1px solid transparent;
                   font-weight: 600;
-                  font-size: 1rem;
+                  font-size: 16px;
                   cursor: pointer;
 
                   span {
@@ -120,7 +120,7 @@
                   background-color: #E6E6F7;
                   color: #00034A;
                   font-weight: 600;
-                  font-size: 1rem;
+                  font-size: 16px;
                 }
 
               }
@@ -132,7 +132,7 @@
                 background-color: #E6E6F7;
                 color: #00034A;
                 font-weight: 700;
-                font-size: 1.5rem;
+                font-size: 24px;
                 line-height: 29.05px;
                 cursor: pointer;
               }
@@ -173,7 +173,7 @@
           h2 {
             margin: 0px;
             font-weight: 600;
-            font-size: 3rem;
+            font-size: 48px;
             line-height: 58.09px;
           }
 
@@ -202,7 +202,7 @@
       h3,
       .h3 {
         font-weight: 600;
-        font-size: 1.5rem;
+        font-size: 24px;
         text-decoration: none;
       }
 
@@ -248,7 +248,7 @@
           }
 
           .information {
-            font-size: 1.5rem;
+            font-size: 24px;
             line-height: 30px;
             font-weight: 600;
             color: #8F9191;
@@ -303,7 +303,7 @@
 
 
         .profile-details {
-
+          gap: 0px;
 
           img {
             width: 48px;
@@ -323,7 +323,7 @@
                   .edit-profile {
                     padding: 10px 20px;
                     border-radius: 22px;
-                    font-size: 0.85rem;
+                    font-size: 14px;
                   }
                 }
 
@@ -338,7 +338,7 @@
             }
 
             h2 {
-              font-size: 1.2rem;
+              font-size: 20px;
               line-height: 22px;
             }
 
@@ -366,14 +366,14 @@
             margin: 0px;
             color: #4B4B4B;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 14px;
             line-height: 20px;
           }
 
           p {
             padding: 0px;
             margin: 0px;
-            font-size: 0.85rem;
+            font-size: 14px;
             line-height: 22px;
             font-weight: 400;
           }
@@ -392,7 +392,7 @@
 
             p {
               margin: 0px;
-              font-size: 0.7rem;
+              font-size: 12px;
             }
           }
         }
@@ -406,16 +406,16 @@
 
           .idea-collab-nav {
             .h3 {
-              font-size: 1rem;
+              font-size: 16px;
             }
 
             .active {
-              font-size: 1rem;
+              font-size: 16px;
             }
 
             .coll-link {
               display: block;
-              font-size: 1rem;
+              font-size: 16px;
               margin-top: 20px;
               font-weight: 600;
               color: #8F9191;
@@ -429,23 +429,50 @@
             }
 
             .information {
+              font-size: 20px;
               width: 100%;
             }
 
+            .users-ideas {
+              .information {
+                font-size: 20px;
+                width: 100%;
+              }
+
+              .posts {
+                display: grid;
+                gap: 16px;
+              }
+            }
 
           }
 
           .posts-section {
-            .posts {
-              display: grid;
-              gap: 16px;
+            .post-section {
+              .information {
+                width: 100%;
+                font-size: 20px;
+              }
+
+              .posts {
+                display: grid;
+                gap: 16px;
+              }
+
             }
           }
 
           .interests-section {
-            .posts {
-              display: grid;
-              gap: 16px;
+            .interest-section {
+              .posts {
+                display: grid;
+                gap: 16px;
+              }
+
+              .information {
+                width: 100%;
+                font-size: 20px;
+              }
             }
           }
         }

@@ -3,20 +3,25 @@ import Chats from "../../components/Chats/Chats";
 import IdeasSection from "../../components/Chats/IdeasSection/IdeasSection";
 import { useAllPosts } from '../../hooks/use-all-posts'
 import { useAllInterests } from '../../hooks/use-all-interests';
+import { useAllConversations } from "../../hooks/use-conversations";
 import { useState, useEffect } from "react";
 import MobileHeader from "../../components/Mobile/MobileHeader/MobileHeader";
 import MobileIdeas from "../../components/Mobile/MobileIdeas/MobileIdeas";
 import { pusherClient } from "../../utils/pusherClient";
 import { useQueryClient } from "@tanstack/react-query";
-import { useCurrentUser } from "../../hooks/use-current-user";
-import { ClipLoader } from "react-spinners";
+import ModalContainer from "../../components/Modal/ModalContainer";
+import ChatsViewSection from "../../components/Chats/ChatsViewSection/ChatsViewSection";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../hooks/use-auth-store";
 
 const Collaborate = () => {
-  const [onOpen, setOnOpen] = useState()
-  const { data: user, isLoading: currentUserLoading, error: currentUserError } = useCurrentUser()
-  const queryClient = useQueryClient()
   const { data: interests, isLoading: interestsLoading, error } = useAllInterests()
-  const { data: posts, isLoading, error: postError } = useAllPosts()
+  const { data: conversations, isLoading: isConversationsLoading, error: conversationsError } = useAllConversations()
+  const { data: posts, isLoading: isPostsLoading, error: postError } = useAllPosts()
+  const user = useAuthStore((state) => state?.user)
+  const location = useLocation()
+  const [onOpen, setOnOpen] = useState()
+  const queryClient = useQueryClient()
   const [friendRequests, setFriendRequests] = useState([])
   const [allPosts, setAllPosts] = useState([])
 
@@ -44,11 +49,11 @@ const Collaborate = () => {
       pusherClient.unsubscribe('posts')
       pusherClient.unbind('all-posts', postsHandler)
     }
-  }, [posts, queryClient])
+  }, [posts])
 
   useEffect(() => {
-    pusherClient.subscribe(String(user.profile.id))
-    console.log("listening to ", `user:${user.profile.id}:incoming_collaborator_requests`)
+    pusherClient.subscribe(String(user.id))
+    console.log("listening to ", `user:${user.id}:incoming_collaborator_requests`)
 
     function friendRequestHandler(requests) {
       console.log(requests)
@@ -58,45 +63,53 @@ const Collaborate = () => {
     pusherClient.bind('incoming_collaborator_requests', friendRequestHandler)
 
     return () => {
-      pusherClient.unsubscribe(String(user.profile?.id))
+      pusherClient.unsubscribe(String(user?.id))
       pusherClient.unbind('incoming_collaborator_requests', friendRequestHandler)
     }
-  }, [user?.profile?.id])
+  }, [user?.id, interests])
 
-  if (currentUserError) {
-    window.location.assign('/')
-  }
 
   return (
     <main id="collaborate-page">
-      {currentUserLoading ? (
-        <div>
-          <ClipLoader />
-        </div>
-      ) : (
-        <div className="collaborate-page">
-          <div className="collaborate-section">
-            <div className="collaborate-view">
+      <div className="collaborate-page">
+        <div className="collaborate-section">
+          <div className="collaborate-view">
 
-              <div className="chats-view">
-                <Chats error={error} interests={friendRequests} isLoading={interestsLoading} onOpen={onOpen} setOnOpen={setOnOpen} />
-              </div>
+            <div className="chats-view">
+              <Chats
+                error={error}
+                interests={friendRequests}
+                isLoading={interestsLoading}
+                conversations={conversations}
+                isConversationsLoading={isConversationsLoading}
+                conversationsError={conversationsError}
+                onOpen={onOpen}
+                setOnOpen={setOnOpen}
+              />
+            </div>
 
-              <div className="ideas-view">
-                <IdeasSection error={postError} isFetching={isLoading} posts={allPosts} />
-              </div>
+            <div className="ideas-view">
+              {location.search === '?=chats' ? <ChatsViewSection /> : <IdeasSection error={postError} isFetching={isPostsLoading} posts={allPosts} />
+              }
+            </div>
 
-            </div >
-          </div >
-
-          {/* MOBILE VIEW BABY */}
-          <div className="mobile-collaborate-page" >
-            <MobileHeader interests={interests} collaboratorPage={true} />
-            <MobileIdeas error={postError} isFetching={isLoading} posts={allPosts} />
           </div >
         </div >
-      )}
-      {onOpen && <div className='overlay' onClick={() => setOnOpen(false)} />}
+
+        {/* MOBILE VIEW BABY */}
+        <div className="mobile-collaborate-page" >
+          <MobileHeader isInterestLoading={interestsLoading} isLoading={isConversationsLoading} conversations={conversations} interests={friendRequests} collaboratorPage={true} />
+          <MobileIdeas error={postError} isFetching={isPostsLoading} posts={allPosts} />
+        </div >
+      </div >
+
+      {onOpen &&
+        <div
+          className='overlay'
+          role='button'
+          onClick={() => setOnOpen(false)}
+        />
+      }
 
       {onOpen && (
         <ModalContainer>

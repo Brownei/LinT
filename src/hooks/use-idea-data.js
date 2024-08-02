@@ -3,11 +3,11 @@ import { api } from "../utils/api"
 
 
 async function getIdeaData(id) {
-    const {data} = await api.get(`/posts/${id}`)
-    return data
+  const { data } = await api.get(`/posts/${id}`)
+  return data.particularPost
 }
 
 export const useIdeaData = (id) => useQuery({
-    queryKey: ['all-posts', id],
-    queryFn: () => getIdeaData(id),
+  queryKey: ['all-posts', id],
+  queryFn: () => getIdeaData(id),
 })

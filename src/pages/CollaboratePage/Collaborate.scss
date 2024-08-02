@@ -39,11 +39,10 @@
       width: 1100px;
 
       .collaborate-view {
-        display: block;
+        display: flex;
         position: absolute;
         align-self: stretch;
         align-items: stretch;
-        display: flex;
         flex: 1;
         top: 0px;
         bottom: 0px;
@@ -51,7 +50,7 @@
         right: 0px;
 
         .chats-view {
-          max-width: 470px;
+          max-width: 600px;
           width: 100%;
           margin-left: auto;
           margin-right: auto;
@@ -64,7 +63,7 @@
         }
 
         .ideas-view {
-          max-width: calc(100% - 500px);
+          max-width: calc(100% - 630px);
           width: 100%;
           margin-left: auto;
           margin-right: auto;
