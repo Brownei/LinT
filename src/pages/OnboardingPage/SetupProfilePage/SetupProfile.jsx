@@ -12,12 +12,15 @@ import { toast } from 'sonner';
 import { ActionIcon, Button, Input, InputLabel, Textarea, TextInput } from '@mantine/core';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import CountrySelect from '../../../components/CountrySelect';
-import { useCurrentUser } from '../../../hooks/use-current-user';
+import { useMediaQuery } from 'react-responsive';
 import { useSettingProfileStore } from '../../../hooks/use-auth-store';
 import { useGlobalContext } from '../../../context/GlobalContext.jsx'
+import { useAuthStore } from '../../../hooks/use-auth-store';
 
 const SetupProfile = ({ heading }) => {
+  const isMobile = useMediaQuery({ maxWidth: 800 })
   const queryClient = useQueryClient()
+  const setUser = useAuthStore((state) => state.setUser)
   const profile = useSettingProfileStore((state => state?.profile))
   const clearProfile = useSettingProfileStore((state => state.clearProfile))
   const { currentUserLoading: loading, currentUserError: error } = useGlobalContext()
@@ -47,7 +50,7 @@ const SetupProfile = ({ heading }) => {
     },
     onSuccess({ data }) {
       queryClient.invalidateQueries("current-user")
-      console.log(data)
+      setUser(data.userInfo.profile)
       toast.success('Profile set!')
       navigate('/collaborate')
     },
@@ -123,16 +126,16 @@ const SetupProfile = ({ heading }) => {
             <div className="setup">
               <form>
                 <div className='input-field'>
-                  <TextInput disabled={createProfileMutation.isPending} label='Full Name' withAsterisk type="text" name="full-name" id="full-name" placeholder='Full Name' value={profile.fullName} {...register("fullName", { required: true })} />
+                  <TextInput size={isMobile ? 'lg' : 'md'} disabled={createProfileMutation.isPending} label='Full Name' withAsterisk type="text" name="full-name" id="full-name" placeholder='Full Name' value={profile.fullName} {...register("fullName", { required: true })} />
                   {errors.firstName && <span>*Your name is required</span>}
                 </div>
                 <div className='username-email'>
                   <div className='input-field'>
-                    <TextInput disabled={createProfileMutation.isPending} label='Pick a username' withAsterisk type="text" name="username" id="username" placeholder='Username' {...register("username", { required: '*Your username is required', validate: (value) => value === value.toLowerCase() || '*Username must be in lowercase' })} />
+                    <TextInput size={isMobile ? 'lg' : 'md'} disabled={createProfileMutation.isPending} label='Pick a username' withAsterisk type="text" name="username" id="username" placeholder='Username' {...register("username", { required: '*Your username is required', validate: (value) => value === value.toLowerCase() || '*Username must be in lowercase' })} />
                     {errors.username && <span>{errors.username.message}</span>}
                   </div>
                   <div className='input-field'>
-                    <TextInput disabled={createProfileMutation.isPending} label='Your email address' withAsterisk type="text" name="email" id="email" placeholder='Email' value={profile.email} {...register("email", { required: true })} />
+                    <TextInput size={isMobile ? 'lg' : 'md'} disabled={createProfileMutation.isPending} label='Your email address' withAsterisk type="text" name="email" id="email" placeholder='Email' value={profile.email} {...register("email", { required: true })} />
                     {errors.email && <span>*Your email address is required</span>}
                   </div>
                 </div>
@@ -140,11 +143,11 @@ const SetupProfile = ({ heading }) => {
                 <CountrySelect value={locationValue} setValue={setLocationValue} />
 
                 <div className='input-field profile-bio'>
-                  <Textarea disabled={createProfileMutation.isPending} autosize radius={'8px'} label='Profile Bio' className='textarea' type="text" name="bio" id="bio" placeholder='Tell us more about you' {...register("bio", { required: true })} />
+                  <Textarea size={isMobile ? 'lg' : 'md'} minRows={5} disabled={createProfileMutation.isPending} autosize label='Profile Bio' className='textarea' type="text" name="bio" id="bio" placeholder='Tell us more about you' {...register("bio", { required: true })} />
                 </div>
 
                 <div className='input-field profile-tag'>
-                  <TextInput disabled={createProfileMutation.isPending} label='Profile Tag' withAsterisk type="text" name="profile-tag" id="profile-tag" placeholder='E.g FullStack Developer' {...register("profileTag", { required: true })} />
+                  <TextInput size={isMobile ? 'lg' : 'md'} disabled={createProfileMutation.isPending} label='Profile Tag' withAsterisk type="text" name="profile-tag" id="profile-tag" placeholder='E.g FullStack Developer' {...register("profileTag", { required: true })} />
                   {errors.profileTag && <span>*Your profile tag is required</span>}
                 </div>
 
@@ -171,7 +174,7 @@ const SetupProfile = ({ heading }) => {
               </form>
 
               <div className='progress'>
-                <Button disabled={createProfileMutation.isPending} type='button' onClick={handleSubmit(onSubmit)}>Save</Button>
+                <button className='button' disabled={createProfileMutation.isPending} type='button' onClick={handleSubmit(onSubmit)}>Save</button>
                 {/* <button onClick={() => navigate('/collaborate')} type='button'>Skip</button> */}
               </div>
 

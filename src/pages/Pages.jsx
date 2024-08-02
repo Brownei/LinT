@@ -17,11 +17,51 @@ import MobileInterests from '../components/Mobile/MobileInterests/MobileInterest
 import MessagesPage from './MessagesPage/MessagesPage';
 import ParticularConversation from './ParticularConversation/ParticularConversation';
 import { debounce } from 'lodash';
+import { getToken } from '../utils/api';
+import { useAuthStore } from '../hooks/use-auth-store';
 
 const Pages = () => {
   const location = useLocation()
   const navigate = useNavigate()
-  const token = sessionStorage.getItem('lint_session')
+  const token = getToken()
+  const user = useAuthStore((state) => state?.user)
+  const initialData = {
+    bio: "",
+    createdAt: "",
+    fullName: "",
+    id: 0,
+    links: [],
+    location: "",
+    occupation: "",
+    profileImage: "",
+    userId: 0,
+    username: "",
+  }
+
+  function areObjectsEqual(obj1, obj2) {
+    // Get the keys of both objects
+    const keys1 = Object.keys(obj1);
+    const keys2 = Object.keys(obj2);
+
+    // Check if the number of keys is different
+    if (keys1.length !== keys2.length) {
+      return false;
+    }
+
+    // Create a set of all keys in both objects
+    const allKeys = new Set([...keys1, ...keys2]);
+    allKeys.delete('links')
+
+    // Check if all keys and values are the same
+    for (let key of allKeys) {
+      if (obj1[key] !== obj2[key]) {
+        console.log('Onjects aint d same')
+        return false;
+      }
+    }
+
+    return true;
+  }
 
   const navigateProperly = useCallback(debounce((path) => {
     navigate(path, { replace: true })
@@ -35,14 +75,31 @@ const Pages = () => {
     ) {
       console.log('Bugging as hell 1')
       navigateProperly('/auth/login')
+    } else if (
+      token &&
+      areObjectsEqual(user, initialData) &&
+      location.pathname !== 'auth/login' &&
+      location.pathname !== 'auth/create-account'
+    ) {
+      console.log('Got here!')
+      console.log(user === initialData)
+      navigateProperly('/setup-profile')
     };
   }, [token])
 
   useEffect(() => {
-    if (token && location.pathname.startsWith('/auth')) {
+    if (
+      token &&
+      areObjectsEqual(user, initialData) &&
+      location.pathname.startsWith('/auth')
+    ) {
+      console.log('Bugging ad hell 3')
+      navigateProperly("/setup-profile")
+    } else if (token && location.pathname.startsWith('/auth')) {
+      console.log(areObjectsEqual(user, initialData))
       console.log('Bugging as hell 2')
       navigateProperly("/collaborate")
-    };
+    }
   }, [token])
 
 

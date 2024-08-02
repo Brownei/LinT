@@ -3,7 +3,8 @@ import axios from "axios";
 export const getToken = () => {
   if (typeof window !== "undefined") {
     // Client-side-only code
-    return sessionStorage.getItem("lint_session");
+    const unParsedToken = sessionStorage.getItem("lint_session");
+    return JSON.parse(unParsedToken)
   } else {
     return "";
   }

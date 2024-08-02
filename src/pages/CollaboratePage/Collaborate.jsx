@@ -25,6 +25,8 @@ const Collaborate = () => {
   const [friendRequests, setFriendRequests] = useState([])
   const [allPosts, setAllPosts] = useState([])
 
+
+  console.log(user)
   useEffect(() => {
     if (posts) {
       setAllPosts(posts);

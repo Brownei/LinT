@@ -8,6 +8,7 @@ import axios from 'axios';
 import { useAuthStore, useSettingProfileStore } from '../../../hooks/use-auth-store';
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
+import { getToken } from '../../../utils/api';
 // import { useCurrentUser } from '../../../hooks/use-current-user';
 
 const Login = () => {
@@ -32,7 +33,11 @@ const Login = () => {
       })
     },
     onSuccess({ data }) {
-      sessionStorage.setItem('lint_session', data.sessionCookie)
+      if (getToken()) {
+        sessionStorage.removeItem('lint_session')
+      }
+
+      sessionStorage.setItem('lint_session', JSON.stringify(data.sessionCookie))
       queryClient.invalidateQueries('current-user')
 
       if (data.userInfo.profile === null) {
@@ -44,6 +49,8 @@ const Login = () => {
       }
     },
   });
+
+  console.log(getToken())
 
   async function handleGoogleSignIn() {
     try {
@@ -71,7 +78,12 @@ const Login = () => {
       })
     },
     onSuccess({ data }) {
-      sessionStorage.setItem('lint_session', data.sessionCookie)
+      if (getToken()) {
+        sessionStorage.removeItem('lint_session')
+      }
+      console.log(data.sessionCookie)
+
+      sessionStorage.setItem('lint_session', JSON.stringify(data.sessionCookie))
 
       if (data.userInfo.profile === null) {
         setProfile(data.userInfo)
@@ -172,7 +184,7 @@ const Login = () => {
 
             <div className='few-details'>
               <p>Do not have an account?</p>
-              <Link to={'/create-account'}>
+              <Link to={'/auth/create-account'}>
                 <button className='button' type='button'>Create Account</button>
               </Link>
 

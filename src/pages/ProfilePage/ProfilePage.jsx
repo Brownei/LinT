@@ -27,7 +27,8 @@ const ProfilePage = () => {
   const { data: collaborators, isLoading: isCollaboratorsLoading, error: collaboratorsError } = useAllCollaborators()
   const userLocation = user?.location.split(',');
   const location = useLocation()
-  const formattedDate = formatDate(user?.createdAt, "yyyy-MM-dd")
+  console.log(user)
+  const formattedDate = formatDate(user.createdAt, "yyyy-MM-dd")
   const signOutMutation = useMutation({
     mutationFn: () => {
       return api.post(`/auth/logout`)

@@ -10,6 +10,7 @@ import { useSettingProfileStore } from '../../../hooks/use-auth-store'
 import { toast } from 'sonner'
 import { useForm } from 'react-hook-form'
 import { Button } from '@mantine/core'
+import { getToken } from '../../../utils/api'
 
 const Register = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -33,7 +34,11 @@ const Register = () => {
       })
     },
     onSuccess({ data }) {
-      sessionStorage.setItem('lint_session', data.sessionCookie)
+      if (getToken()) {
+        sessionStorage.removeItem('lint_session')
+      }
+
+      sessionStorage.setItem('lint_session', JSON.stringify(data.sessionCookie))
       setProfile(data.userInfo)
 
       if (data.userInfo.profile === null) {
@@ -60,7 +65,11 @@ const Register = () => {
       })
     },
     onSuccess({ data }) {
-      sessionStorage.setItem('lint_session', data.sessionCookie)
+      if (getToken()) {
+        sessionStorage.removeItem('lint_session')
+      }
+
+      sessionStorage.setItem('lint_session', JSON.stringify(data.sessionCookie))
       setProfile(data.userInfo)
 
       if (data.userInfo.profile === null) {
