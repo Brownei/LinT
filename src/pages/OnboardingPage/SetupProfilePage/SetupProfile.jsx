@@ -53,6 +53,9 @@ const SetupProfile = ({ heading }) => {
       setUser(data.userInfo.profile)
       toast.success('Profile set!')
       navigate('/collaborate')
+      if (data.error) {
+        toast.error('Error here i guess')
+      }
     },
     onError() {
       toast.error('Something wrong happened!')
