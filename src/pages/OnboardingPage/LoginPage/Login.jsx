@@ -25,7 +25,7 @@ const Login = () => {
 
   const googleLoginMutation = useMutation({
     mutationFn: (token) => {
-      return axios.post('http://localhost:3131/auth/google/login', {}, {
+      return axios.post('https://api.lintapp.com/auth/google/login', {}, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
