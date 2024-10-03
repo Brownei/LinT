@@ -17,10 +17,18 @@
         gap: 0px;
 
         p {
-          font-weight: 400;
-          font-size: 16px;
-          line-height: 22px;
-          margin: 2px;
+          span {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 22px;
+            margin: 2px;
+          }
+
+          .expanded {
+            color: #3338C1;
+            font-size: 14px;
+            cursor: pointer;
+          }
         }
 
         .occupation {
@@ -42,6 +50,7 @@
         img {
           width: 90px;
           height: 90px;
+          object-fit: cover;
           border: 1px solid transparent;
           border-radius: 100%;
         }
@@ -112,7 +121,12 @@
 
                 }
 
+                .mobile-edit-profile {
+                  display: none;
+                }
+
                 .edit-profile {
+                  display: block;
                   text-decoration: none;
                   padding: 10px 60px;
                   border-radius: 24px;
@@ -306,6 +320,7 @@
           gap: 0px;
 
           img {
+            object-fit: cover;
             width: 48px;
             height: 48px;
           }
@@ -320,10 +335,21 @@
                     display: none;
                   }
 
-                  .edit-profile {
-                    padding: 10px 20px;
+                  .mobile-edit-profile {
+                    text-decoration: none;
+                    display: block;
+                    padding: 10px;
+                    border-radius: 24px;
+                    border: 1px solid #00034A;
+                    background-color: #E6E6F7;
+                    color: #00034A;
+                    font-weight: 600;
                     border-radius: 22px;
-                    font-size: 14px;
+                    font-size: 13px;
+                  }
+
+                  .edit-profile {
+                    display: none;
                   }
                 }
 
@@ -371,11 +397,19 @@
           }
 
           p {
-            padding: 0px;
-            margin: 0px;
-            font-size: 14px;
-            line-height: 22px;
-            font-weight: 400;
+            span {
+              padding: 0px;
+              margin: 0px;
+              font-size: 14px;
+              line-height: 22px;
+              font-weight: 400;
+            }
+
+            .expanded {
+              color: #3338C1;
+              font-size: 14px;
+              cursor: pointer;
+            }
           }
         }
 
@@ -424,8 +458,8 @@
           }
 
           .user-ideas {
-            .loading {
-              width: 100%;
+            .mobile-loading {
+              text-align: center;
             }
 
             .information {
@@ -434,6 +468,10 @@
             }
 
             .users-ideas {
+              .mobile-loading {
+                text-align: center;
+              }
+
               .information {
                 font-size: 20px;
                 width: 100%;
@@ -463,6 +501,10 @@
           }
 
           .interests-section {
+            .mobile-loading {
+              text-align: center;
+            }
+
             .interest-section {
               .posts {
                 display: grid;
@@ -479,6 +521,12 @@
 
         .coll-1 {
           display: none;
+
+          div {
+            .mobile-loading {
+              text-align: center;
+            }
+          }
         }
       }
     }

@@ -28,7 +28,7 @@ const CreatePostPage = () => {
     },
     onSuccess() {
       toast.success('Post created')
-      queryClient.invalidateQueries('all-posts')
+      //queryClient.invalidateQueries('all-posts')
       navigate('/collaborate')
     },
     onError() {
@@ -88,8 +88,9 @@ const CreatePostPage = () => {
             <h1>Collaborate Today!</h1>
 
             <div className='input-title'>
-              <TextInput size={isMobile ? 'lg' : 'md'} disabled={createCollabMutation.isPending} radius={isMobile ? 'lg' : 'md'} className='text-inputs' label='Project Title' withAsterisk error={!!errors.title} placeholder="Input your project Idea" {...register("title", { required: true })} />
-              {errors.title && (<p className='error'>*We need the topic of the project</p>)}
+              <TextInput size={isMobile ? 'lg' : 'md'} disabled={createCollabMutation.isPending} radius={isMobile ? 'lg' : 'md'} className='text-inputs' label='Project Title' withAsterisk error={!!errors.title} placeholder="Input your project Idea" {...register("title", { required: true, maxLength: 30 })} />
+              {errors.title && errors.title.type === 'maxLength' && (<p className='error'>*Title seems too long</p>)}
+              {errors.title && errors.title.type === 'required' && (<p className='error'>*We need the topic of the project</p>)}
             </div>
 
             <div className='input-description'>

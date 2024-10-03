@@ -14,6 +14,7 @@ const App = () => {
     defaultOptions: { queries: { staleTime: 8 * 60 * 60 * 1000, gcTime: 1000 * 60 * 60 * 24 } }
   })
 
+
   return (
     <div id="homepage">
       <MantineProvider>
@@ -34,7 +35,6 @@ const App = () => {
               position="bottom-center"
               richColors
             />
-
           </GlobalProvider>
         </QueryClientProvider>
       </MantineProvider>

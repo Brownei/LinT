@@ -7,18 +7,20 @@ import { toast } from 'sonner';
 import { api } from '../../../utils/api';
 
 const InterestsSection = ({ interest, onOpen, setOnOpen }) => {
-  const { data: particularInterest, isLoading, error } = useParticularInterest(interest.id)
   const queryClient = useQueryClient()
   const acceptRequest = useMutation({
     mutationFn: () => {
       return api.put(`collaborators/requests/${interest.id}/accept`, {
-        senderId: particularInterest.sender.id
+        senderId: interest.sender.id
       })
     },
     onSuccess({ data }) {
-      console.log(data)
-      queryClient.invalidateQueries('all-interests')
-      toast.success('Accepted!')
+      if (data.error === null && data.success !== null) {
+        queryClient.invalidateQueries('all-interests')
+        toast.success('Accepted!')
+      } else {
+        toast.error(data.error.message)
+      }
     },
     onError(err) {
       console.log(err)

@@ -12,44 +12,65 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { api } from '../../utils/api'
 import SendingMessagePopup from '../../components/MessagePopup/SendingMessagePopup'
 import moment from 'moment'
-import { useEffect, useState } from 'react'
-import { pusherClient } from '../../utils/pusherClient'
+import { useEffect, useRef, useState } from 'react'
 import { useAuthStore } from '../../hooks/use-auth-store'
+import { useGlobalContext } from '../../context/GlobalContext'
 
 const ParticularConversation = () => {
   const { id } = useParams()
   const user = useAuthStore((state) => state?.user)
-  const [allMessages, setAllMessages] = useState([])
+  const [sentMessages, setSentMessages] = useState([])
+  const { setMessages, messages } = useGlobalContext()
+  const sendingMessage = document.getElementById('main-sending-message')
+  const messageEnding = document.getElementById('ending')
   const queryClient = useQueryClient()
   const { data: conversation, isLoading, error } = useParticularConversation(id)
-  const { data: messages, isLoading: isMessagesLoading } = useAllMessages(id)
+  const { data: allMessages, isLoading: isMessagesLoading } = useAllMessages(id)
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     mode: 'onSubmit'
   })
-  const image = conversation?.creatorId === user.id ? conversation?.recipient.profileImage : conversation?.creator.profileImage
-  const occupation = conversation?.creatorId === user.id ? conversation?.recipient.occupation : conversation?.creator.occupation
-  const fullName = conversation?.creatorId === user.id ? conversation?.recipient.fullName : conversation?.creator.fullName
-
-  const sendMessageMutation = useMutation({
-    mutationFn: async (inputData) => {
-      const { data } = await api.post(`/messages/${conversation.id}`, {
-        content: inputData.message
-      })
-
-      return data.messages
-    },
-    onSettled: () => queryClient.invalidateQueries({ queryKey: ['all-messages'] }),
-  })
-
-  async function onSubmit(data) {
-    reset({ message: '' })
-    await sendMessageMutation.mutateAsync(data)
-  }
 
   const sendingMessageVariables = {
     id: 1,
     profileImage: user.profileImage,
     fullName: user.fullName,
+  }
+
+  function scrollToBottom() {
+    sendingMessage?.scrollIntoView({
+      behavior: 'smooth'
+    })
+    messageEnding?.scrollIntoView({
+      behavior: 'smooth'
+    })
+  };
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages, sendingMessageVariables])
+
+
+  const sendMessageMutation = useMutation({
+    mutationFn: async (inputData) => {
+      setSentMessages((prev) => [...prev, inputData.message])
+
+      await api.post(`/messages/${conversation.id}`, {
+        content: inputData.message
+      })
+      await queryClient.cancelQueries({ queryKey: ['all-messages'] })
+
+      //const prev = queryClient.getQueryData(['all-messages'])
+    },
+    onSuccess: (data) => {
+      console.log(data)
+      setSentMessages((prev) => prev.filter((_, index) => index !== 0));
+      queryClient.invalidateQueries({ queryKey: ['all-messages'] })
+    },
+  })
+
+  async function onSubmit(data) {
+    reset({ message: '' })
+    await sendMessageMutation.mutateAsync(data)
   }
 
   function groupMessagesByDay(messages) {
@@ -64,26 +85,12 @@ const ParticularConversation = () => {
   };
 
   useEffect(() => {
-    if (messages) {
-      setAllMessages(messages)
+    if (!isMessagesLoading && allMessages) {
+      setMessages(allMessages)
+      scrollToBottom()
     }
-  }, [messages]);
+  }, [isMessagesLoading, allMessages]);
 
-  useEffect(() => {
-    pusherClient.subscribe(id)
-
-    function messageHandler(message) {
-      console.log(message)
-      setAllMessages((prev) => [...prev, message])
-    }
-
-    pusherClient.bind('new-message', messageHandler)
-
-    return () => {
-      pusherClient.unsubscribe(id)
-      pusherClient.unbind('new-message', messageHandler)
-    }
-  }, [])
 
   return (
     <main id='particular-conversation-page'>
@@ -98,14 +105,15 @@ const ParticularConversation = () => {
           <button onClick={() => window.history.back()} className='back-button'>
             <span>
               <Icon icon={'tabler:arrow-left'} fontSize={23} color='#0006B1' />
-              {fullName}
+              {conversation.creatorId === user.id ? conversation.recipient.fullName : conversation.creator.fullName}
             </span>
           </button>
 
           <div className='content'>
-            <img src={image} />
-            <h1>{fullName}</h1>
-            <p>{occupation}</p>
+            <img src={conversation.creatorId === user.id ? conversation.recipient.profileImage : conversation.creator.profileImage} />
+            <h1>{conversation.creatorId === user.id ? conversation.recipient.fullName : conversation.creator.fullName}</h1>
+            <p>{conversation?.creatorId === user.id ? conversation?.creator.occupation : conversation?.recipient.occupation}</p>
+
           </div>
           <Divider my='md' />
 
@@ -116,16 +124,21 @@ const ParticularConversation = () => {
               </div>
             ) : (
               <div className='message'>
-                {Object.keys(groupMessagesByDay(allMessages))?.map((date) => (
+                {Object.keys(groupMessagesByDay(messages))?.map((date) => (
                   <div key={date}>
                     <p className='date'>{moment(date).format('MMMM Do YYYY')}</p>
-                    {groupMessagesByDay(allMessages)[date]?.map((message) => (
+                    {groupMessagesByDay(messages)[date]?.map((message) => (
                       <MessagePopup message={message} />
                     ))}
                   </div>
                 ))}
                 {sendMessageMutation.isPending && (
-                  <SendingMessagePopup userInfo={sendingMessageVariables} content={sendMessageMutation.variables.message} />
+                  <div>
+                    {sentMessages.map((message) => (
+                      <SendingMessagePopup userInfo={sendingMessageVariables} message={message} />
+
+                    ))}
+                  </div>
                 )}
                 {sendMessageMutation.isError && (
                   <div style={{ color: 'red' }}>
@@ -142,7 +155,7 @@ const ParticularConversation = () => {
               </div>
             )}
           </div>
-
+          <div id='ending' />
           <MessageInput handleSubmit={handleSubmit} onSubmit={onSubmit} register={register} />
         </div>
       )}

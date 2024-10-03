@@ -25,14 +25,6 @@ const EditProfilePage = () => {
     window.addEventListener("resize", autoResize);
   }, [bio]);
 
-  if (isLoading) {
-    return (
-      <div className="loader">
-        <ClipLoader color="#0006B1" size={30} />
-      </div>
-    )
-  }
-
   return (
     <main id='edit-profile-page'>
       <div className='edit-profile-page'>

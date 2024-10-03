@@ -1,14 +1,24 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 
 export const GlobalContext = createContext();
 
 export const GlobalProvider = ({ children }) => {
   const [selectedConversationId, setSelectedConversationId] = useState('')
+  const [posts, setPosts] = useState([])
+  const [conversations, setConversations] = useState([])
+  const [messages, setMessages] = useState([])
 
-  const value = {
+  const value = useMemo(() => ({
     selectedConversationId,
-    setSelectedConversationId
-  }
+    setSelectedConversationId,
+    setMessages,
+    messages,
+    setConversations,
+    conversations,
+    posts,
+    setPosts
+  }))
+
   return (
     <GlobalContext.Provider value={value}>
       {children}
