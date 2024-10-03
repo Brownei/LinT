@@ -46,6 +46,7 @@
           width: 90px;
           height: 90px;
           border: 1px solid transparent;
+          object-fit: cover;
           border-radius: 100%;
         }
 
@@ -336,6 +337,7 @@
 
           img {
             width: 48px;
+            object-fit: cover;
             height: 48px;
           }
 

@@ -4,7 +4,6 @@ import { api } from "../utils/api"
 
 async function getAllMessages(id) {
   const { data } = await api.get(`messages/${id}`)
-  console.log(data)
   return data
 }
 

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { setSessionExpired } from "../hooks/use-session-store";
 
 export const getToken = () => {
   if (typeof window !== "undefined") {
@@ -27,6 +28,30 @@ api.interceptors.request.use(
   }
 );
 
+// Response interceptor to handle specific status codes
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      if (typeof window !== "undefined") {
+        setSessionExpired(true);
+      }
+    } else if (error.request) {
+      if (typeof window !== "undefined" && !navigator.onLine) {
+        console.log("Root", error);
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
+
+export async function getUserProfile() {
+  const { data } = await api.get(`/auth/user`)
+  console.log(data.userInfo)
+  return data.userInfo
+}
+
 export async function usingAnotherBearerRequest(token, method, url) {
   const controller = new AbortController();
   const signal = controller.signal;
@@ -44,11 +69,8 @@ export async function usingAnotherBearerRequest(token, method, url) {
     return response;
   } catch (error) {
     if (error.code === "ECONNABORTED" || error.message === "canceled") {
-      // Request was cancelled due to timeout
       throw new Error("Request timed out");
     } else if (!error.response) {
-      // Handle network errors
-      // throw new Error("Network error: Please check your internet connection");
     } else return error;
     // throw error; // Re-throw other errors
   }

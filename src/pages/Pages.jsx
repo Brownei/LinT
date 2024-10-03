@@ -19,10 +19,15 @@ import ParticularConversation from './ParticularConversation/ParticularConversat
 import { debounce } from 'lodash';
 import { getToken } from '../utils/api';
 import { useAuthStore } from '../hooks/use-auth-store';
+import Provider from '../provider/Provider';
+import { useSessionStore } from '../hooks/use-session-store';
+import { areObjectsEqual } from '../utils/common';
 
 const Pages = () => {
   const location = useLocation()
   const navigate = useNavigate()
+  const clear = useAuthStore((state) => state?.clear)
+  //const sessionExpired = useSessionStore((store) => store.sessionExpired);
   const token = getToken()
   const user = useAuthStore((state) => state?.user)
   const initialData = {
@@ -36,31 +41,6 @@ const Pages = () => {
     profileImage: "",
     userId: 0,
     username: "",
-  }
-
-  function areObjectsEqual(obj1, obj2) {
-    // Get the keys of both objects
-    const keys1 = Object.keys(obj1);
-    const keys2 = Object.keys(obj2);
-
-    // Check if the number of keys is different
-    if (keys1.length !== keys2.length) {
-      return false;
-    }
-
-    // Create a set of all keys in both objects
-    const allKeys = new Set([...keys1, ...keys2]);
-    allKeys.delete('links')
-
-    // Check if all keys and values are the same
-    for (let key of allKeys) {
-      if (obj1[key] !== obj2[key]) {
-        console.log('Onjects aint d same')
-        return false;
-      }
-    }
-
-    return true;
   }
 
   const navigateProperly = useCallback(debounce((path) => {
@@ -102,30 +82,30 @@ const Pages = () => {
     }
   }, [token])
 
-
   return (
     <section className='pages'>
       <Routes location={location}>
         {token ? (
           <>
-            <Route index element={<Navigate replace to={'collaborate'} />} />
-            <Route path='/' element={<Layout />}>
-              <Route path="collaborate" element={<Collaborate />} />
-              <Route path='profile' element={<ProfilePage />} />
-              <Route path='notifications' element={<Notifications />} />
-              <Route path='collaborate/:id' element={<ParticularCollaboratePage />} />
-              <Route path='profile/edit' element={<EditProfilePage />} />
-              <Route path=':username' element={<UserProfilePage />} />
-              <Route path='collaborate/interests' element={<MobileInterests />} />
-              <Route path='messages' element={<MessagesPage />} />
-            </Route>
+            <Route element={<Provider />}>
+              <Route index element={<Navigate replace to={'collaborate'} />} />
+              <Route path='/' element={<Layout />}>
+                <Route path="collaborate" element={<Collaborate />} />
+                <Route path='profile' element={<ProfilePage />} />
+                <Route path='notifications' element={<Notifications />} />
+                <Route path='collaborate/:id' element={<ParticularCollaboratePage />} />
+                <Route path='profile/edit' element={<EditProfilePage />} />
+                <Route path=':username' element={<UserProfilePage />} />
+                <Route path='collaborate/interests' element={<MobileInterests />} />
+                <Route path='messages' element={<MessagesPage />} />
+              </Route>
 
-            <Route element={<AuthWrapper />}>
-              <Route path='messages/:id' element={<ParticularConversation />} />
-              <Route path='collaborate/create-post' element={<CreatePostPage />} />
+              <Route element={<AuthWrapper />}>
+                <Route path='messages/:id' element={<ParticularConversation />} />
+                <Route path='collaborate/create-post' element={<CreatePostPage />} />
+              </Route>
             </Route>
             <Route path='setup-profile' element={<SetupProfile heading={'Set up your profile'} />} />
-
           </>
         ) : (
           <>

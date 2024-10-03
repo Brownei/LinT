@@ -4,8 +4,7 @@ import './MessagePopup.scss'
 
 const MessagePopup = ({ message }) => {
   const user = useAuthStore((state) => state?.user)
-  console.log(message)
-  const userInfo = message.creatorId === user.id ? message.conversation.creator : message.conversation.recipient
+  const userInfo = message.creatorId === message.conversation.creator.id ? message.conversation.creator : message.conversation.recipient
   const me = message.creatorId === user.id ? 'mine' : 'message-popup'
 
   function format(date) {
@@ -18,7 +17,7 @@ const MessagePopup = ({ message }) => {
       <div className='message-popup-contents'>
         <div className='message-popup-deets'>
           <p>{userInfo.fullName}</p>
-          <span>{format(userInfo.createdAt)}</span>
+          <span>{format(message.createdAt)}</span>
         </div>
 
         <p>{message.content}</p>

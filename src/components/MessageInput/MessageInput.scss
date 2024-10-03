@@ -1,19 +1,13 @@
-#message-input {
-  display: none;
-}
-
-
-@media screen and (max-width: 800px) {
-  #message-input {
+#mess {
+  .message-input {
     display: block;
     position: fixed;
+    max-width: calc(100% - 530px);
     width: 100%;
     z-index: 20;
     background-color: #fff;
     padding: 20px;
     bottom: 0;
-    left: 0;
-    right: 0;
 
     .input {
       outline: none;
@@ -30,6 +24,47 @@
     .send {
       cursor: pointer;
     }
+  }
 
+  .mobile-message-input {
+    display: none;
+  }
+}
+
+
+@media screen and (max-width: 800px) {
+  #mess {
+    .mobile-message-input {
+      display: block;
+      position: fixed;
+      width: 100%;
+      z-index: 20;
+      background-color: #fff;
+      padding: 20px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+
+      .input {
+        outline: none;
+        border: none;
+
+        span {
+          display: flex;
+          gap: 10px;
+        }
+      }
+
+      .image,
+      .emojis,
+      .send {
+        cursor: pointer;
+      }
+
+    }
+
+    .message-input {
+      display: none;
+    }
   }
 }

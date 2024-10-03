@@ -13,20 +13,22 @@ import ModalContainer from "../../components/Modal/ModalContainer";
 import ChatsViewSection from "../../components/Chats/ChatsViewSection/ChatsViewSection";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../hooks/use-auth-store";
+import { useConversationStore } from "../../hooks/use-conversations-store";
+import { getSocket, initializeSocket, useSocketListener } from "../../utils/socket";
+import { useGlobalContext } from "../../context/GlobalContext";
+import { all } from "axios";
 
 const Collaborate = () => {
   const { data: interests, isLoading: interestsLoading, error } = useAllInterests()
-  const { data: conversations, isLoading: isConversationsLoading, error: conversationsError } = useAllConversations()
+  const { data: allConversations, isLoading: isConversationsLoading, error: conversationsError } = useAllConversations()
+  const { setConversations, conversations } = useGlobalContext()
   const { data: posts, isLoading: isPostsLoading, error: postError } = useAllPosts()
-  const user = useAuthStore((state) => state?.user)
   const location = useLocation()
   const [onOpen, setOnOpen] = useState()
   const queryClient = useQueryClient()
   const [friendRequests, setFriendRequests] = useState([])
   const [allPosts, setAllPosts] = useState([])
 
-
-  console.log(user)
   useEffect(() => {
     if (posts) {
       setAllPosts(posts);
@@ -35,41 +37,15 @@ const Collaborate = () => {
     if (interests) {
       setFriendRequests(interests)
     }
-  }, [posts, interests]);
 
-  useEffect(() => {
-    pusherClient.subscribe('posts')
-
-    function postsHandler(data) {
-      setAllPosts((prev) => [data, ...prev])
-      // queryClient.refetchQueries('all-posts')
+    if (allConversations) {
+      const initialConversations = allConversations.map((conversation) => ({
+        ...conversation,
+        read: false, // Default to unread (false)
+      }));
+      setConversations(initialConversations);
     }
-
-    pusherClient.bind('all-posts', postsHandler)
-
-    return () => {
-      pusherClient.unsubscribe('posts')
-      pusherClient.unbind('all-posts', postsHandler)
-    }
-  }, [posts])
-
-  useEffect(() => {
-    pusherClient.subscribe(String(user.id))
-    console.log("listening to ", `user:${user.id}:incoming_collaborator_requests`)
-
-    function friendRequestHandler(requests) {
-      console.log(requests)
-      setFriendRequests((prev) => [requests, ...prev])
-    }
-
-    pusherClient.bind('incoming_collaborator_requests', friendRequestHandler)
-
-    return () => {
-      pusherClient.unsubscribe(String(user?.id))
-      pusherClient.unbind('incoming_collaborator_requests', friendRequestHandler)
-    }
-  }, [user?.id, interests])
-
+  }, [posts, interests, allConversations]);
 
   return (
     <main id="collaborate-page">
@@ -91,7 +67,7 @@ const Collaborate = () => {
             </div>
 
             <div className="ideas-view">
-              {location.search === '?=chats' ? <ChatsViewSection /> : <IdeasSection error={postError} isFetching={isPostsLoading} posts={allPosts} />
+              {location.search.includes('?=chats') ? <ChatsViewSection /> : <IdeasSection error={postError} isFetching={isPostsLoading} posts={allPosts} />
               }
             </div>
 

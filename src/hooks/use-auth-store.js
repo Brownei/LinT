@@ -29,7 +29,7 @@ export const useAuthStore = create(
   )
 )
 
-const profileState = {
+export const profileState = {
   profile: {
     email: "",
     emailVerified: "",
@@ -48,7 +48,7 @@ export const useSettingProfileStore = create(
       clearProfile: () => set(profileState)
     }),
     {
-      name: "profile-store",
+      name: "profile-storage",
     }
   )
 )

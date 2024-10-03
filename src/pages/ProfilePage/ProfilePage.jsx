@@ -14,14 +14,18 @@ import { formatDate } from 'date-fns';
 import { formatDate as dateFormater } from '../../utils/formatDate';
 import { useMutation } from "@tanstack/react-query";
 import { api } from '../../utils/api';
-import { useSession } from '../../hooks/use-session';
 import { useSentRequests } from '../../hooks/use-requests-sent';
 import { useAllCollaborators } from '../../hooks/use-collaborators';
 import { useAuthStore } from '../../hooks/use-auth-store';
+import { useState } from 'react';
+import { useMediaQuery } from "react-responsive";
 
 const ProfilePage = () => {
+  const isMobile = useMediaQuery({ maxWidth: 800 })
+  const maxChars = 200
   const user = useAuthStore((state) => state?.user)
-  const { signOut } = useSession()
+  const clear = useAuthStore((state) => state?.clear)
+  const [expanded, setExpanded] = useState(false)
   const { data: posts, isLoading: isFetching, error } = useUserPosts(user?.username)
   const { data: sentInterests, isLoading: isFetchingSentRequests, error: sentRequestsError } = useSentRequests()
   const { data: collaborators, isLoading: isCollaboratorsLoading, error: collaboratorsError } = useAllCollaborators()
@@ -34,9 +38,15 @@ const ProfilePage = () => {
       return api.post(`/auth/logout`)
     },
     onSuccess() {
-      signOut()
+      clear()
+      window.location.assign('/auth/login')
+      sessionStorage.removeItem("lint_session");
     },
   });
+
+  function handlesShowMoreOrLess() {
+    setExpanded(!expanded)
+  }
 
 
   function getTheLastElement() {
@@ -89,6 +99,7 @@ const ProfilePage = () => {
                   {location.pathname.includes(user.username) || location.pathname === '/profile' ? (
                     <div className='buttons'>
                       <Link to={'/profile/edit'} className='edit-profile'>Edit Profile</Link>
+                      <Link to={'/profile/edit'} className='mobile-edit-profile'>Edit Profile</Link>
                       <button className='logout' disabled={signOutMutation.isPending} onClick={async () => await signOutMutation.mutateAsync()}>{signOutMutation.isPending ? (
                         <span>
                           <Icon className='logout-button' icon={'formkit:spinner'} color={'#E30000'} fontSize={20} />
@@ -127,7 +138,12 @@ const ProfilePage = () => {
           </div>
           <div className='div'>
             <p className='occupation'>{user.occupation}</p>
-            <p>{user.bio}</p>
+            <p>
+              <span>{expanded ? user.bio : `${user.bio.slice(0, maxChars)}...`}</span>
+              <span className='expanded' onClick={handlesShowMoreOrLess}>
+                {expanded ? '   show less' : '   show more'}
+              </span>
+            </p>
           </div>
 
         </div>
@@ -135,7 +151,12 @@ const ProfilePage = () => {
         <div className='mobile-unnecessary'>
           <div className='mobile-profile-info'>
             <p className='occupation'>{user.occupation}</p>
-            <p>{user.bio}</p>
+            <p>
+              <span>{expanded ? user.bio : `${user.bio.slice(0, maxChars)}...`}</span>
+              <span className='expanded' onClick={handlesShowMoreOrLess}>
+                {expanded ? '   show less' : '   show more'}
+              </span>
+            </p>
           </div>
 
           <div className='mobile-icons'>
@@ -168,7 +189,7 @@ const ProfilePage = () => {
             {location.search === '?query=collaborations' ? (
               <div className='user-ideas'>
                 {isFetching ? (
-                  <div className='loading'>
+                  <div className={isMobile ? 'mobile-loading' : 'loading'}>
                     <ClipLoader color='#3338C1' />
                   </div>
                 ) : error ? (<p className='information'>Wanna refresh?..</p>) : (
@@ -192,7 +213,7 @@ const ProfilePage = () => {
             ) : location.search === '?query=interests' ? (
               <div className='interests-section'>
                 {isFetchingSentRequests ? (
-                  <div className='loading'>
+                  <div className={isMobile ? 'mobile-loading' : 'loading'}>
                     <ClipLoader color='#3338C1' />
                   </div>
                 ) : sentRequestsError ? (<p>Error</p>) : (
@@ -212,7 +233,7 @@ const ProfilePage = () => {
             ) : (
               <div className='posts-section'>
                 {isFetching ? (
-                  <div className='loading'>
+                  <div className={isMobile ? 'mobile-loading' : 'loading'}>
                     <ClipLoader color='#3338C1' />
                   </div>
                 ) : error ? (<p>Error</p>) : (
@@ -236,8 +257,8 @@ const ProfilePage = () => {
             <h3>Collaborations</h3>
             <div>
               {isCollaboratorsLoading ? (
-                <div>
-                  <ClipLoader />
+                <div className={isMobile ? 'mobile-loading' : 'loading'}>
+                  <ClipLoader color='#3338C1' />
                 </div>
               ) : collaborators.length <= 0 ? (
                 <span>
