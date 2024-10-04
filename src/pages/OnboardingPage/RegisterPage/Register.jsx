@@ -5,13 +5,15 @@ import { useMutation } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import axios from 'axios'
-import { createAccountWithCredentials, signInWithGoogle } from '../../../utils/firebase'
+import { createAccountWithCredentials, firebaseErrorBypass, signInWithGoogle } from '../../../utils/firebase'
 import { useAuthStore, useSettingProfileStore } from '../../../hooks/use-auth-store'
 import { toast } from 'sonner'
 import { useForm } from 'react-hook-form'
 import { Button } from '@mantine/core'
 import { getToken } from '../../../utils/api'
 import { FirebaseError } from 'firebase/app'
+import { errorToast } from '../../../utils/toast'
+import { deleteUser, updatePassword } from 'firebase/auth'
 
 const Register = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -106,7 +108,6 @@ const Register = () => {
     try {
       setIsLoading(true)
       const userCredentials = await createAccountWithCredentials(data.email, data.password)
-      console.log(userCredentials)
       const accessToken = await userCredentials.user.getIdToken()
       await emailAndPasswordRegisterMutation.mutateAsync({
         token: accessToken,
@@ -114,11 +115,28 @@ const Register = () => {
       })
     } catch (error) {
       if (error instanceof FirebaseError) {
+        console.log(error.message.split(' ')[2] === '(auth/email-already-in-use).')
         if (error.message.split(' ')[2] === '(auth/email-already-in-use).') {
-          toast.error('Email already in use!')
+          console.log(data)
+          try {
+            await deleteUser({
+              email: data.email
+            })
+
+            const credentials = await createAccountWithCredentials(data.email, data.password)
+            const accessToken = await credentials.user.getIdToken();
+            await emailAndPasswordRegisterMutation.mutateAsync({
+              token: accessToken,
+              data
+            })
+          } catch (error) {
+            console.log(error)
+          }
         }
+      } else {
+        errorToast('Not an instanceof FirebaseError')
+        console.log(error)
       }
-      console.log(error.response)
     } finally {
       setIsLoading(false)
     }

@@ -27,7 +27,7 @@ const Pages = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const clear = useAuthStore((state) => state?.clear)
-  //const sessionExpired = useSessionStore((store) => store.sessionExpired);
+  const sessionExpired = useSessionStore((store) => store.sessionExpired);
   const token = getToken()
   const user = useAuthStore((state) => state?.user)
   const initialData = {
@@ -57,6 +57,13 @@ const Pages = () => {
       navigateProperly('/auth/login')
     } else if (
       token &&
+      sessionExpired === true &&
+      location.pathname !== 'auth/login' &&
+      location.pathname !== 'auth/create-account'
+    ) {
+      navigateProperly('/auth/login')
+    } else if (
+      token &&
       areObjectsEqual(user, initialData) &&
       location.pathname !== 'auth/login' &&
       location.pathname !== 'auth/create-account'
@@ -73,11 +80,8 @@ const Pages = () => {
       areObjectsEqual(user, initialData) &&
       location.pathname.startsWith('/auth')
     ) {
-      console.log('Bugging ad hell 3')
       navigateProperly("/setup-profile")
     } else if (token && location.pathname.startsWith('/auth')) {
-      console.log(areObjectsEqual(user, initialData))
-      console.log('Bugging as hell 2')
       navigateProperly("/collaborate")
     }
   }, [token])

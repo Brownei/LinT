@@ -2,7 +2,6 @@ import "./MobileInterests.scss"
 import { useEffect, useState } from "react"
 import { ClipLoader } from "react-spinners"
 import InterestsSection from "../../Chats/InterestsSection/InterestsSection"
-import { pusherClient } from "../../../utils/pusherClient"
 import MessagesPage from "../../../pages/MessagesPage/MessagesPage"
 import { useQueryClient } from "@tanstack/react-query"
 import { useAuthStore } from "../../../hooks/use-auth-store"
@@ -25,23 +24,6 @@ const MobileInterests = () => {
       setFriendRequests(interests)
     }
   }, [interests]);
-
-  useEffect(() => {
-    pusherClient.subscribe(String(user.id))
-    console.log("listening to ", `user:${user.id}:incoming_collaborator_requests`)
-
-    function friendRequestHandler(requests) {
-      console.log(requests)
-      setFriendRequests((prev) => [requests, ...prev])
-    }
-
-    pusherClient.bind('incoming_collaborator_requests', friendRequestHandler)
-
-    return () => {
-      pusherClient.unsubscribe(String(user.id))
-      pusherClient.unbind('incoming_collaborator_requests', friendRequestHandler)
-    }
-  }, [user.id])
 
   useEffect(() => {
     queryClient.invalidateQueries('all-interests')

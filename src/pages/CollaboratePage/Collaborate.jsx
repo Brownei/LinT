@@ -7,7 +7,6 @@ import { useAllConversations } from "../../hooks/use-conversations";
 import { useState, useEffect } from "react";
 import MobileHeader from "../../components/Mobile/MobileHeader/MobileHeader";
 import MobileIdeas from "../../components/Mobile/MobileIdeas/MobileIdeas";
-import { pusherClient } from "../../utils/pusherClient";
 import { useQueryClient } from "@tanstack/react-query";
 import ModalContainer from "../../components/Modal/ModalContainer";
 import ChatsViewSection from "../../components/Chats/ChatsViewSection/ChatsViewSection";
@@ -21,21 +20,21 @@ import { all } from "axios";
 const Collaborate = () => {
   const { data: interests, isLoading: interestsLoading, error } = useAllInterests()
   const { data: allConversations, isLoading: isConversationsLoading, error: conversationsError } = useAllConversations()
-  const { setConversations, conversations } = useGlobalContext()
+  const { setConversations, conversations, setPosts, posts: allPosts, setInterests, interests: friendRequests } = useGlobalContext()
   const { data: posts, isLoading: isPostsLoading, error: postError } = useAllPosts()
   const location = useLocation()
   const [onOpen, setOnOpen] = useState()
   const queryClient = useQueryClient()
-  const [friendRequests, setFriendRequests] = useState([])
-  const [allPosts, setAllPosts] = useState([])
+  //const [friendRequests, setFriendRequests] = useState([])
+  //const [allPosts, setAllPosts] = useState([])
 
   useEffect(() => {
     if (posts) {
-      setAllPosts(posts);
+      setPosts(posts);
     }
 
     if (interests) {
-      setFriendRequests(interests)
+      setInterests(interests)
     }
 
     if (allConversations) {

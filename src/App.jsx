@@ -22,18 +22,20 @@ const App = () => {
           <GlobalProvider>
             <Pages />
             <Toaster
-              toastOptions={{
-                // unstyled: true,
-                style: { display: 'flex', alignItems: 'center', justifyContent: 'center' },
-                classNames: {
-                  error: '.error',
-                  success: '.success',
-                  warning: '.warning',
-                  info: '.info',
-                }
-              }}
               position="bottom-center"
-              richColors
+              toastOptions={{
+                duration: 3000,
+                style: {
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontFamily: "Inter, sans-serif",
+                  fontSize: '14px',
+                  fontWeight: '400',
+                  padding: '10px',
+                  textAlign: 'center'
+                },
+              }}
             />
           </GlobalProvider>
         </QueryClientProvider>

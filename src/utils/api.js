@@ -48,7 +48,6 @@ api.interceptors.response.use(
 
 export async function getUserProfile() {
   const { data } = await api.get(`/auth/user`)
-  console.log(data.userInfo)
   return data.userInfo
 }
 

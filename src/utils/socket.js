@@ -35,7 +35,7 @@ export const getSocket = () => {
 
 export const useSocketListener = (
   eventType,
-  setMessages,
+  setNewData,
   queryKey,
   handleMessageWell
 ) => {
@@ -44,8 +44,14 @@ export const useSocketListener = (
     const handleSocketMessage = (message) => {
       const newMessage = JSON.parse(message)
       queryClient.invalidateQueries({ queryKey: [queryKey] })
-      handleMessageWell(newMessage.conversationId)
-      setMessages((prev) => [...prev, newMessage])
+
+      if (newMessage.conversationId) {
+        handleMessageWell(newMessage.conversationId)
+      } else if (newMessage.post && newMessage.sender) {
+        handleMessageWell(newMessage.collaboratorsRequest.sender.fullName)
+      }
+
+      setNewData((prev) => [...prev, newMessage])
       console.log(`${eventType} Socket Message`, newMessage);
     };
 

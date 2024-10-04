@@ -11,6 +11,7 @@ import { getUserProfile } from '../../utils/api';
 import { useAuthStore } from '../../hooks/use-auth-store';
 
 export default function Layout() {
+  const user = useAuthStore((state) => state?.user)
   const setUser = useAuthStore((state) => state?.setUser)
   const { id } = useParams()
   const location = useLocation()
@@ -19,7 +20,6 @@ export default function Layout() {
     async function fetchData() {
       // You can await here
       const response = await getUserProfile();
-      console.log(response);
 
       if (response?.profile !== undefined || null) {
         setUser(response?.profile)
@@ -28,6 +28,7 @@ export default function Layout() {
       }
       // ...
     }
+
     fetchData();
   }, []);
 

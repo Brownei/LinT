@@ -15,7 +15,6 @@ const Chats = ({ interests, isLoading, error, onOpen, setOnOpen, conversations: 
   let numberOfChats = conversations?.length
   const chatsSection = location.search.startsWith('?=chats') && 'chat-chats'
   const isNotRead = conversations.filter((conversation) => conversation.read === false)
-  console.log(isNotRead)
 
   useEffect(() => {
     if (!isConversationsLoading) {

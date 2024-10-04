@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useMediaQuery } from "react-responsive";
+import { infoToast, successToast } from '../../utils/toast';
 
 
 const CreatePostPage = () => {
@@ -27,8 +28,8 @@ const CreatePostPage = () => {
       })
     },
     onSuccess() {
-      toast.success('Post created')
-      //queryClient.invalidateQueries('all-posts')
+      infoToast('Post created')
+      queryClient.invalidateQueries('all-posts')
       navigate('/collaborate')
     },
     onError() {

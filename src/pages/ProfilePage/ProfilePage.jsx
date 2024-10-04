@@ -31,7 +31,6 @@ const ProfilePage = () => {
   const { data: collaborators, isLoading: isCollaboratorsLoading, error: collaboratorsError } = useAllCollaborators()
   const userLocation = user?.location.split(',');
   const location = useLocation()
-  console.log(user)
   const formattedDate = formatDate(user.createdAt, "yyyy-MM-dd")
   const signOutMutation = useMutation({
     mutationFn: () => {
@@ -139,23 +138,26 @@ const ProfilePage = () => {
           <div className='div'>
             <p className='occupation'>{user.occupation}</p>
             <p>
-              <span>{expanded ? user.bio : `${user.bio.slice(0, maxChars)}...`}</span>
-              <span className='expanded' onClick={handlesShowMoreOrLess}>
-                {expanded ? '   show less' : '   show more'}
-              </span>
+              <span>{expanded && user.bio.length < maxChars ? user.bio : `${user.bio.slice(0, maxChars)}...`}</span>
+              {user.bio.length > maxChars && (
+                <span className='expanded' onClick={handlesShowMoreOrLess}>
+                  {expanded ? '   show less' : '   show more'}
+                </span>
+              )}
             </p>
           </div>
-
         </div>
 
         <div className='mobile-unnecessary'>
           <div className='mobile-profile-info'>
             <p className='occupation'>{user.occupation}</p>
             <p>
-              <span>{expanded ? user.bio : `${user.bio.slice(0, maxChars)}...`}</span>
-              <span className='expanded' onClick={handlesShowMoreOrLess}>
-                {expanded ? '   show less' : '   show more'}
-              </span>
+              <span>{expanded && user.bio.length < maxChars ? user.bio : `${user.bio.slice(0, maxChars)}...`}</span>
+              {user.bio.length > maxChars && (
+                <span className='expanded' onClick={handlesShowMoreOrLess}>
+                  {expanded ? '   show less' : '   show more'}
+                </span>
+              )}
             </p>
           </div>
 
