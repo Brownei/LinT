@@ -13,14 +13,13 @@
       padding: 10px;
 
       .div {
-        max-width: 502px;
+        max-width: 426px;
         gap: 0px;
 
         p {
           span {
             font-weight: 400;
             font-size: 16px;
-            line-height: 22px;
             margin: 2px;
           }
 
@@ -258,7 +257,15 @@
 
           .loading {
             width: 650px;
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+
+          .mobile-loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
           }
 
           .information {
@@ -379,11 +386,12 @@
       }
 
       .mobile-unnecessary {
-        display: grid;
+        display: block;
         margin-top: 8px;
         gap: 8px;
 
         .mobile-profile-info {
+          width: 100%;
           display: grid;
           gap: 8px;
 
@@ -391,6 +399,7 @@
             padding: 0px;
             margin: 0px;
             color: #4B4B4B;
+            text-transform: capitalize;
             font-weight: 600;
             font-size: 14px;
             line-height: 20px;
@@ -401,6 +410,7 @@
               padding: 0px;
               margin: 0px;
               font-size: 14px;
+              width: 100%;
               line-height: 22px;
               font-weight: 400;
             }
@@ -459,7 +469,9 @@
 
           .user-ideas {
             .mobile-loading {
-              text-align: center;
+              display: flex;
+              justify-content: center;
+              align-items: center;
             }
 
             .information {
@@ -469,7 +481,9 @@
 
             .users-ideas {
               .mobile-loading {
-                text-align: center;
+                display: flex;
+                justify-content: center;
+                align-items: center;
               }
 
               .information {
@@ -502,7 +516,9 @@
 
           .interests-section {
             .mobile-loading {
-              text-align: center;
+              display: flex;
+              justify-content: center;
+              align-items: center;
             }
 
             .interest-section {
@@ -524,7 +540,9 @@
 
           div {
             .mobile-loading {
-              text-align: center;
+              display: flex;
+              justify-content: center;
+              align-items: center;
             }
           }
         }

@@ -3,11 +3,12 @@ import './IdeasSection.scss'
 import Ideas from '../../Card/Ideas'
 import { Link } from 'react-router-dom'
 import { ClipLoader } from 'react-spinners'
+import { useMediaQuery } from 'react-responsive'
 // import { toast } from 'sonner'
 // import { infoToast } from '../../../utils/toast'
 
 const IdeasSection = ({ isFetching, error, posts }) => {
-
+  const isMobile = useMediaQuery({ maxWidth: 800 })
 
   // function renderMyToast() {
   // 	infoToast('TOAST RENDERED')
@@ -25,7 +26,7 @@ const IdeasSection = ({ isFetching, error, posts }) => {
           <div className='all-ideas'>
             {isFetching ? (
               <div className='loading'>
-                <ClipLoader color="#0006B1" fontSize={30} />
+                <ClipLoader size={isMobile ? 20 : 30} color='#3338C1' />
               </div>
             ) : error ? (<p className='information'>Wanna refresh?..</p>) : (
               <div>

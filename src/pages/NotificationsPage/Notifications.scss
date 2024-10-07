@@ -15,11 +15,46 @@
     margin-left: 180px;
     width: 628px;
 
+    .notification-loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 30px;
+      text-align: center;
+      color: #8F9191;
+      width: 155px;
+    }
+
     .notifications {
+      width: 100%;
+
+      .empty-state {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 30px;
+        text-align: center;
+        color: #8F9191;
+        width: 155px;
+      }
 
       .particulare-notif {
+        width: 500px;
         padding: 16px;
         cursor: pointer;
+
+        img {
+          width: 24px;
+          height: 24px;
+          border: 1px solid transparent;
+          border-radius: 100%;
+        }
 
         &:hover {
           background-color: #F5F5F5;
@@ -39,12 +74,28 @@
       width: 100%;
       margin-left: 0px;
 
+      .notification-loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 65dvh;
+      }
+
       .notifications {
         display: grid;
+        width: 100%;
         gap: 16px;
         margin-bottom: 100px;
 
+        .empty-state {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 65dvh;
+        }
+
         .particulare-notif {
+          width: 100%;
           background-color: #E6E6F7;
         }
       }

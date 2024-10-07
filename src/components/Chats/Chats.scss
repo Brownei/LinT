@@ -124,6 +124,15 @@
     }
 
     .chat-section {
+      border: 1px solid black;
+
+      .conversation-loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        max-width: calc(100% - 530px);
+        width: 100%;
+      }
 
       input {
         padding: 16px;

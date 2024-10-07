@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useMediaQuery } from "react-responsive";
-import { infoToast, successToast } from '../../utils/toast';
+import { errorToast, infoToast, successToast } from '../../utils/toast';
 
 
 const CreatePostPage = () => {
@@ -33,7 +33,7 @@ const CreatePostPage = () => {
       navigate('/collaborate')
     },
     onError() {
-      toast.error('Error creating your idea!')
+      errorToast('Error creating your idea!')
     }
   });
 
@@ -42,7 +42,7 @@ const CreatePostPage = () => {
       await createCollabMutation.mutateAsync(data)
     } catch (error) {
       console.log(error)
-      toast.error(error.message)
+      errorToast(error.message)
     }
   }
 

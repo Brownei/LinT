@@ -22,6 +22,7 @@ import { useAuthStore } from '../hooks/use-auth-store';
 import Provider from '../provider/Provider';
 import { useSessionStore } from '../hooks/use-session-store';
 import { areObjectsEqual } from '../utils/common';
+import { errorToast } from '../utils/toast';
 
 const Pages = () => {
   const location = useLocation()
@@ -61,7 +62,8 @@ const Pages = () => {
       location.pathname !== 'auth/login' &&
       location.pathname !== 'auth/create-account'
     ) {
-      navigateProperly('/auth/login')
+      console.log(sessionExpired)
+      errorToast('Session done expire!')
     } else if (
       token &&
       areObjectsEqual(user, initialData) &&

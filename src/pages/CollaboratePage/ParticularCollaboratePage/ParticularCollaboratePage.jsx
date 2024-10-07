@@ -7,11 +7,13 @@ import RequestModal from '../../../components/RequestModal/RequestModal'
 import { useState } from 'react'
 import LanguageIcons from '../../../components/LanguageIcons/LanguageIcons'
 import { useAuthStore } from '../../../hooks/use-auth-store'
+import { useMediaQuery } from 'react-responsive'
 
 const ParticularCollaboratePage = () => {
   const [onOpen, setOnOpen] = useState()
   const { id } = useParams()
   const { data: particularpost, error, isLoading } = useIdeaData(id)
+  const isMobile = useMediaQuery({ maxWidth: 800 })
   const user = useAuthStore((state) => state?.user)
 
   console.log(particularpost)
@@ -19,7 +21,7 @@ const ParticularCollaboratePage = () => {
     <main id='particular-page'>
       {isLoading ? (
         <div className='loader'>
-          <ClipLoader color="#0006B1" fontSize={30} />
+          <ClipLoader size={isMobile ? 20 : 30} color='#3338C1' />
         </div>
       ) : error ? (
         <div>You might wanna refresh big boy!</div>

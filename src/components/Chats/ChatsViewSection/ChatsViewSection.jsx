@@ -14,12 +14,14 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { api } from '../../../utils/api'
 import { useEffect, useState } from 'react'
+import { useMediaQuery } from 'react-responsive'
 
 const ChatsViewSection = () => {
   const { setMessages, messages } = useGlobalContext()
   const sendingMessage = document.getElementById('main-sending-message')
   const messageEnding = document.getElementById('ending')
   const navigate = useNavigate()
+  const isMobile = useMediaQuery({ maxWidth: 800 })
   const queryClient = useQueryClient()
   const user = useAuthStore((state) => state?.user)
   const location = useLocation()
@@ -33,10 +35,12 @@ const ChatsViewSection = () => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     mode: 'onSubmit'
   })
-  const { data: conversation, isLoading, error } = useParticularConversation(id)
+  //const { data: conversation, isLoading, error } = useParticularConversation(id)
+  const { conversations } = useGlobalContext()
   const [sentMessages, setSentMessages] = useState([])
   const { data: allMessages, isFetching: isMessagesFetching, isLoading: isMessagesLoading } = useAllMessages(id)
   console.log(sentMessages)
+  const conversation = id !== '' ? conversations.find((conversation) => conversation.id === id) : {}
 
   function scrollToBottom() {
     //console.log({ messageEnding, sendingMessage })
@@ -101,15 +105,15 @@ const ChatsViewSection = () => {
 
   return (
     <main id='chats-view-section'>
-      {
-        isLoading || isMessagesLoading ? (
-          <div className='loader-messages'>
-            <ClipLoader size={30} color={'#0006B1'} />
-          </div >
-        ) : (
-          <div className='chats-view-details'>
-            {locationSplit[3] !== undefined ? (
-              <div className='all-details'>
+      <div className='chats-view-details'>
+        {id !== '' ? (
+          <div className='all-details'>
+            {isMessagesLoading ? (
+              <div className='loader-messages'>
+                <ClipLoader size={isMobile ? 20 : 30} color='#3338C1' />
+              </div>
+            ) : (
+              <>
                 <div className='main-header'>
                   <h1>{conversation.creatorId === user.id ? conversation.recipient.fullName : conversation.creator.fullName}</h1>
                   <CloseIcon size={20} onClick={() => navigate('?=chats')} />
@@ -122,53 +126,55 @@ const ChatsViewSection = () => {
                 <Divider />
 
                 <div className='message-container'>
-                  {isMessagesLoading ? (
-                    <div>
-                      <ClipLoader />
-                    </div>
-                  ) : (
-                    <div className='message'>
-                      {Object.keys(groupMessagesByDay(messages))?.map((date, index) => (
-                        <div key={index}>
-                          <p className='date-container'>
-                            <hr className="date-line" />
-                            <span className='date'>{moment(date).format('MMMM Do YYYY')}</span>
-                          </p>
-                          {groupMessagesByDay(messages)[date]?.map((message) => (
-                            <MessagePopup message={message} />
-                          ))}
-                        </div>
-                      ))}
-                      {sendMessageMutation.isPending && (
-                        <div>
-                          {sentMessages.map((message) => (
-                            <SendingMessagePopup userInfo={sendingMessageVariables} message={message} />
+                  <div className='message'>
+                    {Object.keys(groupMessagesByDay(messages))?.map((date, index) => (
+                      <div key={index}>
+                        <p className='date-container'>
+                          <hr className="date-line" />
+                          <span className='date'>{moment(date).format('MMMM Do YYYY')}</span>
+                        </p>
+                        {groupMessagesByDay(messages)[date]?.map((message) => (
+                          <MessagePopup message={message} />
+                        ))}
+                      </div>
+                    ))}
+                    {sendMessageMutation.isPending && (
+                      <div>
+                        {sentMessages.map((message) => (
+                          <SendingMessagePopup userInfo={sendingMessageVariables} message={message} />
 
-                          ))}
-                        </div>
-                      )}
-                      {sendMessageMutation.isError && (
-                        <div style={{ color: 'red' }}>
-                          {sendMessageMutation.variables}
-                          <button
-                            onClick={() =>
-                              sendMessageMutation.mutate(sendMessageMutation.variables)
-                            }
-                          >
-                            Retry
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  )}
+                        ))}
+                      </div>
+                    )}
+                    {sendMessageMutation.isError && (
+                      <div style={{ color: 'red' }}>
+                        {sendMessageMutation.variables}
+                        <button
+                          onClick={() =>
+                            sendMessageMutation.mutate(sendMessageMutation.variables)
+                          }
+                        >
+                          Retry
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <div id='ending' />
-                <MessageInput handleSubmit={handleSubmit} onSubmit={onSubmit} register={register} />
-              </div>
-            ) : 'Select Messages and start collabing'}
+              </>
+            )}
+
+            <div id='ending' />
+            <MessageInput handleSubmit={handleSubmit} onSubmit={onSubmit} register={register} />
           </div>
-        )
-      }
+        ) : (
+          <h1 className='no-conversation'>
+            <span>Select Messages</span>
+            <br />
+            <span>Start Collaborating!</span>
+          </h1>
+        )}
+      </div>
+
 
     </main>
   )

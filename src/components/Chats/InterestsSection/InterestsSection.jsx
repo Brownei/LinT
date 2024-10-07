@@ -5,6 +5,7 @@ import { useParticularInterest } from '../../../hooks/use-particular-interest';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { api } from '../../../utils/api';
+import { errorToast, successToast } from '../../../utils/toast';
 
 const InterestsSection = ({ interest, onOpen, setOnOpen }) => {
   const queryClient = useQueryClient()
@@ -15,11 +16,12 @@ const InterestsSection = ({ interest, onOpen, setOnOpen }) => {
       })
     },
     onSuccess({ data }) {
-      if (data.error === null && data.success !== null) {
+      console.log(data)
+      if (!data.error) {
         queryClient.invalidateQueries('all-interests')
-        toast.success('Accepted!')
+        successToast('Accepted!')
       } else {
-        toast.error(data.error.message)
+        errorToast(data.error.message)
       }
     },
     onError(err) {

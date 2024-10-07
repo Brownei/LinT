@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './ProfilePage.scss';
 import Ideas from '../../components/Card/Ideas';
 import ProfileInterests from '../../components/Card/ProfileInterests'
@@ -19,11 +19,13 @@ import { useAllCollaborators } from '../../hooks/use-collaborators';
 import { useAuthStore } from '../../hooks/use-auth-store';
 import { useState } from 'react';
 import { useMediaQuery } from "react-responsive";
+import { filter } from 'lodash';
 
 const ProfilePage = () => {
   const isMobile = useMediaQuery({ maxWidth: 800 })
   const maxChars = 200
   const user = useAuthStore((state) => state?.user)
+  const navigate = useNavigate()
   const clear = useAuthStore((state) => state?.clear)
   const [expanded, setExpanded] = useState(false)
   const { data: posts, isLoading: isFetching, error } = useUserPosts(user?.username)
@@ -32,21 +34,16 @@ const ProfilePage = () => {
   const userLocation = user?.location.split(',');
   const location = useLocation()
   const formattedDate = formatDate(user.createdAt, "yyyy-MM-dd")
-  const signOutMutation = useMutation({
-    mutationFn: () => {
-      return api.post(`/auth/logout`)
-    },
-    onSuccess() {
-      clear()
-      window.location.assign('/auth/login')
-      sessionStorage.removeItem("lint_session");
-    },
-  });
 
   function handlesShowMoreOrLess() {
     setExpanded(!expanded)
   }
 
+  function signOut() {
+    clear()
+    window.location.assign('/auth/login')
+    sessionStorage.removeItem("lint_session");
+  }
 
   function getTheLastElement() {
     const index = userLocation.length
@@ -54,33 +51,9 @@ const ProfilePage = () => {
     return userLocation[index - 1]
   }
 
-  const collaborations = [
-    {
-      id: 1,
-      name: "Brownson Esiti",
-      profession: "Product Designer",
-      image: brownson
-    },
-    {
-      id: 2,
-      name: "Udofiah Gift",
-      profession: "Product Designer",
-      image: gift
-    },
-    {
-      id: 3,
-      name: "Brownson Esiti",
-      profession: "Product Designer",
-      image: brownson
-    },
-    {
-      id: 4,
-      name: "Udofiah Gift",
-      profession: "Product Designer",
-      image: gift
-    },
-  ]
-
+  if (location.search === '?query=collaborations' && !isMobile) {
+    navigate('/profile')
+  }
 
   return (
     <main id="profile-page">
@@ -99,18 +72,14 @@ const ProfilePage = () => {
                     <div className='buttons'>
                       <Link to={'/profile/edit'} className='edit-profile'>Edit Profile</Link>
                       <Link to={'/profile/edit'} className='mobile-edit-profile'>Edit Profile</Link>
-                      <button className='logout' disabled={signOutMutation.isPending} onClick={async () => await signOutMutation.mutateAsync()}>{signOutMutation.isPending ? (
-                        <span>
-                          <Icon className='logout-button' icon={'formkit:spinner'} color={'#E30000'} fontSize={20} />
-                        </span>
-                      ) : (
+                      <button className='logout' onClick={signOut}>
                         <span>
                           <Icon color='#E30000' icon={'mingcute:exit-line'} fontSize={20} />
                         </span>
-                      )}</button>
+                      </button>
                     </div>
                   ) : (
-                    <button className='collabs'>{collaborations.length} Collabs</button>
+                    <button className='collabs'>{collaborators.length} Collabs</button>
                   )}
 
                   <div className='icons'>
@@ -138,7 +107,7 @@ const ProfilePage = () => {
           <div className='div'>
             <p className='occupation'>{user.occupation}</p>
             <p>
-              <span>{expanded && user.bio.length < maxChars ? user.bio : `${user.bio.slice(0, maxChars)}...`}</span>
+              <span>{expanded ? user.bio : `${user.bio.slice(0, maxChars)}...`}</span>
               {user.bio.length > maxChars && (
                 <span className='expanded' onClick={handlesShowMoreOrLess}>
                   {expanded ? '   show less' : '   show more'}
@@ -152,7 +121,7 @@ const ProfilePage = () => {
           <div className='mobile-profile-info'>
             <p className='occupation'>{user.occupation}</p>
             <p>
-              <span>{expanded && user.bio.length < maxChars ? user.bio : `${user.bio.slice(0, maxChars)}...`}</span>
+              <span>{expanded ? user.bio : `${user.bio.slice(0, maxChars)}...`}</span>
               {user.bio.length > maxChars && (
                 <span className='expanded' onClick={handlesShowMoreOrLess}>
                   {expanded ? '   show less' : '   show more'}
@@ -186,13 +155,13 @@ const ProfilePage = () => {
             <div className='idea-collab-nav'>
               <Link className={location.search === '' ? 'active' : 'h3'} to={'/profile'}>Ideas</Link>
               <Link className={location.search === '?query=interests' ? 'active' : 'h3'} to={'/profile?query=interests'}>Interests</Link>
-              <Link className={location.search === '?query=collaborations' ? 'active' : 'coll-link'} to={'/profile?query=collaborations'}>Collaborations</Link>
+              {isMobile && (<Link className={location.search === '?query=collaborations' ? 'active' : 'coll-link'} to={'/profile?query=collaborations'}>Collaborations</Link>)}
             </div>
             {location.search === '?query=collaborations' ? (
               <div className='user-ideas'>
                 {isFetching ? (
                   <div className={isMobile ? 'mobile-loading' : 'loading'}>
-                    <ClipLoader color='#3338C1' />
+                    <ClipLoader color='#3338C1' size={isMobile ? 20 : 30} />
                   </div>
                 ) : error ? (<p className='information'>Wanna refresh?..</p>) : (
                   <div className='users-ideas'>
@@ -202,11 +171,14 @@ const ProfilePage = () => {
                       </p>
                     ) : (
                       <div className='posts'>
-                        {collaborators.map((collaborator, index) => (
-                          <div key={index}>
-                            <Coll collaborations={collaborator.sender} currentUser={user} />
-                          </div>
-                        ))}
+                        {collaborators.map((collaborator, index) => {
+                          const filteredCollaborator = collaborator.sender.id === user.id ? collaborator.receiver : collaborator.sender
+                          return (
+                            <div key={index}>
+                              <Coll collaborations={filteredCollaborator} currentUser={user} />
+                            </div>
+                          )
+                        })}
                       </div>
                     )}
                   </div>
@@ -216,12 +188,12 @@ const ProfilePage = () => {
               <div className='interests-section'>
                 {isFetchingSentRequests ? (
                   <div className={isMobile ? 'mobile-loading' : 'loading'}>
-                    <ClipLoader color='#3338C1' />
+                    <ClipLoader size={isMobile ? 20 : 30} color='#3338C1' />
                   </div>
                 ) : sentRequestsError ? (<p>Error</p>) : (
                   <div className='interest-section'>
                     {sentInterests.length === 0 ? (
-                      <p className='information'>No ideas yet? Share and Collaborate!</p>
+                      <p className='information'>Collaborate now!</p>
                     ) : (
                       <div className='posts'>
                         {sentInterests.map((interests) => (
@@ -236,7 +208,7 @@ const ProfilePage = () => {
               <div className='posts-section'>
                 {isFetching ? (
                   <div className={isMobile ? 'mobile-loading' : 'loading'}>
-                    <ClipLoader color='#3338C1' />
+                    <ClipLoader color='#3338C1' size={isMobile ? 20 : 30} />
                   </div>
                 ) : error ? (<p>Error</p>) : (
                   <div className='post-section'>
@@ -260,7 +232,7 @@ const ProfilePage = () => {
             <div>
               {isCollaboratorsLoading ? (
                 <div className={isMobile ? 'mobile-loading' : 'loading'}>
-                  <ClipLoader color='#3338C1' />
+                  <ClipLoader color='#3338C1' size={isMobile ? 20 : 30} />
                 </div>
               ) : collaborators.length <= 0 ? (
                 <span>
@@ -268,11 +240,14 @@ const ProfilePage = () => {
                 </span>
               ) : (
                 <div className='user-collabs'>
-                  {collaborators.map((collaborator, index) => (
-                    <div key={index}>
-                      <Coll collaborations={collaborator.sender} currentUser={user} />
-                    </div>
-                  ))}
+                  {collaborators.map((collaborator, index) => {
+                    const filteredCollaborator = collaborator.sender.id === user.id ? collaborator.receiver : collaborator.sender
+                    return (
+                      <div key={index}>
+                        <Coll collaborations={filteredCollaborator} currentUser={user} />
+                      </div>
+                    )
+                  })}
                 </div>
               )}
             </div>

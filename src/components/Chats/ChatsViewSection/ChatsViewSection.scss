@@ -29,6 +29,14 @@
     z-index: 0;
     gap: 30px;
 
+    .no-conversation {
+      span {
+        color: #00034A;
+        font-weight: 600;
+        font-size: 46px;
+      }
+    }
+
     .all-details {
       .main-header {
         display: flex;

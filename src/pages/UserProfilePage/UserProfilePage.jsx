@@ -15,6 +15,7 @@ import Ideas from '../../components/Card/Ideas';
 import { useAllCollaborators, useAllCollaboratorsConcerningAUser } from '../../hooks/use-collaborators';
 import { api } from "../../utils/api";
 import { useMutation } from "@tanstack/react-query";
+import { useMediaQuery } from "react-responsive";
 
 const UserProfilePage = () => {
   const { username } = useParams()
@@ -22,6 +23,7 @@ const UserProfilePage = () => {
   const { data: collaborators, isLoading: isCollaboratorsLoading, error: collaboratorsError } = useAllCollaboratorsConcerningAUser(username)
   const { data: profile, isLoading: isFetchingProfile, error: profileError } = useProfile(username)
   const userLocation = profile?.location.split(',')
+  const isMobile = useMediaQuery({ maxWidth: 800 })
   const user = useAuthStore((state) => state?.user)
   const location = useLocation()
   const { data: posts, isLoading: isFetching, error } = useUserPosts(username)
@@ -72,7 +74,7 @@ const UserProfilePage = () => {
   if (isFetchingProfile) {
     return (
       <div className="loader">
-        <ClipLoader color="#0006B1" size={30} />
+        <ClipLoader size={isMobile ? 20 : 30} color='#3338C1' />
       </div>
     )
   }
@@ -182,7 +184,7 @@ const UserProfilePage = () => {
               <div className='user-ideas'>
                 {isFetching ? (
                   <div className='loading'>
-                    <ClipLoader color='#3338C1' />
+                    <ClipLoader size={isMobile ? 20 : 30} color='#3338C1' />
                   </div>
                 ) : error ? (<p className='information'>Wanna refresh?..</p>) : (
                   <p className='information'>Help brother</p>
@@ -192,7 +194,7 @@ const UserProfilePage = () => {
               <div className='interests-section'>
                 {isFetchingSentRequests ? (
                   <div className='loading'>
-                    <ClipLoader color='#3338C1' />
+                    <ClipLoader size={isMobile ? 20 : 30} color='#3338C1' />
                   </div>
                 ) : sentRequestsError ? (<p>Error</p>) : (
                   <div>
@@ -212,7 +214,7 @@ const UserProfilePage = () => {
               <div className='posts-section'>
                 {isFetching ? (
                   <div className='loading'>
-                    <ClipLoader color='#3338C1' />
+                    <ClipLoader size={isMobile ? 20 : 30} color='#3338C1' />
                   </div>
                 ) : error ? (<p>Error</p>) : (
                   <div>
@@ -236,7 +238,7 @@ const UserProfilePage = () => {
             <div className='coll-2'>
               {isCollaboratorsLoading ? (
                 <div className='loading'>
-                  <ClipLoader />
+                  <ClipLoader size={isMobile ? 20 : 30} color='#3338C1' />
                 </div>
               ) : collaborators.length <= 0 ? (
                 <span className='empty-state'>

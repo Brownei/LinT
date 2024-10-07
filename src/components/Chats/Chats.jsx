@@ -7,12 +7,13 @@ import { ClipLoader } from 'react-spinners';
 import ChatsSection from './ChatsSection/ChatsSection';
 import { useEffect } from 'react';
 import { useGlobalContext } from '../../context/GlobalContext';
+import { useMediaQuery } from 'react-responsive';
 
 const Chats = ({ interests, isLoading, error, onOpen, setOnOpen, conversations: allConversations, isConversationsLoading, conversationsError }) => {
   const { setConversations, conversations } = useGlobalContext()
+  const isMobile = useMediaQuery({ maxWidth: 800 })
   const location = useLocation()
   let numberOfInterest = interests?.length
-  let numberOfChats = conversations?.length
   const chatsSection = location.search.startsWith('?=chats') && 'chat-chats'
   const isNotRead = conversations.filter((conversation) => conversation.read === false)
 
@@ -59,40 +60,42 @@ const Chats = ({ interests, isLoading, error, onOpen, setOnOpen, conversations: 
             <span className={location.search.startsWith('?=chats') ? 'active' : ''}></span>
           </div>
         </div>
-        {isLoading ? (
-          <div className='loading'>
-            <ClipLoader fontSize={30} />
-          </div>
-        ) : error ? (
-          <div>You gotta make a little refresh</div>
-        ) : (
-          <div>
-            {location.search.includes('?=chats') ? (
-              <div className='chat-section'>
-                <input type="text" placeholder='Search' />
-                {isConversationsLoading ? (
-                  <div>
-                    <ClipLoader size={30} />
-                  </div>
-                ) : conversationsError ? (
-                  <div>
-                    You gotta refresh big boy
-                  </div>
-                ) :
-                  <div>
-                    {
-                      conversations.map((conversation) => (
-                        <div key={conversation.id}>
-                          <ChatsSection conversation={conversation} handleTap={handleTap} />
-                        </div>
-                      ))
-                    }
-                  </div>
-                }
-              </div>
-            ) : (
-              <div className='interest-section'>
-                {interests?.length > 0 ? (
+        <div>
+          {location.search.includes('?=chats') ? (
+            <div className='chat-section'>
+              <input type="text" placeholder='Search' />
+              {isConversationsLoading ? (
+                <div className='conversation-loading'>
+                  <ClipLoader color='#3338C1' size={isMobile ? 20 : 30} />
+                </div>
+              ) : conversationsError ? (
+                <div>
+                  You gotta refresh big boy
+                </div>
+              ) :
+                <div>
+                  {
+                    conversations.map((conversation) => (
+                      <div key={conversation.id}>
+                        <ChatsSection conversation={conversation} handleTap={handleTap} />
+                      </div>
+                    ))
+                  }
+                </div>
+              }
+            </div>
+          ) : (
+            <div className='interest-section'>
+              {isLoading ? (
+                <div className='loading'>
+                  <ClipLoader color='#3338C1' size={isMobile ? 20 : 30} />
+                </div>
+
+              ) : error ? (
+                <div>You gotta make a little refresh</div>
+
+              ) : (
+                interests?.length > 0 ? (
                   <div className='all-interests'>
                     <span>View people interested in your Idea!!</span>
                     {interests.map((interest) => (
@@ -105,13 +108,13 @@ const Chats = ({ interests, isLoading, error, onOpen, setOnOpen, conversations: 
                   <div className='no-interests'>
                     <p>No interests yet!</p>
                   </div>
-                )}
-              </div>
-            )}
-          </div>
-        )}
+                )
+              )}
+            </div>
+          )}
+        </div>
       </div>
-    </main>
+    </main >
   )
 }
 

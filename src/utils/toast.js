@@ -4,6 +4,7 @@ import { toast } from "sonner";
 export function successToast(information) {
   return toast(information, {
     style: {
+      textAlign: 'center',
       backgroundColor: '#E6F3E7',
       color: '#003704'
     }
@@ -34,6 +35,7 @@ export function errorToast(information) {
 export function warningToast(information) {
   return toast(information, {
     style: {
+      textAlign: 'center',
       backgroundColor: '#F59E0B',
       color: '#000'
     }

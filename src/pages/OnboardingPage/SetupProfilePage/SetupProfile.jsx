@@ -18,6 +18,8 @@ import { useGlobalContext } from '../../../context/GlobalContext.jsx'
 import { useAuthStore } from '../../../hooks/use-auth-store';
 import { useCurrentUser } from '../../../hooks/use-current-user';
 import { areObjectsEqual } from '../../../utils/common';
+import { successToast } from '../../../utils/toast';
+import { create } from 'lodash';
 
 const SetupProfile = ({ heading }) => {
   const isMobile = useMediaQuery({ maxWidth: 800 })
@@ -54,7 +56,7 @@ const SetupProfile = ({ heading }) => {
     onSuccess({ data }) {
       queryClient.invalidateQueries("current-user")
       setUser(data.profile)
-      toast.success('Profile set!')
+      successToast('Profile set!')
       navigate('/collaborate')
       if (data.error) {
         console.log(data.error)
@@ -119,7 +121,7 @@ const SetupProfile = ({ heading }) => {
           <div className="setup">
             <form>
               <div className='input-field'>
-                <TextInput size={isMobile ? 'lg' : 'md'} disabled={createProfileMutation.isPending} label='Full Name' withAsterisk type="text" name="full-name" id="full-name" placeholder='Full Name' value={profile.fullName} {...register('fullName', { required: true })} />
+                <TextInput size={isMobile ? 'lg' : 'md'} disabled={createProfileMutation.isPending} label='Full Name' withAsterisk type="text" name="full-name" id="full-name" placeholder='Full Name' value={profile.fullName === '' ? '' : profile.fullName} {...register('fullName', { required: true })} />
                 {errors.firstName && <span>*Your name is required</span>}
               </div>
               <div className='username-email'>
@@ -167,7 +169,13 @@ const SetupProfile = ({ heading }) => {
             </form>
 
             <div className='progress'>
-              <button className='button' disabled={createProfileMutation.isPending} type='button' onClick={handleSubmit(onSubmit)}>Save</button>
+              <button className='button' disabled={createProfileMutation.isPending} type='button' onClick={handleSubmit(onSubmit)}>
+                {createProfileMutation.isPending ? (
+                  <Icon className='loading-google' icon={'formkit:spinner'} fontSize={22} />
+                ) : (
+                  <span>Save</span>
+                )}
+              </button>
               {/* <button onClick={() => navigate('/collaborate')} type='button'>Skip</button> */}
             </div>
 

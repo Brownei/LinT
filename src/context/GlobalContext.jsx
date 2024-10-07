@@ -4,6 +4,7 @@ export const GlobalContext = createContext();
 
 export const GlobalProvider = ({ children }) => {
   const [selectedConversationId, setSelectedConversationId] = useState('')
+  const [notifications, setNotifications] = useState([])
   const [interests, setInterests] = useState([])
   const [posts, setPosts] = useState([])
   const [conversations, setConversations] = useState([])
@@ -19,12 +20,15 @@ export const GlobalProvider = ({ children }) => {
     posts,
     setPosts,
     interests,
-    setInterests
+    setInterests,
+    notifications,
+    setNotifications
   }), [
     messages,
     conversations,
     posts,
-    interests
+    interests,
+    notifications
   ])
 
   return (

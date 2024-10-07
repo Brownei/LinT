@@ -15,9 +15,11 @@ import moment from 'moment'
 import { useEffect, useRef, useState } from 'react'
 import { useAuthStore } from '../../hooks/use-auth-store'
 import { useGlobalContext } from '../../context/GlobalContext'
+import { useMediaQuery } from 'react-responsive'
 
 const ParticularConversation = () => {
   const { id } = useParams()
+  const isMobile = useMediaQuery({ maxWidth: 800 })
   const user = useAuthStore((state) => state?.user)
   const [sentMessages, setSentMessages] = useState([])
   const { setMessages, messages } = useGlobalContext()
@@ -96,7 +98,7 @@ const ParticularConversation = () => {
     <main id='particular-conversation-page'>
       {isLoading ? (
         <div>
-          <ClipLoader size={30} />
+          <ClipLoader size={isMobile ? 20 : 30} color='#3338C1' />
         </div>
       ) : error ? (
         <div>You might wanna refresh!</div>
@@ -120,7 +122,7 @@ const ParticularConversation = () => {
           <div className='message-container'>
             {isMessagesLoading ? (
               <div>
-                <ClipLoader />
+                <ClipLoader size={isMobile ? 20 : 30} color='#3338C1' />
               </div>
             ) : (
               <div className='message'>

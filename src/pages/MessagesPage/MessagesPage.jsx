@@ -3,23 +3,29 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import './MessagesPage.scss'
 import { useNavigate } from 'react-router-dom'
 import { ClipLoader } from 'react-spinners'
+import { useMediaQuery } from "react-responsive";
 import { useAllInterests } from '../../hooks/use-all-interests';
 import { useAllConversations } from "../../hooks/use-conversations";
 import ChatsSection from '../../components/Chats/ChatsSection/ChatsSection'
 
 const MessagesPage = () => {
+  const isMobile = useMediaQuery({ maxWidth: 800 })
   const { data: interests, isLoading: interestsLoading, error } = useAllInterests()
   const { data: conversations, isLoading: isConversationsLoading, error: conversationsError } = useAllConversations()
   const navigate = useNavigate()
 
   if (interestsLoading) {
     <div className='loader'>
-      <ClipLoader />
+      <ClipLoader size={isMobile ? 20 : 30} color='#3338C1' />
     </div>
   }
 
   if (error || conversationsError) {
     <p>Error o!</p>
+  }
+
+  if (!isMobile) {
+    navigate('/collaborate')
   }
 
   return (
@@ -36,7 +42,7 @@ const MessagesPage = () => {
         <div className='message-content'>
           {isConversationsLoading ? (
             <div className='loader'>
-              <ClipLoader size={30} />
+              <ClipLoader size={isMobile ? 20 : 30} color='#3338C1' />
             </div>
           ) : (
             <div className='content'>

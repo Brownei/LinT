@@ -6,9 +6,11 @@ import { ClipLoader } from 'react-spinners'
 import moment from 'moment'
 import { useGlobalContext } from '../../../context/GlobalContext'
 import { useEffect } from 'react'
+import { useMediaQuery } from 'react-responsive'
 
 const ChatsSection = ({ conversation, handleTap }) => {
   const user = useAuthStore((state) => state?.user)
+  const isMobile = useMediaQuery({ maxWidth: 800 })
   const location = useLocation()
   const { data: messages, isLoading: isMessagesLoading } = useAllMessages(conversation.id)
   const navigate = useNavigate()
@@ -31,7 +33,7 @@ const ChatsSection = ({ conversation, handleTap }) => {
     <>
       {isMessagesLoading ? (
         <div className='loader'>
-          <ClipLoader size={30} color={'#0006B1'} />
+          <ClipLoader color='#3338C1' size={isMobile ? 20 : 30} />
         </div>
       ) : (
         <div id='chats-section' role={location.pathname === '/messages' ? 'link' : 'button'} onClick={onClickHandler}>
@@ -39,9 +41,9 @@ const ChatsSection = ({ conversation, handleTap }) => {
           <div className='details'>
             <div className='details-header'>
               <p className='fullName'>{fullName}</p>
-              <p className='timeDate'>{moment(messages[messages.length - 1].createdAt).format('hh:mm A')}</p>
+              <p className='timeDate'>{messages.length > 0 ? moment(messages[messages.length - 1].createdAt).format('hh:mm A') : ''}</p>
             </div>
-            <p className={messages[messages.length - 1].creatorId === user.id ? 'mine-data' : 'data'}>{messages[messages.length - 1].content}</p>
+            <p className={messages.length > 0 && messages[messages.length - 1].creatorId === user.id ? 'mine-data' : 'data'}>{messages.length > 0 ? messages[messages.length - 1].content : ''}</p>
           </div>
         </div>
       )}

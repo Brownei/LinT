@@ -47,7 +47,7 @@ export const useSocketListener = (
 
       if (newMessage.conversationId) {
         handleMessageWell(newMessage.conversationId)
-      } else if (newMessage.post && newMessage.sender) {
+      } else if (newMessage.post) {
         handleMessageWell(newMessage.collaboratorsRequest.sender.fullName)
       }
 

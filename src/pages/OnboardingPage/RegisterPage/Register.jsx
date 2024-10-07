@@ -13,7 +13,7 @@ import { Button } from '@mantine/core'
 import { getToken } from '../../../utils/api'
 import { FirebaseError } from 'firebase/app'
 import { errorToast } from '../../../utils/toast'
-import { deleteUser, updatePassword } from 'firebase/auth'
+import { updatePassword } from 'firebase/auth'
 
 const Register = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -27,116 +27,68 @@ const Register = () => {
   })
   const password = watch('password')
 
-  const googleRegisterMutation = useMutation({
-    mutationFn: (token) => {
-      return axios.post(`https://api.lintapp.com/auth/google/register`, {}, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
-      })
-    },
-    onSuccess({ data }) {
-      if (getToken()) {
-        sessionStorage.removeItem('lint_session')
-      }
-
-      sessionStorage.setItem('lint_session', JSON.stringify(data.sessionCookie))
-
-      if (data.userInfo.profile === null) {
-        setProfile(data.userInfo)
-        navigate('/setup-profile', { replace: true });
-      } else {
-        setUser(data.userInfo.profile)
-        navigate('/collaborate', { replace: true });
-      }
-    },
-    onError(error) {
-      toast.error(error.message)
-    }
-  });
-
-  const emailAndPasswordRegisterMutation = useMutation({
-    mutationFn: ({ token, data }) => {
-      return axios.post(`https://api.lintapp.com/auth/register`, {
-        password: data.password,
-        fullName: data.fullName
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
-      })
-    },
-    onSuccess({ data }) {
-      if (getToken()) {
-        sessionStorage.removeItem('lint_session')
-      }
-
-      sessionStorage.setItem('lint_session', JSON.stringify(data.sessionCookie))
-      setProfile(data.userInfo)
-      console.log(data.userInfo.profile === null)
-
-      if (data.error) {
-        console.log(data.error)
-        toast.error('error')
-      } else if (data.userInfo.profile === null) {
-        setProfile(data.userInfo)
-        navigate('/setup-profile', { replace: true });
-      } else {
-        setUser(data.userInfo.profile)
-        navigate('/collaborate', { replace: true });
-      }
-
-    },
-    onError(error) {
-      toast.error(error.message)
-    }
-  });
-
   async function handleGoogleRegister() {
+    setIsLoading(true)
     try {
       const userCredentials = await signInWithGoogle();
       const accessToken = await userCredentials.user.getIdToken();
-      await googleRegisterMutation.mutateAsync(accessToken)
+      const response = await axios.post(`http://localhost:3131/auth/google/register`, {
+        accessToken
+      })
+
+      if (response) {
+        const { data } = response
+
+        if (getToken()) {
+          sessionStorage.removeItem('lint_session')
+        }
+
+        sessionStorage.setItem('lint_session', JSON.stringify(data.sessionCookie))
+
+        if (data.userInfo.profile === null) {
+          setProfile(data.userInfo)
+          navigate('/setup-profile', { replace: true });
+        } else {
+          setUser(data.userInfo.profile)
+          navigate('/collaborate', { replace: true });
+        }
+      }
     } catch (error) {
-      console.log(error)
+      errorToast(error.message)
+    } finally {
+      setIsLoading(false)
     }
   }
 
   async function handleCredentialsRegister(data) {
+    setIsLoading(true)
     try {
-      setIsLoading(true)
-      const userCredentials = await createAccountWithCredentials(data.email, data.password)
-      const accessToken = await userCredentials.user.getIdToken()
-      await emailAndPasswordRegisterMutation.mutateAsync({
-        token: accessToken,
-        data
+      const response = await axios.post(`http://localhost:3131/auth/register`, {
+        password: data.password,
+        fullName: data.fullName,
+        email: data.email,
+        emailVerified: false,
+        profileImage: ''
       })
-    } catch (error) {
-      if (error instanceof FirebaseError) {
-        console.log(error.message.split(' ')[2] === '(auth/email-already-in-use).')
-        if (error.message.split(' ')[2] === '(auth/email-already-in-use).') {
-          console.log(data)
-          try {
-            await deleteUser({
-              email: data.email
-            })
 
-            const credentials = await createAccountWithCredentials(data.email, data.password)
-            const accessToken = await credentials.user.getIdToken();
-            await emailAndPasswordRegisterMutation.mutateAsync({
-              token: accessToken,
-              data
-            })
-          } catch (error) {
-            console.log(error)
-          }
+      if (response) {
+        const { data: res } = response
+
+        if (getToken()) {
+          sessionStorage.removeItem('lint_session')
         }
-      } else {
-        errorToast('Not an instanceof FirebaseError')
-        console.log(error)
+
+        if (data.error) {
+          console.log(res.error)
+          errorToast(res.error.response.message)
+        } else {
+          sessionStorage.setItem('lint_session', JSON.stringify(res.sessionCookie))
+          setProfile(res.userInfo)
+          navigate('/setup-profile')
+        }
       }
+    } catch (error) {
+      errorToast(error.message)
     } finally {
       setIsLoading(false)
     }
@@ -207,7 +159,7 @@ const Register = () => {
               </div>
             </div>
 
-            <button type='submit' disabled={isLoading || googleRegisterMutation.isPending || emailAndPasswordRegisterMutation.isPending} className={`register-button ${isLoading && 'loading'}`}>
+            <button type='submit' disabled={isLoading} className={`register-button ${isLoading && 'loading'}`}>
               <span className='text'>
                 Create account
               </span>
@@ -218,8 +170,8 @@ const Register = () => {
           </form>
 
           <div className='other-options'>
-            <button onClick={handleGoogleRegister} type='button' className='google-button' disabled={isLoading || googleRegisterMutation.isPending || emailAndPasswordRegisterMutation.isPending}>
-              {googleRegisterMutation.isPending ? (
+            <button onClick={handleGoogleRegister} type='button' className='google-button' disabled={isLoading}>
+              {isLoading ? (
                 <span className='google-button-check'>
                   <Icon className='loading-google' icon={'formkit:spinner'} fontSize={22} />
                   <span></span>

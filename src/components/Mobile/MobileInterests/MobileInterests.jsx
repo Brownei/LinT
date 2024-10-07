@@ -9,9 +9,11 @@ import { Icon } from "@iconify/react"
 import MobileHeader from "../MobileHeader/MobileHeader"
 import { useNavigate } from "react-router-dom"
 import { useAllInterests } from "../../../hooks/use-all-interests"
+import { useMediaQuery } from "react-responsive";
 import { useAllConversations } from "../../../hooks/use-conversations"
 
 const MobileInterests = () => {
+  const isMobile = useMediaQuery({ maxWidth: 800 })
   const { data: conversations, isLoading: isConversationsLoading, error: conversationsError } = useAllConversations()
   const { data: interests, isLoading: interestsLoading, error } = useAllInterests()
   const user = useAuthStore((state) => state?.user)
@@ -29,6 +31,10 @@ const MobileInterests = () => {
     queryClient.invalidateQueries('all-interests')
   }, [friendRequests])
 
+  if (!isMobile) {
+    navigate('/collaborate')
+  }
+
   return (
     <main id="mobile-interests">
       <button onClick={() => navigate('/collaborate')} className='back-button'>
@@ -41,7 +47,7 @@ const MobileInterests = () => {
 
       {interestsLoading ? (
         <div className='loading'>
-          <ClipLoader fontSize={30} />
+          <ClipLoader size={isMobile ? 20 : 30} color='#3338C1' />
         </div>
       ) : error ? (
         <div className="error">You gotta make a little refresh</div>

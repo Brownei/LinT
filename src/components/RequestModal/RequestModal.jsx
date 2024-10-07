@@ -47,7 +47,7 @@ const RequestModal = ({ post }) => {
       {sendInterestMutation.isPending ? (
         <ModalContainer>
           <div className='loading'>
-            <ClipLoader color="#0006B1" fontSize={30} />
+            <ClipLoader size={isMobile ? 20 : 30} color='#3338C1' />
           </div>
         </ModalContainer>
       ) : sendInterestMutation.isSuccess ? (

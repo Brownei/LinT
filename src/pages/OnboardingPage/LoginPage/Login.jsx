@@ -2,14 +2,13 @@ import './Login.scss'
 import { useState } from 'react';
 import { Icon } from '@iconify/react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { signInWithGoogle, signInWthCredentials } from '../../../utils/firebase';
+import { useQueryClient } from "@tanstack/react-query";
+import { signInWithGoogle } from '../../../utils/firebase';
 import axios from 'axios';
 import { useAuthStore, useSettingProfileStore } from '../../../hooks/use-auth-store';
-import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
 import { getToken } from '../../../utils/api';
-// import { useCurrentUser } from '../../../hooks/use-current-user';
+import { errorToast } from '../../../utils/toast';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -19,102 +18,86 @@ const Login = () => {
   })
   const [showPassword, setShowPassword] = useState(false)
   // const { data: user } = useCurrentUser()
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const setUser = useAuthStore((state) => state.setUser)
   const setProfile = useSettingProfileStore((state) => state.setProfile)
 
-  const googleLoginMutation = useMutation({
-    mutationFn: (token) => {
-      return axios.post('https://api.lintapp.com/auth/google/login', {}, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
-      })
-    },
-    onSettled({ data }) {
-      if (getToken()) {
-        sessionStorage.removeItem('lint_session')
-      }
-
-      sessionStorage.setItem('lint_session', JSON.stringify(data.sessionCookie))
-      queryClient.invalidateQueries('current-user')
-
-      if (data.userInfo.profile === null) {
-        setProfile(data.userInfo)
-        navigate('/setup-profile');
-      } else {
-        setUser(data.userInfo.profile)
-        navigate('/collaborate')
-      }
-    },
-  });
-
-  console.log(getToken())
-
   async function handleGoogleSignIn() {
+    setIsGoogleLoading(true)
     try {
       const userCredentials = await signInWithGoogle();
       const accessToken = await userCredentials.user.getIdToken();
-      await googleLoginMutation.mutateAsync(accessToken)
-    } catch (error) {
-      console.log(error.response?.data)
-      if (error.response?.data.statusCode === 401) {
-        toast.error('Why not register an account?')
+      const response = await axios.post('http://localhost:3131/auth/google/login', {
+        accessToken
+      })
+
+      if (response) {
+        const { data } = response
+
+        if (!data.error) {
+          console.log(data)
+          if (getToken()) {
+            sessionStorage.removeItem('lint_session')
+          }
+
+          sessionStorage.setItem('lint_session', JSON.stringify(data.sessionCookie))
+          queryClient.invalidateQueries('current-user')
+
+          if (data.userInfo.profile === null) {
+            setProfile(data.userInfo)
+            navigate('/setup-profile');
+          } else {
+            setUser(data.userInfo.profile)
+            navigate('/collaborate')
+          }
+        } else {
+          errorToast(data.error.message)
+        }
       }
+    } catch (error) {
+      console.log(error)
+      errorToast(error.response.data)
+    } finally {
+      setIsGoogleLoading(false)
     }
   }
 
-  const emailAndPasswordLoginMutation = useMutation({
-    mutationFn: ({ token, data }) => {
-      return axios.post('https://api.lintapp.com/auth/login', {
+  async function handleEmailAndPasswordSignIn(data) {
+    setIsLoading(true)
+    try {
+      const response = await axios.post('http://localhost:3131/auth/login', {
         email: data.email,
         password: data.password
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
       })
-    },
-    onSuccess({ data }) {
-      if (getToken()) {
-        sessionStorage.removeItem('lint_session')
+
+      if (response) {
+        const { data: res } = response
+
+        if (getToken()) {
+          sessionStorage.removeItem('lint_session')
+        }
+
+        if (!res.error) {
+          sessionStorage.setItem('lint_session', JSON.stringify(res.sessionCookie))
+
+          if (res.userInfo.profile === null) {
+            setProfile(res.userInfo)
+            navigate('/setup-profile');
+          } else {
+            setUser(res.userInfo.profile)
+            navigate('/collaborate')
+          }
+        } else {
+          errorToast(res.error.message)
+        }
       }
-      console.log(data.sessionCookie)
-
-      sessionStorage.setItem('lint_session', JSON.stringify(data.sessionCookie))
-
-      if (data.userInfo.profile === null) {
-        setProfile(data.userInfo)
-        navigate('/setup-profile');
-      } else {
-        setUser(data.userInfo.profile)
-        navigate('/collaborate')
-      }
-    },
-  })
-
-  async function handleEmailAndPasswordSignIn(data) {
-    try {
-      setIsLoading(true)
-      const userCredentials = await signInWthCredentials(data.email, data.password);
-      const accessToken = await userCredentials.user.getIdToken();
-      await emailAndPasswordLoginMutation.mutateAsync({ token: accessToken, data })
     } catch (error) {
-      console.log(error.response?.data)
-      if (error.response?.data.statusCode === 401) {
-        toast.error('Why not register an account?')
-      }
+      errorToast(error.response?.data)
     } finally {
       setIsLoading(false)
     }
   }
-
-  // if(user) {
-  //   setIsLoading(true)
-  //   window.location.assign('/collaborate')
-  // }
 
   return (
     <main>
@@ -157,19 +140,18 @@ const Login = () => {
                 </div>
               </div>
               <button
-                disabled={isLoading || googleLoginMutation.isPending}
+                disabled={isLoading || isGoogleLoading}
                 type='submit'
                 className='login-button'
               >
-
                 {isLoading ? (
                   <Icon className='loading-google' icon={'formkit:spinner'} fontSize={22} />
                 ) : 'Login'}
               </button>
             </form>
 
-            <button disabled={isLoading || googleLoginMutation.isPending || emailAndPasswordLoginMutation.isPending} onClick={() => handleGoogleSignIn()} type='button' className='google-button'>
-              {googleLoginMutation.isPending ? (
+            <button disabled={isLoading || isGoogleLoading} onClick={() => handleGoogleSignIn()} type='button' className='google-button'>
+              {isGoogleLoading ? (
                 <span className='google-button-check'>
                   <Icon className='loading-google' icon={'formkit:spinner'} fontSize={22} />
                   <span>Logging in....</span>
