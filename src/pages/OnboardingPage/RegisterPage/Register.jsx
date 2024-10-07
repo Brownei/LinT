@@ -9,7 +9,7 @@ import { createAccountWithCredentials, firebaseErrorBypass, signInWithGoogle } f
 import { useAuthStore, useSettingProfileStore } from '../../../hooks/use-auth-store'
 import { toast } from 'sonner'
 import { useForm } from 'react-hook-form'
-import { Button } from '@mantine/core'
+import { Button, TextInput } from '@mantine/core'
 import { getToken } from '../../../utils/api'
 import { FirebaseError } from 'firebase/app'
 import { errorToast } from '../../../utils/toast'

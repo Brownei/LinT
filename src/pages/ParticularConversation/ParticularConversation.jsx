@@ -22,11 +22,12 @@ const ParticularConversation = () => {
   const isMobile = useMediaQuery({ maxWidth: 800 })
   const user = useAuthStore((state) => state?.user)
   const [sentMessages, setSentMessages] = useState([])
-  const { setMessages, messages } = useGlobalContext()
+  const { setMessages, messages, conversations } = useGlobalContext()
   const sendingMessage = document.getElementById('main-sending-message')
   const messageEnding = document.getElementById('ending')
   const queryClient = useQueryClient()
-  const { data: conversation, isLoading, error } = useParticularConversation(id)
+  const conversation = id !== '' ? conversations.find((conversation) => conversation.id === id) : {}
+  //const { data: conversation, isLoading, error } = useParticularConversation(id)
   const { data: allMessages, isLoading: isMessagesLoading } = useAllMessages(id)
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     mode: 'onSubmit'
@@ -96,71 +97,64 @@ const ParticularConversation = () => {
 
   return (
     <main id='particular-conversation-page'>
-      {isLoading ? (
-        <div>
-          <ClipLoader size={isMobile ? 20 : 30} color='#3338C1' />
+      <div className='particular-conversation-page'>
+        <button onClick={() => window.history.back()} className='back-button'>
+          <span>
+            <Icon icon={'tabler:arrow-left'} fontSize={23} color='#0006B1' />
+            {conversation.creatorId === user.id ? conversation.recipient.fullName : conversation.creator.fullName}
+          </span>
+        </button>
+
+        <div className='content'>
+          <img src={conversation.creatorId === user.id ? conversation.recipient.profileImage : conversation.creator.profileImage} />
+          <h1>{conversation.creatorId === user.id ? conversation.recipient.fullName : conversation.creator.fullName}</h1>
+          <p>{conversation?.creatorId === user.id ? conversation?.creator.occupation : conversation?.recipient.occupation}</p>
+
         </div>
-      ) : error ? (
-        <div>You might wanna refresh!</div>
-      ) : (
-        <div className='particular-conversation-page'>
-          <button onClick={() => window.history.back()} className='back-button'>
-            <span>
-              <Icon icon={'tabler:arrow-left'} fontSize={23} color='#0006B1' />
-              {conversation.creatorId === user.id ? conversation.recipient.fullName : conversation.creator.fullName}
-            </span>
-          </button>
+        <Divider my='md' />
 
-          <div className='content'>
-            <img src={conversation.creatorId === user.id ? conversation.recipient.profileImage : conversation.creator.profileImage} />
-            <h1>{conversation.creatorId === user.id ? conversation.recipient.fullName : conversation.creator.fullName}</h1>
-            <p>{conversation?.creatorId === user.id ? conversation?.creator.occupation : conversation?.recipient.occupation}</p>
+        <div className='message-container'>
+          {isMessagesLoading ? (
+            <div>
+              <ClipLoader size={isMobile ? 20 : 30} color='#3338C1' />
+            </div>
+          ) : (
+            <div className='message'>
+              {Object.keys(groupMessagesByDay(messages))?.map((date) => (
+                <div key={date}>
+                  <p className='date'>{moment(date).format('MMMM Do YYYY')}</p>
+                  {groupMessagesByDay(messages)[date]?.map((message) => (
+                    <MessagePopup message={message} />
+                  ))}
+                </div>
+              ))}
+              {sendMessageMutation.isPending && (
+                <div>
+                  {sentMessages.map((message) => (
+                    <SendingMessagePopup userInfo={sendingMessageVariables} message={message} />
 
-          </div>
-          <Divider my='md' />
-
-          <div className='message-container'>
-            {isMessagesLoading ? (
-              <div>
-                <ClipLoader size={isMobile ? 20 : 30} color='#3338C1' />
-              </div>
-            ) : (
-              <div className='message'>
-                {Object.keys(groupMessagesByDay(messages))?.map((date) => (
-                  <div key={date}>
-                    <p className='date'>{moment(date).format('MMMM Do YYYY')}</p>
-                    {groupMessagesByDay(messages)[date]?.map((message) => (
-                      <MessagePopup message={message} />
-                    ))}
-                  </div>
-                ))}
-                {sendMessageMutation.isPending && (
-                  <div>
-                    {sentMessages.map((message) => (
-                      <SendingMessagePopup userInfo={sendingMessageVariables} message={message} />
-
-                    ))}
-                  </div>
-                )}
-                {sendMessageMutation.isError && (
-                  <div style={{ color: 'red' }}>
-                    {sendMessageMutation.variables}
-                    <button
-                      onClick={() =>
-                        sendMessageMutation.mutate(sendMessageMutation.variables)
-                      }
-                    >
-                      Retry
-                    </button>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-          <div id='ending' />
-          <MessageInput handleSubmit={handleSubmit} onSubmit={onSubmit} register={register} />
+                  ))}
+                </div>
+              )}
+              {sendMessageMutation.isError && (
+                <div style={{ color: 'red' }}>
+                  {sendMessageMutation.variables}
+                  <button
+                    onClick={() =>
+                      sendMessageMutation.mutate(sendMessageMutation.variables)
+                    }
+                  >
+                    Retry
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
-      )}
+        <div id='ending' />
+        <MessageInput handleSubmit={handleSubmit} onSubmit={onSubmit} register={register} />
+      </div>
+
     </main>
   )
 }

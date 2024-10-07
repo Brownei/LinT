@@ -3,7 +3,7 @@ import './MobileHeader.scss';
 import { Badge, Button, Loader } from "@mantine/core";
 import { NavLink, useLocation } from "react-router-dom";
 
-const MobileHeader = ({ collaboratorPage, interests, conversations, isLoading, isInterestLoading }) => {
+const MobileHeader = ({ collaboratorPage, interests, conversations }) => {
   const location = useLocation()
 
   return (
@@ -12,24 +12,12 @@ const MobileHeader = ({ collaboratorPage, interests, conversations, isLoading, i
       <div className='buttons'>
         <div className="mobile-chats">
           <NavLink to={'/collaborate/interests'} className={location.pathname === '/collaborate/interests' ? 'active-link' : 'link'}>
-            {isInterestLoading ? (
-              <Badge color="#00034A" size="xs">
-                <Loader size="xs" />
-              </Badge>
-            ) : (
-              <Badge color="#00034A" size="xs" circle>{interests?.length}</Badge>
-            )}
+            <Badge color="#00034A" size="xs" circle>{interests?.length}</Badge>
             Interest
           </NavLink>
 
           <NavLink to={'/messages'} className={location.pathname === '/messages' ? 'active-link' : 'link'}>
-            {isLoading ? (
-              <Badge color="#00034A" size="xs">
-                <Loader size="xs" />
-              </Badge>
-            ) : (
-              <Badge color="#00034A" size="xs" circle>{conversations?.length}</Badge>
-            )}
+            <Badge color="#00034A" size="xs" circle>{conversations?.length}</Badge>
             Chats
           </NavLink>
         </div>

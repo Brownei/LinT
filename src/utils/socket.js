@@ -1,6 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { io } from "socket.io-client";
+import { infoToast } from "./toast";
 
 let socket;
 
@@ -37,7 +38,7 @@ export const useSocketListener = (
   eventType,
   setNewData,
   queryKey,
-  handleMessageWell
+  handleMessageWell,
 ) => {
   const queryClient = useQueryClient()
   useEffect(() => {
@@ -45,10 +46,14 @@ export const useSocketListener = (
       const newMessage = JSON.parse(message)
       queryClient.invalidateQueries({ queryKey: [queryKey] })
 
-      if (newMessage.conversationId) {
+      if (eventType === 'new-message') {
         handleMessageWell(newMessage.conversationId)
-      } else if (newMessage.post) {
+      } else if (eventType === 'new-request') {
         handleMessageWell(newMessage.collaboratorsRequest.sender.fullName)
+      } else if (eventType === 'new-post') {
+        console.log('New Post dey!')
+      } else if (eventType === 'accepted-request' || eventType === 'rejected-request') {
+        infoToast('A request you sent was accepted or rejected!')
       }
 
       setNewData((prev) => [...prev, newMessage])

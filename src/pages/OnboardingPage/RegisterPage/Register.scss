@@ -8,14 +8,12 @@
   h1 {
     text-align: start;
     font-weight: 600;
+    margin: 30px;
     font-size: 24px;
   }
 
   .register {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    margin: 30px;
 
     form {
       display: flex;
@@ -237,12 +235,13 @@
     }
 
     .register {
+
       form {
         .input-field {
           .input-register-field {
             .input-field {
               input {
-                width: 345px;
+                width: 100%;
                 padding: 18px 14px;
               }
             }
@@ -251,7 +250,7 @@
 
           .input-register {
             input {
-              width: 390px;
+              width: 100%;
               padding: 18px 14px;
             }
 

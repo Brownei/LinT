@@ -7,15 +7,10 @@ import { useAllConversations } from "../../hooks/use-conversations";
 import { useState, useEffect } from "react";
 import MobileHeader from "../../components/Mobile/MobileHeader/MobileHeader";
 import MobileIdeas from "../../components/Mobile/MobileIdeas/MobileIdeas";
-import { useQueryClient } from "@tanstack/react-query";
 import ModalContainer from "../../components/Modal/ModalContainer";
 import ChatsViewSection from "../../components/Chats/ChatsViewSection/ChatsViewSection";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useAuthStore } from "../../hooks/use-auth-store";
-import { useConversationStore } from "../../hooks/use-conversations-store";
-import { getSocket, initializeSocket, useSocketListener } from "../../utils/socket";
+import { useLocation } from "react-router-dom";
 import { useGlobalContext } from "../../context/GlobalContext";
-import { all } from "axios";
 
 const Collaborate = () => {
   const { data: interests, isLoading: interestsLoading, error } = useAllInterests()
@@ -24,27 +19,24 @@ const Collaborate = () => {
   const { data: posts, isLoading: isPostsLoading, error: postError } = useAllPosts()
   const location = useLocation()
   const [onOpen, setOnOpen] = useState()
-  const queryClient = useQueryClient()
-  //const [friendRequests, setFriendRequests] = useState([])
-  //const [allPosts, setAllPosts] = useState([])
 
   useEffect(() => {
-    if (posts) {
+    if (!isPostsLoading) {
       setPosts(posts);
     }
 
-    if (interests) {
+    if (!interestsLoading) {
       setInterests(interests)
     }
 
-    if (allConversations) {
+    if (!isConversationsLoading) {
       const initialConversations = allConversations.map((conversation) => ({
         ...conversation,
         read: false, // Default to unread (false)
       }));
       setConversations(initialConversations);
     }
-  }, [posts, interests, allConversations]);
+  }, [isPostsLoading, interestsLoading, isConversationsLoading]);
 
   return (
     <main id="collaborate-page">
@@ -75,7 +67,7 @@ const Collaborate = () => {
 
         {/* MOBILE VIEW BABY */}
         <div className="mobile-collaborate-page" >
-          <MobileHeader isInterestLoading={interestsLoading} isLoading={isConversationsLoading} conversations={conversations} interests={friendRequests} collaboratorPage={true} />
+          <MobileHeader conversations={conversations} interests={friendRequests} collaboratorPage={true} />
           <MobileIdeas error={postError} isFetching={isPostsLoading} posts={allPosts} />
         </div >
       </div >
