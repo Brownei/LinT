@@ -7,7 +7,7 @@ let socket;
 
 export const initializeSocket = (params) => {
   if (!socket) {
-    socket = io("http://localhost:3131", {
+    socket = io(process.env.VITE_API_ENDPOINT, {
       query: {
         params: JSON.stringify(params),
       },
