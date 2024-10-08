@@ -21,7 +21,8 @@ const InterestsSection = ({ interest, onOpen, setOnOpen }) => {
         queryClient.invalidateQueries('all-interests')
         successToast('Accepted!')
       } else {
-        errorToast(data.error.message)
+        const filteredMessage = data.error.message.split(':')
+        errorToast(filteredMessage[1])
       }
     },
     onError(err) {

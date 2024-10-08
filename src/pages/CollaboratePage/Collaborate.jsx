@@ -36,7 +36,7 @@ const Collaborate = () => {
       }));
       setConversations(initialConversations);
     }
-  }, [isPostsLoading, interestsLoading, isConversationsLoading]);
+  }, [posts, interests, allConversations]);
 
   return (
     <main id="collaborate-page">

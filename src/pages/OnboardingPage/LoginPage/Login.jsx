@@ -28,7 +28,7 @@ const Login = () => {
     try {
       const userCredentials = await signInWithGoogle();
       const accessToken = await userCredentials.user.getIdToken();
-      const response = await axios.post('http://localhost:3131/auth/google/login', {
+      const response = await axios.post('https://api.lintapp.com/auth/google/login', {
         accessToken
       })
 
@@ -66,7 +66,7 @@ const Login = () => {
   async function handleEmailAndPasswordSignIn(data) {
     setIsLoading(true)
     try {
-      const response = await axios.post('http://localhost:3131/auth/login', {
+      const response = await axios.post('https://api.lintapp.com/auth/login', {
         email: data.email,
         password: data.password
       })

@@ -32,7 +32,7 @@ const Register = () => {
     try {
       const userCredentials = await signInWithGoogle();
       const accessToken = await userCredentials.user.getIdToken();
-      const response = await axios.post(`http://localhost:3131/auth/google/register`, {
+      const response = await axios.post(`https://api.lintapp.com/auth/google/register`, {
         accessToken
       })
 
@@ -63,7 +63,7 @@ const Register = () => {
   async function handleCredentialsRegister(data) {
     setIsLoading(true)
     try {
-      const response = await axios.post(`http://localhost:3131/auth/register`, {
+      const response = await axios.post(`https://api.lintapp.com/auth/register`, {
         password: data.password,
         fullName: data.fullName,
         email: data.email,

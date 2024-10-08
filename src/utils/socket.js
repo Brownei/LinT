@@ -56,7 +56,12 @@ export const useSocketListener = (
         infoToast('A request you sent was accepted or rejected!')
       }
 
-      setNewData((prev) => [...prev, newMessage])
+      if (eventType === 'new-post') {
+        setNewData((prev) => [newMessage, ...prev])
+
+      } else {
+        setNewData((prev) => [...prev, newMessage])
+      }
       console.log(`${eventType} Socket Message`, newMessage);
     };
 
