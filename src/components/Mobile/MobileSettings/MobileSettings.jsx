@@ -1,23 +1,17 @@
 import { Menu } from '@mantine/core';
 import './MobileSettings.scss'
 import { Icon } from '@iconify/react/dist/iconify.js';
-import { useMutation } from '@tanstack/react-query';
-import { api } from '../../../utils/api';
 import { Link } from 'react-router-dom';
 import { useAuthStore } from '../../../hooks/use-auth-store';
 
 const MobileSettings = () => {
   const clear = useAuthStore((state) => state.clear)
-  const signOutMutation = useMutation({
-    mutationFn: () => {
-      return api.post(`/auth/logout`)
-    },
-    onSuccess() {
-      clear()
-      window.location.assign('/auth/login')
-      sessionStorage.removeItem("lint_session");
-    },
-  });
+  function signOut() {
+    clear()
+    window.location.assign('/auth/login')
+    sessionStorage.removeItem("lint_session");
+  }
+
 
   return (
     <nav id="mobile-settings">
@@ -56,9 +50,9 @@ const MobileSettings = () => {
             <Menu.Item
               color="red"
               leftSection={<Icon icon={'solar:logout-2-broken'} fontSize={14} />}
-              onClick={() => signOutMutation.mutateAsync()}
+              onClick={signOut}
             >
-              {signOutMutation.isPending ? 'Running..' : 'Logout'}
+              Logout
             </Menu.Item>
           </Menu.Dropdown>
         </Menu>
