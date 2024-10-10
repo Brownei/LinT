@@ -11,11 +11,14 @@ import ModalContainer from "../../components/Modal/ModalContainer";
 import ChatsViewSection from "../../components/Chats/ChatsViewSection/ChatsViewSection";
 import { useLocation } from "react-router-dom";
 import { useGlobalContext } from "../../context/GlobalContext";
+import { useConversationStore } from "../../hooks/use-conversations-store";
 
 const Collaborate = () => {
   const { data: interests, isLoading: interestsLoading, error } = useAllInterests()
   const { data: allConversations, isLoading: isConversationsLoading, error: conversationsError } = useAllConversations()
-  const { setConversations, conversations, setPosts, posts: allPosts, setInterests, interests: friendRequests } = useGlobalContext()
+  const setConversations = useConversationStore((state) => state?.setConversations)
+  const conversations = useConversationStore((state) => state?.conversations)
+  const { setPosts, posts: allPosts, setInterests, interests: friendRequests } = useGlobalContext()
   const { data: posts, isLoading: isPostsLoading, error: postError } = useAllPosts()
   const location = useLocation()
   const [onOpen, setOnOpen] = useState()
@@ -30,13 +33,15 @@ const Collaborate = () => {
     }
 
     if (!isConversationsLoading) {
-      const initialConversations = allConversations.map((conversation) => ({
-        ...conversation,
-        read: false, // Default to unread (false)
-      }));
-      setConversations(initialConversations);
+      if (conversations.length === 0) {
+        const initialConversations = allConversations.map((conversation) => ({
+          ...conversation,
+          read: false,
+        }));
+        setConversations(initialConversations);
+      }
     }
-  }, [posts, interests, allConversations]);
+  }, [isPostsLoading, interestsLoading, isConversationsLoading, allConversations, conversations.length]);
 
   return (
     <main id="collaborate-page">

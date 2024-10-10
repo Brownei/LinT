@@ -7,11 +7,14 @@ import { useMediaQuery } from "react-responsive";
 import { useAllInterests } from '../../hooks/use-all-interests';
 import { useAllConversations } from "../../hooks/use-conversations";
 import ChatsSection from '../../components/Chats/ChatsSection/ChatsSection'
+import { useGlobalContext } from '../../context/GlobalContext'
+import { useEffect } from 'react'
 
 const MessagesPage = () => {
   const isMobile = useMediaQuery({ maxWidth: 800 })
   const { data: interests, isLoading: interestsLoading, error } = useAllInterests()
-  const { data: conversations, isLoading: isConversationsLoading, error: conversationsError } = useAllConversations()
+  const { conversations, setConversations } = useGlobalContext()
+  const { data: allConversations, isLoading: isConversationsLoading, error: conversationsError } = useAllConversations()
   const navigate = useNavigate()
 
   if (interestsLoading) {
@@ -23,6 +26,16 @@ const MessagesPage = () => {
   if (error || conversationsError) {
     <p>Error o!</p>
   }
+
+  useEffect(() => {
+    if (allConversations) {
+      const initialConversations = allConversations.map((conversation) => ({
+        ...conversation,
+        read: false, // Default to unread (false)
+      }));
+      setConversations(initialConversations);
+    }
+  }, [allConversations]);
 
   if (!isMobile) {
     navigate('/collaborate')

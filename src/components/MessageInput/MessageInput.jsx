@@ -13,6 +13,7 @@ const MessageInput = ({ register, handleSubmit, onSubmit }) => {
       handleSubmit(onSubmit)();
     }
   };
+
   return (
     <div id='mess'>
       <div className='message-input'>

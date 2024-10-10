@@ -15,6 +15,7 @@ import { useForm } from 'react-hook-form'
 import { api } from '../../../utils/api'
 import { useEffect, useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
+import { useConversationStore } from '../../../hooks/use-conversations-store'
 
 const ChatsViewSection = () => {
   const { setMessages, messages } = useGlobalContext()
@@ -32,18 +33,16 @@ const ChatsViewSection = () => {
     fullName: user.fullName,
   }
   const id = locationSplit[3] ? locationSplit[3] : ''
-  const { register, handleSubmit, reset, formState: { errors } } = useForm({
+  const { register, handleSubmit, reset } = useForm({
     mode: 'onSubmit'
   })
-  //const { data: conversation, isLoading, error } = useParticularConversation(id)
-  const { conversations } = useGlobalContext()
+  const conversations = useConversationStore((state) => state.conversations)
   const [sentMessages, setSentMessages] = useState([])
-  const { data: allMessages, isFetching: isMessagesFetching, isLoading: isMessagesLoading } = useAllMessages(id)
-  console.log(sentMessages)
+  const { data: allMessages, isLoading: isMessagesLoading } = useAllMessages(id)
   const conversation = id !== '' ? conversations.find((conversation) => conversation.id === id) : {}
+  console.log(conversation)
 
   function scrollToBottom() {
-    //console.log({ messageEnding, sendingMessage })
     sendingMessage?.scrollIntoView({
       behavior: 'smooth'
     })
@@ -64,8 +63,6 @@ const ChatsViewSection = () => {
         content: inputData.message
       })
       await queryClient.cancelQueries({ queryKey: ['all-messages'] })
-
-      const prev = queryClient.getQueryData(['all-messages'])
 
       setTimeout(() => {
         // When message is sent, remove it from the pending list
@@ -96,11 +93,11 @@ const ChatsViewSection = () => {
   };
 
   useEffect(() => {
-    if (!isMessagesLoading && allMessages) {
+    if (!isMessagesLoading) {
       setMessages(allMessages)
       scrollToBottom()
     }
-  }, [isMessagesLoading, allMessages]);
+  }, [allMessages]);
 
 
   return (

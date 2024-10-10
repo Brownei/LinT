@@ -16,13 +16,15 @@ import { useEffect, useRef, useState } from 'react'
 import { useAuthStore } from '../../hooks/use-auth-store'
 import { useGlobalContext } from '../../context/GlobalContext'
 import { useMediaQuery } from 'react-responsive'
+import { useConversationStore } from '../../hooks/use-conversations-store'
 
 const ParticularConversation = () => {
   const { id } = useParams()
   const isMobile = useMediaQuery({ maxWidth: 800 })
   const user = useAuthStore((state) => state?.user)
   const [sentMessages, setSentMessages] = useState([])
-  const { setMessages, messages, conversations } = useGlobalContext()
+  const { setMessages, messages } = useGlobalContext()
+  const conversations = useConversationStore((state) => state?.conversations)
   const sendingMessage = document.getElementById('main-sending-message')
   const messageEnding = document.getElementById('ending')
   const queryClient = useQueryClient()
@@ -32,13 +34,13 @@ const ParticularConversation = () => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     mode: 'onSubmit'
   })
-  console.log({ id, conversations })
 
   const sendingMessageVariables = {
     id: 1,
     profileImage: user.profileImage,
     fullName: user.fullName,
   }
+  console.log(conversations)
 
   function scrollToBottom() {
     sendingMessage?.scrollIntoView({
@@ -89,11 +91,11 @@ const ParticularConversation = () => {
   };
 
   useEffect(() => {
-    if (!isMessagesLoading && allMessages) {
+    if (!isMessagesLoading) {
       setMessages(allMessages)
       scrollToBottom()
     }
-  }, [isMessagesLoading, allMessages]);
+  }, [allMessages]);
 
 
   return (

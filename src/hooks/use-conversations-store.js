@@ -2,14 +2,14 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 const initialState = {
-  conversationIds: []
+  conversations: []
 }
 
 export const useConversationStore = create(
   persist(
     (set) => ({
       ...initialState,
-      setConversationIds: (newData) => set((state) => ({ user: { ...state.conversationIds, ...newData } })),
+      setConversations: (newData) => set((state) => ({ conversations: [...state.conversations, ...newData] })),
       clear: () => set(initialState)
     }),
     {

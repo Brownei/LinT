@@ -8,25 +8,17 @@ import ChatsSection from './ChatsSection/ChatsSection';
 import { useEffect } from 'react';
 import { useGlobalContext } from '../../context/GlobalContext';
 import { useMediaQuery } from 'react-responsive';
+import { useConversationStore } from '../../hooks/use-conversations-store';
 
-const Chats = ({ interests, isLoading, error, onOpen, setOnOpen, conversations: allConversations, isConversationsLoading, conversationsError }) => {
-  const { setConversations, conversations } = useGlobalContext()
+const Chats = ({ interests, isLoading, error, onOpen, setOnOpen, conversations, isConversationsLoading, conversationsError }) => {
+  const setConversations = useConversationStore((state) => state?.setConversations)
+  //const conversations = useConversationStore((state) => state?.conversations)
+  //const { setConversations, conversations } = useGlobalContext()
   const isMobile = useMediaQuery({ maxWidth: 800 })
   const location = useLocation()
   let numberOfInterest = interests?.length
   const chatsSection = location.search.startsWith('?=chats') && 'chat-chats'
   const isNotRead = conversations.filter((conversation) => conversation.read === false)
-
-  useEffect(() => {
-    if (!isConversationsLoading) {
-      const initialConversations = allConversations.map((conversation) => ({
-        ...conversation,
-        read: false, // Default to unread (false)
-      }));
-
-      setConversations(initialConversations)
-    }
-  }, [isConversationsLoading]);
 
   const handleTap = (id) => {
     setConversations((prev) =>
