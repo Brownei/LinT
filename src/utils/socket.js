@@ -7,7 +7,7 @@ let socket;
 
 export const initializeSocket = (params) => {
   if (!socket) {
-    socket = io(process.env.VITE_API_ENDPOINT, {
+    socket = io('https://api.lintapp.com', {
       query: {
         params: JSON.stringify(params),
       },
