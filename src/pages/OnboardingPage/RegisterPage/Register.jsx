@@ -6,18 +6,20 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import axios from 'axios'
 import { createAccountWithCredentials, signInWithGoogle } from '../../../utils/firebase'
-import { useSettingProfileStore } from '../../../hooks/use-auth-store'
+import { useAuthStore, useSettingProfileStore } from '../../../hooks/use-auth-store'
 import { toast } from 'sonner'
 import { useForm } from 'react-hook-form'
 import { Button } from '@mantine/core'
+import { getToken } from '../../../utils/api'
+import { FirebaseError } from 'firebase/app'
 
 const Register = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-
   const [showPassword, setShowPassword] = useState(false)
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false)
   const setProfile = useSettingProfileStore((state) => state.setProfile)
+  const setUser = useAuthStore((state) => state.setUser)
   const { register, handleSubmit, watch, formState: { errors } } = useForm({
     mode: 'onSubmit'
   })
@@ -33,12 +35,17 @@ const Register = () => {
       })
     },
     onSuccess({ data }) {
-      sessionStorage.setItem('lint_session', data.sessionCookie)
-      setProfile(data.userInfo)
+      if (getToken()) {
+        sessionStorage.removeItem('lint_session')
+      }
+
+      sessionStorage.setItem('lint_session', JSON.stringify(data.sessionCookie))
 
       if (data.userInfo.profile === null) {
+        setProfile(data.userInfo)
         navigate('/setup-profile', { replace: true });
       } else {
+        setUser(data.userInfo.profile)
         navigate('/collaborate', { replace: true });
       }
     },
@@ -60,14 +67,25 @@ const Register = () => {
       })
     },
     onSuccess({ data }) {
-      sessionStorage.setItem('lint_session', data.sessionCookie)
-      setProfile(data.userInfo)
+      if (getToken()) {
+        sessionStorage.removeItem('lint_session')
+      }
 
-      if (data.userInfo.profile === null) {
+      sessionStorage.setItem('lint_session', JSON.stringify(data.sessionCookie))
+      setProfile(data.userInfo)
+      console.log(data.userInfo.profile === null)
+
+      if (data.error) {
+        console.log(data.error)
+        toast.error('error')
+      } else if (data.userInfo.profile === null) {
+        setProfile(data.userInfo)
         navigate('/setup-profile', { replace: true });
       } else {
+        setUser(data.userInfo.profile)
         navigate('/collaborate', { replace: true });
       }
+
     },
     onError(error) {
       toast.error(error.message)
@@ -95,6 +113,11 @@ const Register = () => {
         data
       })
     } catch (error) {
+      if (error instanceof FirebaseError) {
+        if (error.message.split(' ')[2] === '(auth/email-already-in-use).') {
+          toast.error('Email already in use!')
+        }
+      }
       console.log(error.response)
     } finally {
       setIsLoading(false)
@@ -166,10 +189,13 @@ const Register = () => {
               </div>
             </div>
 
-            <button type='submit' disabled={isLoading || googleRegisterMutation.isPending || emailAndPasswordRegisterMutation.isPending} className='register-button'>
-              {isLoading ? (
+            <button type='submit' disabled={isLoading || googleRegisterMutation.isPending || emailAndPasswordRegisterMutation.isPending} className={`register-button ${isLoading && 'loading'}`}>
+              <span className='text'>
+                Create account
+              </span>
+              <span className='spinner'>
                 <Icon className='loading-google' icon={'formkit:spinner'} fontSize={20} />
-              ) : 'Create account'}
+              </span>
             </button>
           </form>
 
@@ -187,7 +213,7 @@ const Register = () => {
                 </span>
               )}
             </button>
-            <Link to={'/'} className='login-button'>
+            <Link to={'/auth/login'} className='login-button'>
               Have an account?
               <span>Sign In</span>
             </Link>

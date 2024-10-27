@@ -6,34 +6,43 @@ import MobileNav from '../Mobile/MobileNav/MobileNav';
 import MobileSettings from '../Mobile/MobileSettings/MobileSettings';
 import { useGlobalContext } from '../../context/GlobalContext';
 import { ClipLoader } from 'react-spinners';
+import { useEffect } from 'react';
+import { getUserProfile } from '../../utils/api';
+import { useAuthStore } from '../../hooks/use-auth-store';
 
 export default function Layout() {
-  const { currentUserLoading } = useGlobalContext()
+  const setUser = useAuthStore((state) => state?.setUser)
   const { id } = useParams()
   const location = useLocation()
 
+  useEffect(() => {
+    async function fetchData() {
+      // You can await here
+      const response = await getUserProfile();
+      console.log(response);
+
+      if (response?.profile !== undefined || null) {
+        setUser(response?.profile)
+      } else {
+        setProfile(response)
+      }
+      // ...
+    }
+    fetchData();
+  }, []);
+
   return (
     <main id="body">
-      {currentUserLoading ? (
-        <div className='loader'>
-          <ClipLoader color='#0006B1' />
-        </div>
-      ) : (
-        <div>
-          <div className='mobile-settings'>
-            <MobileSettings />
-          </div>
+      <div className='mobile-settings'>
+        <MobileSettings />
+      </div>
 
-          <Nav />
-          <Outlet />
+      <Nav />
+      <Outlet />
 
-          <div className="collaborate-mobile-page">
-            {location.pathname !== `/messages/${id}` && <MobileNav />}
-          </div>
-
-        </div >
-
-      )}
+      <div className="collaborate-mobile-page">
+        {location.pathname !== `/messages/${id}` && <MobileNav />}
+      </div>
     </main >
   )
 }

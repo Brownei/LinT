@@ -29,18 +29,15 @@ export async function createAccountWithCredentials(email, password) {
 export async function firebaseErrorBypass(email, password) {
   try {
     const response = await createAccountWithCredentials(email, password)
-    if (error.message.split(' ')[2] === '(auth/email-already-in-use)') {
-      return await signInWthCredentials(email, password)
-
-    }
-
     return response.user;
 
   } catch (error) {
     if (error instanceof FirebaseError) {
       console.log(error.message.split(' ')[2])
+      if (error.message.split(' ')[2] === '(auth/email-already-in-use)') {
+        return await signInWthCredentials(email, password)
 
-      return;
+      }
     }
 
   }
