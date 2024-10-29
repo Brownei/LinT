@@ -63,7 +63,7 @@ const Register = () => {
   async function handleCredentialsRegister(data) {
     setIsLoading(true)
     try {
-      const response = await axios.post(`https://api.lintapp.com/auth/google/register`, {
+      const response = await axios.post(`https://api.lintapp.com/auth/register`, {
         password: data.password,
         fullName: data.fullName,
         email: data.email,
@@ -72,16 +72,17 @@ const Register = () => {
       })
 
       if (response) {
-        const { data: res } = response
+        const res = response.data
 
         if (getToken()) {
           sessionStorage.removeItem('lint_session')
         }
 
-        if (data.error) {
+        if (res.error) {
           console.log(res.error)
           errorToast(res.error.response.message)
         } else {
+          console.log(res)
           sessionStorage.setItem('lint_session', JSON.stringify(res.sessionCookie))
           setProfile(res.userInfo)
           navigate('/setup-profile')
